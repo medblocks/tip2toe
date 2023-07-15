@@ -3,6 +3,7 @@ import QuestionnaireLayout from '@/core/layout/QuestionnaireLayout'
 import DefaultLayout from '@/core/layout/DefaultLayout'
 import Home from '@/core/pages/HomeView.tsx'
 import Overview from '@/core/pages/Questionnaire/Overview.tsx'
+import Form from '@/core/pages/Questionnaire/Form.tsx'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path: ":slug",
-        element: <div>Questionnaire section</div>,
+        element: <Form />,
       },
       {
         path: "summary",
