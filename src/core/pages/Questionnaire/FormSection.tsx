@@ -18,14 +18,14 @@ export default function FormSection({ formSection }: IProps) {
           {uploadSections.map((x) => (
             <div key={x}>
               <h4>{x}</h4>
-              {/* <UploadWidget section={`${slug}:${x}`} /> */}
+              {/* UPLOAD SECTIONS */}
             </div>
           ))}
-          {/* <NavButtons /> */}
+          {/* NAV BUTTONS */}
         </div>
       ) : null}
-      {/* <Questions questions={questions} /> */}
-      {/* <EditPhenotypicFeatures ontologies={ontologies} slug={slug} /> */}
+      {/* QUESTIONS */}
+      {/* ONTOLOGY QUESTIONS */}
     </>
   );
 }
