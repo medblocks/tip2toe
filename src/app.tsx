@@ -1,27 +1,60 @@
-import NavBar  from './core/components/header.tsx'
-import Sidebar from './core/components/sidebar.tsx'
-import { sample_header_list } from './sample_header.ts'
+import React from 'preact/compat';
+import QuestionnaireLayout from '@/core/layout/QuestionnaireLayout'
+import DefaultLayout from '@/core/layout/DefaultLayout'
+import Home from '@/core/pages/HomeView.tsx'
+import Overview from '@/core/pages/Questionnaire/Overview.tsx'
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
 
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <DefaultLayout />,
+    children: [
+      {
+        path: "",
+        element: <Home />,
+      }
+    ]
+  },
+  {
+    path: "/questionnaire",
+    element: <QuestionnaireLayout />,
+    children: [
+      {
+        path: "",
+        element: <Navigate to="overview" replace />,
+      },
+      {
+        path: "overview",
+        element: <Overview />,
+      },
+      {
+        path: ":slug",
+        element: <div>Questionnaire section</div>,
+      },
+      {
+        path: "summary",
+        element: <div>Questionnaire summary</div>,
+      },
+    ],
+  },
+  {
+    path: "*", 
+    element: <div>Not found</div>,
+  }
+]);
 export function App() {
-  const formSections:any = sample_header_list;
   return (
-    
     <>
-      <NavBar />
-      <div className="mx-auto max-w-6xl">
-        <div className="fixed top-16 bottom-16 hidden w-72 overflow-auto p-4 md:block">
-          <Sidebar formSections={formSections} />
-        </div>
-        <div className="md:ml-72 p-4 pb-20 pt-24 overflow-auto ">
-          TODO LIST
-          <ol style={"list-style: auto"}>
-            <li>Making the sidebar component navigation friendly</li>
-            <li>Adding a dynamic form componnent compatible to each section</li>
-            <li>adding a navigation bottom bar</li>
-          </ol>
-
-        </div>
-      </div>
+      <React.StrictMode>
+        <RouterProvider router={router} />
+      </React.StrictMode>
     </>
   )
 }
+

@@ -1,8 +1,6 @@
-
-
 const NavBar = () => (
   <header>
-    <nav class="fixed top-0 w-full z-50 bg-[#00B6CC] border-gray-200 px-4 lg:px-6 py-2.5">
+    <nav class="fixed top-0 w-full z-50 bg-udni-teal border-gray-200 px-4 lg:px-6 py-2.5">
       <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <a href="#" class="flex items-center">
           {/* image tag -> <img src="" class="mr-3 h-6 sm:h-9" alt="Logo" /> */}
