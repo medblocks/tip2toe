@@ -24,3 +24,35 @@ export interface IFormSection {
   questions?: IQuestion[];
   uploadSections?: string[];
 }
+
+
+// New
+export type MBQuestionType = 
+| 'text'
+| 'longText'
+| 'number'
+| 'select'
+| 'selectMultiple'
+| 'date'
+| 'ontology';
+
+export interface MBQuestion {
+  code?: string;
+  terminology: string;
+  value: string;
+  path: string;
+  type: MBQuestionType;
+  selected_value?: {}
+}
+
+export interface MBFormSection {
+  title: string;
+  description: string;
+  path:string;
+  slug:string;
+  questions: MBQuestion[];
+}
+
+export interface MBFormData {
+  [section: string]: MBFormSection
+}
