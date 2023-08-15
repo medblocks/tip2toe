@@ -15,7 +15,8 @@ export const {accessToken, idToken, context, services } = await smartAuth({
   iss: "https://dev.medblocks.com/fhir",
   clientId: "tip2toe",
   redirectUri: "http://localhost:5173",
-  scope: "emulate_user openid offline launch/patient extra",
+  scope: "emulate_user openid offline launch/patient",
+  // launch: btoa(JSON.stringify({patient: "123", encounter:"fromLaunch"})),
   onRedirect(originalUrl) {
       console.log(originalUrl)
   },
