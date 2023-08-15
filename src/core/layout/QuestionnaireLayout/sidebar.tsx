@@ -1,19 +1,42 @@
 import { NavLink } from 'react-router-dom';
-import { IFormSection } from '@/types';
+import { MBFormData } from "@/types.ts";
 
-interface IProps {
-  formSections?: IFormSection[];
-}
-export default function Sidebar({ formSections }: IProps) {
+
+export default function Sidebar({ formSections }: MBFormData) {
+  let totalSections = Object.keys(formSections).length;
   return (
     <>
-      {formSections?.map(({ slug, title }, i) => {
-        const url = `/questionnaire/${slug}`;
+      <NavLink
+        className={({ isActive }: any ) =>
+          ` flex w-full items-center rounded-md text-sm px-4 py-2 ${
+            isActive
+              ? 'bg-udni-teal text-white'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+          }`
+        }
+        to={`/questionnaire/overview`}
+      >
+        0. {"Overview"}
+      </NavLink>
+      <NavLink
+        className={({ isActive }: any ) =>
+          ` flex w-full items-center rounded-md text-sm px-4 py-2 ${
+            isActive
+              ? 'bg-udni-teal text-white'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+          }`
+        }
+        to={`/questionnaire/this-is-me`}
+      >
+        1. {"This is me"}
+      </NavLink>
+      {Object.entries(formSections)?.map(([key, value], i)=> {
+        const url = `/questionnaire/${value.slug}`;
         return (
           <NavLink
             key={url}
             className={({ isActive }: any ) =>
-              ` flex w-full items-center rounded-md text-sm p-2 ${
+              ` flex w-full items-center rounded-md text-sm px-4 py-2 ${
                 isActive
                   ? 'bg-udni-teal text-white'
                   : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
@@ -21,10 +44,22 @@ export default function Sidebar({ formSections }: IProps) {
             }
             to={url}
           >
-            {i + 1}. {title}
+            {i + 2}. {value.title}
           </NavLink>
         );
       })}
+      <NavLink
+        className={({ isActive }: any ) =>
+          ` flex w-full items-center rounded-md text-sm px-4 py-2 ${
+            isActive
+              ? 'bg-udni-teal text-white'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-200'
+          }`
+        }
+        to={`/questionnaire/summary`}
+      >
+        {totalSections}. {"Summary"}
+      </NavLink>
     </>
   );
 }
