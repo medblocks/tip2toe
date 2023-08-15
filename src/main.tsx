@@ -3,8 +3,8 @@ import { App } from './app.tsx'
 import './assets/css/main.css'
 import 'medblocks-ui'
 import 'medblocks-ui/dist/styles'
-import { idToken, context } from './auth.ts'
+import { idToken, context, services } from './auth.ts'
 
-console.log({idToken, context})
+console.log({idToken, context, services})
 
 render(<App />, document.getElementById('app')!)

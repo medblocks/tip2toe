@@ -16,6 +16,7 @@ export const {accessToken, idToken, context, services } = await smartAuth({
   clientId: "tip2toe",
   redirectUri: "http://localhost:5173",
   scope: "emulate_user openid offline launch/patient",
+  // launch: btoa(JSON.stringify({patient: "123", encounter:"fromLaunch"})),
   onRedirect(originalUrl) {
       console.log(originalUrl)
   },
