@@ -5,19 +5,22 @@ interface ConfirmAlertHandlerProps {
   title: string;
   _onConfirm: () => void;
   _onCancel: () => void;
+  id?: string | null;
 }
 
-const ConfirmAlert: React.FC<ConfirmAlertHandlerProps> = ({ message, title, _onConfirm, _onCancel}) => {
+const ConfirmAlert: React.FC<ConfirmAlertHandlerProps> = ({ message, title, _onConfirm, _onCancel, id=null}) => {
   const [open, setOpen] = useState<boolean>(false)
   const [text, setText] = useState<string>(message)
   const [titleText, setTitleText] = useState<string>(title)
   useEffect(() => {
+    console.log(message);
     if (message) {
-      setText(message);
+      let text = (message).toString();
+      setText(text);
       setTitleText(title);
       setOpen(true);
     }
-  }, [message, title]);
+  }, [id]);
 
   function confirm() {
     _onConfirm();

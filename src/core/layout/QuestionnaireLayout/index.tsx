@@ -1,191 +1,152 @@
-// PROPERTIES IMPORT
+// PREACT HOOKS AND PROPERTIES
+import { useEffect,useState } from "preact/hooks";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "preact/hooks";
-// PROPERTIES IMPORT
 
-// MEDBLOCKS IMPORTS
-import { FormData, ontology } from "@/FormData";
+// PREACT HOOKS AND PROPERTIES
+
+import { _practitionerForm,_patientForm } from "@/tip2toeform"
 import { MBFormData } from "@/types.ts";
-// MEDBLOCKS IMPORTS
+import { ONTOLOGY } from "@/tip2toeform";
+import * as signalStore from '@/core/store'
 
 // PAGE IMPORTS
-import AllSections from "@/core/pages/Questionnaire/AllSections.tsx";
-import IndividualView from "@/core/pages/Questionnaire/IndividualView.tsx";
-import Overview from "@/core/pages/Questionnaire/Overview.tsx";
-import Summary from "@/core/pages/Questionnaire/Summary.tsx";
+import AllSections from "@/core/pages/Questionnaire/AllSections";
+import Overview from "@/core/pages/Questionnaire/Overview";
+import ThisIsMe from "@/core/pages/Questionnaire/ThisIsMe";
+import Summary from "@/core/pages/Questionnaire/Summary";
+
 // PAGE IMPORTS
 
-// LAYOUT COMPONENT IMPORTS
-import SidebarSummary from "./sidebarSummary.tsx";
-import FormNav from "./formnav.tsx";
-import Sidebar from "./sidebar.tsx";
-// LAYOUT COMPONENT IMPORTS
+// LAYOUT COMPONENTS
+import Sidebar from "./_components/SidebarNavigation";
+import FormNavigation from "./_components/FormNavigation";
+import SummarySidebar from "./_components/SummarySidebar";
+import LoadingDialog from "@/core/components/LoadingDialog";
+import Notification from "@/core/components/Notification";
+import ConfirmAlert from "@/core/components/ConfirmAlert";
+import { createComposition, setEhrId } from "@/core/utils/openehr";
+import FamilyHistory from "@/core/pages/Questionnaire/FamilyHistory";
+import IndividualView from "@/core/pages/Questionnaire/IndividualView";
 
-
-import {getEhrId, createComposition, getAllCompositionIDs, getCompositionByID, updateComposition} from "@/core/utils/openehr.ts";
-import LoadingDialog from "@/core/components/LoadingDialog.tsx";
-import Notification from "@/core/components/notification.tsx";
-import ConfirmAlert from "@/core/components/confirm.tsx";
+// LAYOUT COMPONENTS
 
 export default function QuestionnaireLayout() {
+
+  const [_summary, set_summary] = useState<Array<any>>([]);
+  const [_nextUrl,set_nextUrl] = useState<string | null>(null);
+  const [_prevUrl,set_prevUrl] = useState<string | null>(null);
+  const [encounterId, setEncounterId] = useState<string | null>(null);
+  const [patientId, setpatientId] = useState<string | null>(null);
+  const [ehrId, setehrId] = useState<string>("");
+
+  const [medblocksForm, setmedblocksForm] = useState<MBFormData>(_practitionerForm);
+  
+  const [_loading, set_loading] = useState<{show:boolean, text:string | null}>({show:false,text:null});
+  const [_notification, set_notification] = useState<{type?:string | null, message:string, description?: string | null }>({type:'info',message:"",description:null});
+  const [_confirm, set_confirm] = useState<{show:boolean, title:string, message:string, id:string | null, onConfirm?:()=>void, onCancel?:()=>void}>({show:false,title:"",message:"",id:null, onConfirm:()=>{},onCancel:()=>{}});
+
+  const excludeSections:Array<string> = ['overview','summary','this_is_me','family_history','individual']
+  const _formid = "medblocksForm";
   const { pathname } = useLocation();
-  const [nextUrl, setNextUrl] = useState<string | null>(null);
-  const [prevUrl, setPrevUrl] = useState<string | null>(null);
-  const [selectedValues, setSelectedValues] = useState<Array<any>>([]);
-  
-  const formId = "form1";
-  const formData: MBFormData = FormData;
-  const [ehrId, setEhrId] = useState<string>('');
-
-  const [isImportedForm, setIsImportedForm] = useState<boolean>(false);
-  const [compositionId, setCompositionId] = useState<string>('');
-  
-  const [currentFormData, setCurrentFormData] = useState<MBFormData>(formData);
-  const [showloading, setshowLoading] = useState<boolean>(false);
-  const [loadingText, setLoadingText] = useState<String | null>(null);
-
-  const [notification, setNotification] = useState<string>("");
-  const [notificationType, setNotificationType] = useState<string>("");
-
-  const [confirmMessage, setConfirmMessage] = useState<string>("");
-  const [confirmTitle, setConfirmTitle] = useState<string>("");
-  const [confirmOnConfirm, setConfirmOnConfirm] = useState<() => void>(() => {});
-  const [confirmOnCancel, setConfirmOnCancel] = useState<() => void>(() => {});
 
 
-  
-
-  const fetchData = async () => {
-    try {
-      toggleLoading("Getting EHR ID...");
-      
-      const id = await getEhrId();
-      if (id) {
-        setEhrId(id);
-      } else {
-        $notify("Error getting EHR ID", "error");
-      }
-      if(id){
-          
-        toggleLoading("Getting Latest Composition if any...");
-        
-        const data = await getAllCompositionIDs(id);
-        if (data?.rows?.length >= 0) {
-          if(data.rows.length > 0){
-            let compostiondata = await getCompositionByID(data.rows[data.rows.length-1][2])
-            setCompositionId(data.rows[data.rows.length-1][2])
-            $confirm("Import Data","Do you want to import data from the latest composition?",() => handleImport(compostiondata.composition))
-          }
-        } else {
-          $notify("Error getting composition IDs", "error");
-          return;  // Exit if no data is found
-        }
-        
-      }
-      toggleLoading();
-
-    } catch (error) {
-      console.error("An error occurred:", error);
-      toggleLoading(); // Ensure the loading state is toggled off in case of an error
-      $notify("An unexpected error occurred", "error");
-    }
-  };
-  useState(async () => {
-    await fetchData()
-  });
+  useState(async ()=>{
+    signalStore.isPractitioner.subscribe((value)=>{
+      if(value) setmedblocksForm(_practitionerForm)
+      else setmedblocksForm(_patientForm)
+    })
+    signalStore.encounterId.subscribe((value)=>{
+      setEncounterId(value)
+    })
+    signalStore.patientId.subscribe((value)=>{
+      setpatientId(value)
+    })
+    fetchData()
 
 
-  useEffect(() => {
-    const sectionsArray = Object.values(formData);
+  })
+
+  useEffect(()=>{
+    window.scrollTo(0, 0);
+    const sectionsArray = Object.values(medblocksForm);
     const index = sectionsArray.findIndex(
       (x) => x.slug === location.pathname.split("/").pop()
     );
-
     if (index < sectionsArray.length - 1 && pathname !== `/questionnaire/summary`) {
-      setNextUrl(`/questionnaire/${sectionsArray[index + 1].slug}`);
-    } else if (index === sectionsArray.length - 1) {
-      setNextUrl('/questionnaire/summary');
+      set_nextUrl(`/questionnaire/${sectionsArray[index + 1].slug}`);
     } else {
-      setNextUrl(null);
+      set_nextUrl(null);
     }
 
     if (index > 0) {
-      setPrevUrl(`/questionnaire/${sectionsArray[index - 1].slug}`);
-    }
-    else if (pathname === `/questionnaire/summary`) {
-      setPrevUrl(`/questionnaire/${sectionsArray[sectionsArray.length-1].slug}`);
+      set_prevUrl(`/questionnaire/${sectionsArray[index - 1].slug}`);
     }
     else {
-      setPrevUrl(null);
+      set_prevUrl(null);
     }
-  }, [pathname]);
+  }, [pathname])
 
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  function submitForm(e:any, check:boolean = true) {
-    console.log("submitForm", e.detail);
-    if(isImportedForm && check){
-      $confirm("Update composition?","Do you want to update the previous composition(Confirm) or create a new composition(Cancel)?",() => updateForm(e.detail),() => submitForm(e.detail,false) )
-      return;
-    }
-    else if(!check){
-      console.log("submitForm", e);
-      $confirm("Create composition?","Are you sure you want to submit",() => createForm(e))
-    }
-    else{
-      $confirm("Create composition?","Are you sure you want to submit",() => createForm(e.detail))
-    }
-  }
-
-  async function createForm(data){
-    delete data['tip2toe.v0/_uid']
-    if(ehrId) {
-      toggleLoading("Creating Composition...");
-      createComposition(ehrId, data).then(async (_data) => {
-        await setCompositionId(_data.compositionUid);
-        $notify("Composition Created", "success");
-        toggleLoading(); // Ensure the loading state is toggled off in case of an error
+  function addToSummary(data: any) {
+    let index = _summary.findIndex((item) => item.code == data.code);
+    if (data && data.value == ONTOLOGY.default.value) {
+      if (index > -1) {
+        _summary.splice(index, 1);
       }
-      ).catch((error) => {
-        console.error("An error occurred:", error);
-        toggleLoading(); // Ensure the loading state is toggled off in case of an error
-        $notify("An unexpected error occurred", "error");
+    } else {
+      if (index > -1) {
+        _summary[index].value = data.value;
+      } else {
+        _summary.push(data);
+      }
+    }
+    set_summary([..._summary]);
+  }
+
+  async function fetchData () {
+    try{
+      $Loading("Loading EHR ID...")
+      if(signalStore.encounterId.value && signalStore.patientId.value){
+        setehrId(await setEhrId(signalStore.patientId.value))
+        $Loading()
+      }
+      else{
+        $Notification("No EHR ID found","error","Please select a patient and an encounter to continue")
+        $Loading("Failed to load EHR ID")
+      }
+      
+    } catch (error : any) {
+      $Notification("Failed to load EHR ID","error",error.toString())
+      $Loading("Failed to load EHR ID")
+    }
+  }
+
+  function submitForm(e:any){
+    console.log(e.detail)
+    $Confirm("Create composition?","Are you sure you want to submit",() => createForm(e.detail))
+
+  }
+
+  async function createForm(data:any){
+    try{
+      $Loading("Creating composition...")
+      delete data['tip2toe.v0/_uid']
+      createComposition(ehrId, data).then(async (res:any) => {
+        if (res) {
+          $Loading()
+          $Notification("Composition created successfully","success",null)
+        } 
+      }).catch((error:any) => {
+        $Loading()
+        $Notification("Failed to create composition","error",error.toString())
       })
+    } catch (error : any) {
+      $Loading()
+      $Notification("Failed to create composition","error",error.toString())
     }
-    else{
-      $notify("No EHR ID Found", "error");
-      return;  // Exit if no ID is found
-    }
-    $notify("Composition Created", "success");
   }
 
-  async function updateForm(data){
-    toggleLoading("Updating Composition...");
-    if(!compositionId) {
-      $notify("Error getting composition ID", "error");
-      return;  // Exit if no data is found
-    }
-    else{
-      await updateComposition(compositionId, data);
-      $notify("Composition Updated", "success");
-    }
-    toggleLoading(); // Ensure the loading state is toggled off in case of an error
-  }
-
-  function toggleLoading(text=null as String | null) {
-    if(text){
-      setLoadingText(text);
-      setshowLoading(true);
-      return;
-    }
-    setshowLoading(!Boolean((showloading).toString()));
-  }
-
-  async function handleImport(data) {
-    let changeFormData = { ...currentFormData };
+  async function handleImport(data:any) {
+    let _data = { ...medblocksForm };
     Object.entries(data).forEach(([key, value]) => {
       if (key.includes("symptom_or_sign_name")) {
         let temp = key.split("tip2toe.v0/symptom_sign_screening_questionnaire/any_event:0/")[1];
@@ -194,19 +155,19 @@ export default function QuestionnaireLayout() {
         let formIndex = tempformIndex.split("/")[0];
         let type = tempformIndex.split("/")[1].split("|")[1];
 
-        if (!changeFormData[formKey]) {
-          changeFormData[formKey] = { questions: {} };
+        if (!_data[formKey]) {
+          _data[formKey] = { questions: {} };
         }
-        if (changeFormData[formKey]["questions"][formIndex] === undefined) {
-          changeFormData[formKey]["questions"][formIndex] = {
+        if (_data[formKey]["questions"][formIndex] === undefined) {
+          _data[formKey]["questions"][formIndex] = {
             type: "ontology",
             path: key.split("/symptom_or_sign_name")[0],
           };
         }
-        changeFormData[formKey]["questions"][formIndex][type] = value;
+        _data[formKey]["questions"][formIndex][type] = value;
       }
     });
-    setCurrentFormData(changeFormData);
+    setmedblocksForm(_data);
     let formElement = await document.getElementById(formId);
     formElement.import(data);
     Object.entries(data).forEach(async ([key, value]) => {
@@ -215,84 +176,103 @@ export default function QuestionnaireLayout() {
         let formKey = temp.split(":")[0];
         let tempformIndex = temp.split(":")[1];
         let formIndex = tempformIndex.split("/")[0];
-        await addToSummary({ code: formData[formKey]["questions"][formIndex].code, title: formData[formKey]["questions"][formIndex].value, value: value })
+        await addToSummary({ code: medblocksForm[formKey]["questions"][formIndex].code, title: medblocksForm[formKey]["questions"][formIndex].value, value: value })
       }
     });
-    setIsImportedForm(true);
   }
-  function addToSummary(data: any) {
-    if (data && data.value == ontology.default.value) {
-      // remove from selected values
-      let index = selectedValues.findIndex((item) => item.code == data.code);
-      if (index > -1) {
-        selectedValues.splice(index, 1);
-      }
-      setSelectedValues([...selectedValues]);
-    } else {
-      // check if already exists then update the value else add new
-      let index = selectedValues.findIndex((item) => item.code == data.code);
-      if (index > -1) {
-        selectedValues[index].value = data.value;
-      } else {
-        selectedValues.push(data);
-      }
-      setSelectedValues([...selectedValues]);
+
+  // UI ELEMENT FUNCTIONS
+  function $Loading(text?:string | null) {
+    if(text){
+      set_loading({show:true,text:text})
+      return
     }
+    set_loading({show:!Boolean((_loading.show).toString()), text:null})
   }
+  function $Notification(message:string,type:string | null, description:string | null) {
+    set_notification({type:type,message:message,description:description})
+  }
+  function $Confirm(title:string,message:string,onConfirm?:()=>void,onCancel?:()=>void) {
+    let _id = Math.random().toString(36).substring(7);
+    set_confirm({show:true,title:title,message:message,onConfirm:onConfirm,onCancel:onCancel, id: _id})
 
-  function $notify(message: string, type = 'info' as string) {
-    setNotification(message);
-    setNotificationType(type);
   }
+  // UI ELEMENT FUNCTIONS
 
-  function $confirm(title?: string ,message?: string, onConfirm?: () => void, onCancel?: () => void) {
-    setConfirmTitle(title);
-    setConfirmMessage(message);
-    if(!onConfirm) setConfirmOnConfirm(()=>{}); else setConfirmOnConfirm(()=>onConfirm);
-    if(!onCancel) setConfirmOnCancel(()=> {}); else setConfirmOnCancel(()=>onCancel);
-  }
 
   return (
     <>
-      <Notification notificationMessage={notification} notificationType={notificationType} />
       <div class="flex min-h-full flex-col">
+
+        {/* UI ELEMENTS */}
+          <Notification notificationMessage={_notification.message} notificationType={_notification.type} notificationDescription={_notification.description}  />
+          <LoadingDialog show={_loading.show} loadingText={_loading.text} />
+          <ConfirmAlert message={_confirm.message} title={_confirm.title} id={_confirm.id} _onConfirm={()=>{_confirm.onConfirm && _confirm.onConfirm()}} _onCancel={() => {_confirm.onCancel && _confirm.onCancel()}} />
+        {/* UI ELEMENTS */}
+
         <div class="mx-auto flex w-full items-start">
+
+          {/* NAVIGATION SIDEBAR */}
           <aside class="sticky top-8 hidden w-64 mr-8 shrink-0 lg:block">
             <div class="hidden lg:fixed lg:inset-y-0 lg:z-10 lg:flex lg:w-72 lg:flex-col">
-              <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white/60 px-3 pb-4">
+              <div id="navigationSidebar" class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white/60 px-3 pb-4">
                 <nav class="flex mt-2 flex-1 flex-col">
-                  <Sidebar formSections={currentFormData} />
+                  <Sidebar formSections={medblocksForm}  />
                 </nav>
               </div>
             </div>
           </aside>
+          {/* NAVIGATION SIDEBAR */}
 
+          {/* MEDBLOCKS FORM */}
           <main class="flex-1 border-r border-solid pt-10">
-            <LoadingDialog show={showloading} loadingText={loadingText} />
-            <ConfirmAlert message={confirmMessage} title={confirmTitle} _onConfirm={()=>{confirmOnConfirm && confirmOnConfirm()}} _onCancel={() => {confirmOnCancel && confirmOnCancel()}} />
-            <mb-form class="" id={formId} onmb-submit={submitForm}>
-              <mb-context path="tip2toe.v0/composer"></mb-context>
-              <mb-context path="tip2toe.v0/language"></mb-context>
-              <mb-context path="tip2toe.v0/territory"></mb-context>
-              <mb-context path="tip2toe.v0/category"></mb-context>
+            <mb-form id={_formid} onmb-submit={submitForm} >
+
+              {/* FORM CONTEXT */}
               <mb-context path="tip2toe.v0/context/start_time"></mb-context>
               <mb-context path="tip2toe.v0/context/setting"></mb-context>
+              <mb-context path="tip2toe.v0/category"></mb-context>
+              <mb-context path="tip2toe.v0/language"></mb-context>
+              <mb-context path="tip2toe.v0/territory"></mb-context>
+              <mb-context path="tip2toe.v0/composer"></mb-context>
+              <mb-context path="tip2toe.v0/_health_care_facility|id_namespace"></mb-context>
+              {/* FORM CONTEXT */}
+
+              {/* FORM CONTENT */}
               <div class="mx-6 md:min-h-[88vh]">
                 <Overview />
-                <IndividualView />
-                {Object.entries(currentFormData).map(([key, value]) => (
-                  <AllSections
-                    key={`${key}_${value.questions.length}`}
-                    _sectionData={value}
-                    addToSummary={addToSummary}
-                  />
-                ))}
-                <Summary selectedValues={selectedValues} />
+                {/* <ThisIsMe addToSummary={addToSummary} /> */}
+                <FamilyHistory addToSummary={addToSummary} />
+                <IndividualView addToSummary={addToSummary}/>
+                {Object.entries(medblocksForm).map(([key, value]) => {
+                  if(excludeSections.includes(key)){
+                    return (<></>)
+                  }
+                  else{
+                    return (
+                      <AllSections
+                        key={`${key}_${value.questions.length}`}
+                        _sectionData={value}
+                        addToSummary={addToSummary}
+                      />
+                    )
+                  }
+                })}
+                <Summary selectedValues={_summary} />
               </div>
-              <FormNav prevUrl={prevUrl} nextUrl={nextUrl} />
+              {/* FORM CONTENT */}
+
+              {/* FORM NAVIGATION */}
+              <FormNavigation prevUrl={_prevUrl} nextUrl={_nextUrl} />
+              {/* FORM NAVIGATION */}
+
             </mb-form>
           </main>
-          <SidebarSummary selectedValues={selectedValues} />
+          {/* MEDBLOCKS FORM */}
+
+          {/* RIGHT SIDEBAR SUMMARY */}
+            <SummarySidebar _summary={_summary} />
+          {/* RIGHT SIDEBAR SUMMARY */}
         </div>
       </div>
     </>

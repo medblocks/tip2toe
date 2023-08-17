@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { MBFormSection, MBQuestion } from "@/types";
-import { ontology } from "@/FormData";
+import { ONTOLOGY } from "@/tip2toeform";
 
 interface AllSectionHandlerProps {
   _sectionData: MBFormSection;
@@ -11,7 +11,7 @@ interface AllSectionHandlerProps {
 
 const AllSections: React.FC<AllSectionHandlerProps> = ({ _sectionData, addToSummary }) => {
   const { pathname } = useLocation();
-  const defaultButtonValue = ontology.default
+  const defaultButtonValue = ONTOLOGY.default
   const [questions, setQuestions] = useState(_sectionData.questions);
 
   const formatPath = (path: string, questionIndex: number) => path.replace(/{([0]+)}/g, questionIndex.toString());
@@ -24,7 +24,7 @@ const AllSections: React.FC<AllSectionHandlerProps> = ({ _sectionData, addToSumm
     }
   }
 
-  async function searchFunction({ searchString, maxHits }) {
+  async function searchFunction({ searchString, maxHits }: { searchString: string; maxHits: number; }) {
     const response = await axios.get('https://hpo.jax.org/api/hpo/search/', {
       params: {
         q: searchString,
@@ -40,7 +40,7 @@ const AllSections: React.FC<AllSectionHandlerProps> = ({ _sectionData, addToSumm
     }));
   }
 
-  const saveQuestionsState = (question: MBQuestion, selectedValue: object) => {
+  const saveQuestionsState = (question: MBQuestion, selectedValue: any) => {
     const updatedQuestions = questions.map(q => q.code === question.code ? { ...q, selected_value: selectedValue } : q);
     addToSummary({ code: question.code, title: question.value, value: selectedValue["value"] });
     setQuestions(updatedQuestions);
@@ -86,7 +86,7 @@ const AllSections: React.FC<AllSectionHandlerProps> = ({ _sectionData, addToSumm
               <div>
                 <mb-context bind={{ code: item.code, terminology: item.terminology, value: item.value }} path={`${item.path}/symptom_or_sign_name`} label="Symptom or sign name"></mb-context>
                 <mb-buttons onmb-input={e => buttonClickHandler(e, item)} data={item.selected_value} class="mt-4 z-0" path={`${item.path}/presence`} terminology="local">
-                  {ontology.options.map((option: any) => (
+                  {ONTOLOGY.options.map((option: any) => (
                     <mb-option value={option.code} label={option.value}></mb-option>
                   ))}
                 </mb-buttons>
@@ -99,7 +99,7 @@ const AllSections: React.FC<AllSectionHandlerProps> = ({ _sectionData, addToSumm
           </div>
         ))}
       </div>
-      <mb-search label="Other. Describe in Clinical summary and/or add HPO terms here" onmb-input={(e) => addQuestion(e.target)} class="mt-6 mb-10" disablefallback plugin={searchFunction} />
+      <mb-search label="Other. Describe in Clinical summary and/or add HPO terms here" onmb-input={(e: { target: any; }) => addQuestion(e.target)} class="mt-6 mb-10" disablefallback plugin={searchFunction} />
     </div>
   );
 }

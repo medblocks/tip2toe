@@ -8,6 +8,7 @@ interface FormNavHandlerProps {
 
 const FormNav: React.FC<FormNavHandlerProps> = ({ prevUrl, nextUrl }) => {
   const { pathname } = useLocation();
+
   return (
     <>
     <div className="sticky z-10 bottom-0 bg-white border-t border-slate-200 print:hidden">
@@ -15,7 +16,7 @@ const FormNav: React.FC<FormNavHandlerProps> = ({ prevUrl, nextUrl }) => {
         {prevUrl ? (
           <NavLink
             to={prevUrl}
-            className="flex border rounded p-2 px-4 border-udni-teal text-udni-teal uppercase text-sm font-bold hover:bg-udni-teal hover:text-white"
+            className="flex border rounded p-2 px-4 border-primary text-primary uppercase text-sm font-bold hover:bg-primary hover:text-white"
           >
             Previous
           </NavLink>
@@ -24,14 +25,14 @@ const FormNav: React.FC<FormNavHandlerProps> = ({ prevUrl, nextUrl }) => {
         )}
         {nextUrl && (
           <NavLink
-            className="flex border rounded p-2 px-4 border-udni-teal text-udni-teal uppercase text-sm font-bold hover:bg-udni-teal hover:text-white"
+            className="flex border rounded p-2 px-4 border-primary text-primary uppercase text-sm font-bold hover:bg-primary hover:text-white"
             to={nextUrl}
           >
             Next
           </NavLink>
         )}
         {nextUrl == null && pathname == `/questionnaire/summary` ? (
-          <mb-submit className="cursor-pointer flex border rounded p-2 px-4 border-udni-teal text-udni-teal uppercase text-sm font-bold hover:bg-udni-teal hover:text-white">
+          <mb-submit className="cursor-pointer flex border rounded p-2 px-4 border-primary text-primary uppercase text-sm font-bold hover:bg-primary hover:text-white">
             Submit
           </mb-submit>
         ) : (

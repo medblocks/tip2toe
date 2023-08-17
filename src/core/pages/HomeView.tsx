@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom';
 
-const HomePage = () => {
+interface HomePageHandlerProps {
+  _authenticate: Function;
+}
+
+const HomePage : React.FC<HomePageHandlerProps> = ({ _authenticate }) => {
   return (
     <div className="home p-4 max-w-6xl mx-auto">
         <div className="max-w-xl mx-auto my-16 ">
           <h2 className="text-2xl pb-5">
             Questionnaire for the
             <br />
-            <span className="text-udni-teal">
+            <span className="text-primary">
               Undiagnosed Diseases Network International
             </span>
             <br />
@@ -30,7 +33,7 @@ const HomePage = () => {
             storage. You must accept functional cookies for this to work.
           </p>
         </div>
-        <div className="flex flex-col md:flex-row md:divide-x divide-udni-teal">
+        <div className="flex flex-col md:flex-row md:divide-x divide-primary">
           <div className="w-full p-8   flex flex-col items-center my-5 group">
             <div className="flex items-center space-x-2">
               <h3>Start new form</h3>
@@ -38,27 +41,7 @@ const HomePage = () => {
             <p className="text-gray-600 text-sm">
               For physicians, geneticists. Start questionnare.
             </p>
-            <label className="mt-4">
-              <input
-                type="checkbox"
-                />{' '}
-              Enable cookies for auto-save
-            </label>
-            {
-            <Link
-              to="/questionnaire"
-              className="border rounded p-3 px-6 mt-5 border-udni-teal text-udni-teal uppercase text-sm font-bold hover:bg-udni-teal hover:text-white"
-            >
-              Start new
-            </Link> }
-          </div>
-          <div className="w-full p-8   flex flex-col items-center my-5 ">
-            <div className="flex items-center space-x-2">
-              <h3>Continue form</h3>
-            </div>
-            <p className="text-gray-600 text-sm">
-              Add images, documents to an existing form.
-            </p>
+            <button onClick={()=>_authenticate()} class="border rounded p-3 px-6 mt-5 border-primary text-primary uppercase text-sm font-bold hover:bg-primary hover:text-white" >Login</button>
           </div>
         </div>
       </div>

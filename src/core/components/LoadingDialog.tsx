@@ -6,18 +6,18 @@ interface LoadingDialogHandlerProps {
   onClose?: () => void;
 }
 
-const LoadingDialog: React.FC<LoadingDialogHandlerProps> = ({ show, onClose, loadingText = "Loading..." }) => {
+const LoadingDialog: React.FC<LoadingDialogHandlerProps> = ({ show, loadingText = "Loading...", onClose=()=>{}}) => {
   const [open, setOpen] = useState(show)
   const [text, setText] = useState(loadingText)
   useEffect(() => {
     setOpen(show);
     setText(loadingText);
+    if (show == false) onClose && onClose();
   }, [show, loadingText]); 
   return (
     <>
       <div className={open?'relative':'hidden'} class="relative z-20" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="z-20 fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
         <div class="fixed inset-0 z-20 overflow-y-auto">
           <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">

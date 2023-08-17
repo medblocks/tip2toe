@@ -1,29 +1,43 @@
-import { useSearchParams } from 'react-router-dom';
 import {_handleEHRRequests , _handleCompositionRequests, _handleAQLQuery} from './_openehrApiHandler'
+// import { useSearchParams } from 'react-router-dom';
 
-async function getEhrId() {
-  let ehrId = null
-  const [searchParams] = useSearchParams();
-  if (!searchParams.has('patientId')) {
-    ehrId = sessionStorage.getItem('ehrId')
-    if (!ehrId){
-      console.log('No ehrId found')
-      return null
+async function setEhrId(ehrId : string) {
+  // let ehrId = null
+  // const [searchParams] = useSearchParams();
+  // if (!searchParams.has('patientId')) {
+  //   ehrId = sessionStorage.getItem('ehrId')
+  //   if (!ehrId){
+  //     console.log('No ehrId found')
+  //     return null
+  //   }
+  // }
+  // else ehrId = searchParams.get('patientId') as string
+  // sessionStorage.setItem('ehrId', ehrId)
+  let is_ehrIdPresent = false
+  try{
+    is_ehrIdPresent = await _handleEHRRequests('GET', ehrId) == null ? false : true
+  }
+  catch(e){
+    is_ehrIdPresent = false
+  }
+  if(!is_ehrIdPresent){
+    try{
+      await _handleEHRRequests('PUT', ehrId)
+      return ehrId
+    }
+    catch(e){
+      console.log(e)
+      throw new Error('Error creating ehrId')
     }
   }
-  else ehrId = searchParams.get('patientId') as string
-  sessionStorage.setItem('ehrId', ehrId)
-
-  if(await _handleEHRRequests('GET', ehrId) == null){
-    console.log('No ehrId found, creating new one')
-    await _handleEHRRequests('PUT', ehrId)
-  }
-  else{
-    console.log('ehrId found')
-  }
+  else return ehrId
+  //   console.log('No ehrId found, creating new one')
+  // }
+  // else{
+  //   console.log('ehrId found')
+  // }
   
 
-  return ehrId
 }
 
 async function getAllCompositionIDs(ehrId : string){
@@ -40,8 +54,14 @@ async function getCompositionByID(compositionId : string){
 
 
 async function createComposition(ehrId : string,composition : any){
-  const response = await _handleCompositionRequests('POST', ehrId, composition)
-  return response
+  try{
+    const response = await _handleCompositionRequests('POST', ehrId, composition)
+    return response
+  }
+  catch(e){
+    console.log(e)
+    throw new Error('Error creating composition')
+  }
 }
 
 async function updateComposition(compositionId : string, composition : any){
@@ -51,4 +71,4 @@ async function updateComposition(compositionId : string, composition : any){
 }
 
 
-export {getEhrId, createComposition, getAllCompositionIDs, getCompositionByID, updateComposition}
+export {setEhrId, createComposition, getAllCompositionIDs, getCompositionByID, updateComposition}

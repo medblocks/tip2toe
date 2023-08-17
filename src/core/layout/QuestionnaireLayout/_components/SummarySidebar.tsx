@@ -1,10 +1,10 @@
 import { useLocation } from "react-router-dom";
 
-interface SidebarSummaryHandlerProps {
-  selectedValues: Array<object>;
+interface SummarySidebarHandlerProps {
+  _summary: Array<object>;
 }
 
-const SidebarSummary: React.FC<SidebarSummaryHandlerProps> = ({ selectedValues }) => {
+const SummarySidebar: React.FC<SummarySidebarHandlerProps> = ({ _summary }) => {
   const { pathname } = useLocation();
   return (
     <>
@@ -23,7 +23,7 @@ const SidebarSummary: React.FC<SidebarSummaryHandlerProps> = ({ selectedValues }
                   Summary
                 </h2>
                 <div class="mt-4 divide-y divide-gray-300 text-left px-2 ">
-                  {selectedValues.map((item: any) => (
+                  {_summary.map((item: any) => (
                     <div key={item.code} className={"text-gray-400"}>
                       <p>
                         {item.value == "Yes" ? (
@@ -89,4 +89,4 @@ const SidebarSummary: React.FC<SidebarSummaryHandlerProps> = ({ selectedValues }
   )
 }
 
-export default SidebarSummary;
+export default SummarySidebar;
