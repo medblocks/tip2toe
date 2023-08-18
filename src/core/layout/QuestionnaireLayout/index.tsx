@@ -22,7 +22,7 @@ import Sidebar from "./_components/SidebarNavigation";
 import FormNavigation from "./_components/FormNavigation";
 import SummarySidebar from "./_components/SummarySidebar";
 import LoadingDialog from "@/core/components/LoadingDialog";
-import Notification from "@/core/components/Notification";
+import Notification from "@/core/components/Notifications";
 import ConfirmAlert from "@/core/components/ConfirmAlert";
 import { createComposition, getAllCompositionIDs, getCompositionByID, setEhrId } from "@/core/utils/openehr";
 import FamilyHistory from "@/core/pages/Questionnaire/FamilyHistory";
