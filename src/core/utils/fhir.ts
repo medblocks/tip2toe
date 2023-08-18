@@ -1,0 +1,17 @@
+import { _handleFhirPatient } from "./_fhitApiHandler"
+
+async function getFhirPatientDetails(patientId : string){
+  try{
+    const response = await _handleFhirPatient('Get', patientId)
+    return response
+  }
+  catch(e){
+    console.log(e)
+    throw new Error('Error creating composition')
+  }
+}
+
+
+
+
+export {getFhirPatientDetails}

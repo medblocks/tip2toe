@@ -1,4 +1,7 @@
 import { useLocation } from "react-router-dom";
+import FhirPatientDetails from "./FhirPatientDetails";
+import * as signalStore from '@/core/store';
+import { useEffect } from "preact/hooks";
 
 interface SummarySidebarHandlerProps {
   _summary: Array<object>;
@@ -6,20 +9,32 @@ interface SummarySidebarHandlerProps {
 
 const SummarySidebar: React.FC<SummarySidebarHandlerProps> = ({ _summary }) => {
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    let sidebar = document.getElementById("summarySidebar");
+    if (sidebar) {
+      sidebar.scrollTo({ top:sidebar.scrollHeight, behavior: "smooth" });
+    }
+  },[_summary]);
+  
+
   return (
     <>
     <aside
         class={
           pathname != `/questionnaire/summary`
-            ? "sticky top-8 w-96 shrink-0 xl:block"
+            ? "sticky top-8 w-96 hidden shrink-0 md:block"
             : "hidden"
         }
       >
         <div class="fixed inset-y-0 z-50 flex w-96 flex-col">
-          <div class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 px-3 pb-4">
+          <div id="summarySidebar" class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 px-3 pb-4">
             <div class="flex mt-2 flex-1 flex-col">
               <div class="text-center ">
-                <h2 class="mt-10 text-4xl uppercase font-bold antialiased tracking-wide">
+                {signalStore.isPractitioner.value ? (
+                  <FhirPatientDetails  />
+                ):(<></>)}
+                <h2 class="mt-2 text-4xl uppercase font-bold antialiased tracking-wide">
                   Summary
                 </h2>
                 <div class="mt-4 divide-y divide-gray-300 text-left px-2 ">

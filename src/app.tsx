@@ -55,7 +55,13 @@ const App = () => {
           await authenticate(iss, launch, _patientId, _encounterId);
           setIsAppLoading(false);
           setIsAuthenticated(true);
-        } else {
+        } 
+        else if (!iss && sessionStorage?.getItem('idToken')) {
+          signalStore._loadStoreFromSessionStorage();
+          setIsAppLoading(false);
+          setIsAuthenticated(true);
+        }
+        else {
           console.log('no iss or launch', window.location.href);
           setIsAppLoading(false);
         }
