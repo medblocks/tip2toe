@@ -24,9 +24,10 @@ import SummarySidebar from "./_components/SummarySidebar";
 import LoadingDialog from "@/core/components/LoadingDialog";
 import Notification from "@/core/components/Notifications";
 import ConfirmAlert from "@/core/components/ConfirmAlert";
-import { createComposition, getAllCompositionIDs, getCompositionByID, setEhrId } from "@/core/utils/openehr";
+import { createComposition, getAllCompositionIDs, getCompositionByID, setEhrId, updateComposition } from "@/core/utils/openehr";
 import FamilyHistory from "@/core/pages/Questionnaire/FamilyHistory";
 import IndividualView from "@/core/pages/Questionnaire/IndividualView";
+import { default_data } from "@/sample_data";
 
 // LAYOUT COMPONENTS
 
@@ -37,6 +38,7 @@ export default function QuestionnaireLayout() {
   const [_prevUrl,set_prevUrl] = useState<string | null>(null);
   const [encounterId, setEncounterId] = useState<string | null>(null);
   const [patientId, setpatientId] = useState<string | null>(null);
+  const [_compositionId, set_compositionId] = useState<string | null>(null);
   const [ehrId, setehrId] = useState<string>("");
 
   const [medblocksForm, setmedblocksForm] = useState<MBFormData>(_practitionerForm);
@@ -62,8 +64,6 @@ export default function QuestionnaireLayout() {
       setpatientId(value)
     })
     fetchData()
-
-
   })
 
   useEffect(()=>{
@@ -113,15 +113,19 @@ export default function QuestionnaireLayout() {
         const patientData = await getAllCompositionIDs(_ehrId)
         $Loading("Loading Patient Data...")
         if(patientData?.rows?.length > 0){
+          set_compositionId(patientData.rows[patientData.rows.length-1][2])
           let compositionData =  await getCompositionByID(patientData.rows[patientData.rows.length-1][2])
           if(compositionData){
+            Object.entries(default_data).forEach(([key, value]) => {
+              if (!compositionData.composition[key]) {
+                compositionData.composition[key] = value;
+              }
+            })
             handleImport(compositionData.composition)
           }
         }
       }
       $Loading()
-          
-        
       }
       else{
         $Notification("No EHR ID found","error","Please select a patient and an encounter to continue")
@@ -135,26 +139,50 @@ export default function QuestionnaireLayout() {
 
   function submitForm(e:any){
     console.log(e.detail)
-    $Confirm("Create composition?","Are you sure you want to submit",() => createForm(e.detail))
-
+    if(_compositionId){
+      $Confirm("Update Form?","Are you sure you want to submit",() => updateForm(e.detail))
+    }
+    else{
+      $Confirm("Submit Form?","Are you sure you want to submit",() => createForm(e.detail))
+    }
   }
 
   async function createForm(data:any){
     try{
-      $Loading("Creating composition...")
+      $Loading("Submitting Form...")
       delete data['tip2toe.v0/_uid']
       createComposition(ehrId, data).then(async (res:any) => {
         if (res) {
+          set_compositionId(res.compositionUid)
           $Loading()
-          $Notification("Composition created successfully","success",null)
+          $Notification("Form submitted successfully","success",null)
         } 
       }).catch((error:any) => {
         $Loading()
-        $Notification("Failed to create composition","error",error.toString())
+        $Notification("Failed to submit form","error",error.toString())
       })
     } catch (error : any) {
       $Loading()
-      $Notification("Failed to create composition","error",error.toString())
+      $Notification("Failed to submit form","error",error.toString())
+    }
+  }
+
+  async function updateForm(data:any){
+    try{
+      $Loading("Updating Form...")
+      delete data['tip2toe.v0/_uid']
+      updateComposition(_compositionId, data).then(async (res:any) => {
+        if (res) {
+          $Loading()
+          $Notification("Form update successfully","success",null)
+        } 
+      }).catch((error:any) => {
+        $Loading()
+        $Notification("Failed to submit form","error",error.toString())
+      })
+    } catch (error : any) {
+      $Loading()
+      $Notification("Failed to submit form","error",error.toString())
     }
   }
 
@@ -257,7 +285,7 @@ export default function QuestionnaireLayout() {
                 <Overview />
                 <FamilyHistory addToSummary={addToSummary} />
                 <IndividualView addToSummary={addToSummary}/>
-              <ThisIsMe addToSummary={addToSummary} />
+                <ThisIsMe readonly={signalStore.isPractitioner.value} addToSummary={addToSummary} />
                 {Object.entries(medblocksForm).map(([key, value]) => {
                   if(excludeSections.includes(key)){
                     return (<></>)

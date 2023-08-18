@@ -82,7 +82,6 @@ async function _handleCompositionRequests(methodtype='GET' as string, id: string
     config.url = `${signalStore.serviceUrl_openehr_ehrscape}/composition/${id}?format=FLAT&templateId=${templateId}`
   }
 
-  console.log(config)
   const response = await axios.request(config).then((response) => {
     return response.data
   }).catch((error) => {

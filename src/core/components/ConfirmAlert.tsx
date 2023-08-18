@@ -13,7 +13,6 @@ const ConfirmAlert: React.FC<ConfirmAlertHandlerProps> = ({ message, title, _onC
   const [text, setText] = useState<string>(message)
   const [titleText, setTitleText] = useState<string>(title)
   useEffect(() => {
-    console.log(message);
     if (message) {
       let text = (message).toString();
       setText(text);

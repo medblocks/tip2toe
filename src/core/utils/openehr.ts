@@ -1,18 +1,6 @@
 import {_handleEHRRequests , _handleCompositionRequests, _handleAQLQuery} from './_openehrApiHandler'
-// import { useSearchParams } from 'react-router-dom';
 
 async function setEhrId(ehrId : string) {
-  // let ehrId = null
-  // const [searchParams] = useSearchParams();
-  // if (!searchParams.has('patientId')) {
-  //   ehrId = sessionStorage.getItem('ehrId')
-  //   if (!ehrId){
-  //     console.log('No ehrId found')
-  //     return null
-  //   }
-  // }
-  // else ehrId = searchParams.get('patientId') as string
-  // sessionStorage.setItem('ehrId', ehrId)
   let is_ehrIdPresent = false
   try{
     is_ehrIdPresent = await _handleEHRRequests('GET', ehrId) == null ? false : true
@@ -31,13 +19,6 @@ async function setEhrId(ehrId : string) {
     }
   }
   else return ehrId
-  //   console.log('No ehrId found, creating new one')
-  // }
-  // else{
-  //   console.log('ehrId found')
-  // }
-  
-
 }
 
 async function getAllCompositionIDs(ehrId : string){
@@ -69,6 +50,7 @@ async function updateComposition(compositionId : string, composition : any){
   console.log(response)
   return response
 }
+ 
 
 
 export {setEhrId, createComposition, getAllCompositionIDs, getCompositionByID, updateComposition}

@@ -3,8 +3,11 @@ import { App } from './app.tsx'
 import './assets/css/main.css'
 import 'medblocks-ui'
 import 'medblocks-ui/dist/styles'
+import * as signalStore from '@/core/store'
+
+
+signalStore._loadStoreFromSessionStorage()
 // @ts-ignore
-// import * as signalStore from '@/core/store'
 // import { _authHandler } from './auth.ts'
 // import { idToken, context, services } from './auth.ts'
 

@@ -19,7 +19,7 @@ const IndividualView: React.FC<IndividualViewHandlerProps> = ({ addToSummary }) 
 
   return (
     <div class={pathname === `/questionnaire/individual` ?'':'hidden'}>
-      <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">IndividualView</h2>
+      <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">Individual View</h2>
 
       <div class="mt-4 divide-y divide-gray-300">
         <div class="py-5">
