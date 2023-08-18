@@ -1,117 +1,97 @@
-import React, { useEffect, useState } from 'preact/compat';
-import QuestionnaireLayout from '@/core/layout/QuestionnaireLayout'
-import DefaultLayout from '@/core/layout/DefaultLayout'
-import Home from '@/core/pages/HomeView.tsx'
-import * as signalStore from '@/core/store'
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-
-} from "react-router-dom";
+// Importing necessary dependencies and components
+import React, { useState, useEffect } from 'preact/compat';
+import QuestionnaireLayout from '@/core/layout/QuestionnaireLayout';
+import DefaultLayout from '@/core/layout/DefaultLayout';
+import Home from '@/core/pages/HomeView.tsx';
+import * as signalStore from '@/core/store';
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { _authHandler } from './auth';
-import LoadingDialog from './core/components/LoadingDialog';
+import AppLoading from './core/components/AppLoading';
 
-const router = createBrowserRouter([
+// Routes configuration for the application
+const routes = [
   {
     path: "/",
     element: <DefaultLayout />,
     children: [
-      {
-        path: "",
-        // element: <Home />,
-        element: <Navigate to="/questionnaire/overview" replace />,
-
-      }
+      { path: "", element: <Navigate to="/questionnaire/overview" replace /> }
     ]
   },
   {
     path: "/questionnaire",
     children: [
-      {
-        path: "",
-        element: <Navigate to="overview" replace />,
-      },
-      {
-        path: ":slug",
-        element: <QuestionnaireLayout />
-      },
-    ],
+      { path: "", element: <Navigate to="overview" replace /> },
+      { path: ":slug", element: <QuestionnaireLayout /> }
+    ]
   },
-  {
-    path: "*", 
-    element: <div>Not found</div>,
-  }
-]);
+  { path: "*", element: <div>Not found</div> }
+];
+
 const App = () => {
-  const [isAppLoading, setIsAppLoading] = React.useState(true);
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-  const [loadingText, setLoadingText] = React.useState('Loading Tip2Toe App...');
-  let urlParams = new URLSearchParams(window.location.search);
+  // State management for application loading, authentication, and loading text
+  const [isAppLoading, setIsAppLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loadingText, setLoadingText] = useState('Loading Tip2Toe App...');
 
-  useState(async () => {
-    if(Object.keys(signalStore.context.value).length==0){
-      let _patientId, _encounterId
-      if (urlParams.has('_patientId')&&urlParams.has('_encounterId')) {
-        _patientId = urlParams.get('_patientId')
-        _encounterId = urlParams.get('_encounterId')
-      }
-      setIsAppLoading(true)
-      const _hasCode = window.location.href.includes('#code=')
-      if ((urlParams.has('iss')&&urlParams.has('launch')||_hasCode)) {
-        await _authenticate(urlParams.get('iss'),urlParams.get('launch'),_patientId,_encounterId).then(()=>{
-          setIsAppLoading(false)
-          setIsAuthenticated(true)
-        })
-        // const { idToken, context, services } = await  _authHandler(urlParams.get('iss'),urlParams.get('launch'),window.location.origin,_patientId,_encounterId)
-        // setLoadingText('Loading User Data...')
-        // signalStore._loadStore(idToken, context, services)
-        // setIsAuthenticated(true)
-      }
-      else{
-        console.log('no iss or launch',window.location.href)
-      setIsAppLoading(false)
+  // Extracting URL parameters from the current window's location
+  const urlParams = new URLSearchParams(window.location.search);
 
-        // setLoadingText('Getting Authentication Information...')
-        // const { idToken, context, services } = await  _authHandler(null,null,window.location.origin,_patientId,_encounterId)
-        // setLoadingText('Loading User Data...')
-        // signalStore._loadStore(idToken, context, services)
-        // setIsAuthenticated(true)
+  // Effect hook that initializes the app
+  useEffect(() => {
+    async function initializeApp() {
+      // Check if signal store's context value is empty
+      if (Object.keys(signalStore.context.value).length === 0) {
+        const _patientId = urlParams.get('_patientId');
+        const _encounterId = urlParams.get('_encounterId');
+        const _hasCode = window.location.href.includes('#code=');
+        const iss = urlParams.get('iss');
+        const launch = urlParams.get('launch');
+        
+        setLoadingText('Authenticating...');
+
+        // Check for 'iss', 'launch' parameters or the presence of '#code=' in the URL
+        if (iss && launch || _hasCode) {
+          if(_hasCode) setLoadingText('Getting Authentication Information...');
+          await authenticate(iss, launch, _patientId, _encounterId);
+          setIsAppLoading(false);
+          setIsAuthenticated(true);
+        } else {
+          console.log('no iss or launch', window.location.href);
+          setIsAppLoading(false);
+        }
+      } else {
+        setIsAuthenticated(true);
       }
     }
-    else{
-      setIsAuthenticated(true)
-    }
-  });
 
-  async function _authenticate(iss=null,launch=null,patientId=null,encounterId=null){
-    setIsAppLoading(true)
-    setLoadingText('Getting Authentication Information...')
-    const { accessToken ,idToken, context, services } = await  _authHandler(iss,launch,window.location.origin,patientId,encounterId)
-    signalStore._loadStore(idToken, context, services,accessToken)
-    setIsAuthenticated(true)
-    // return true
+    initializeApp();
+  }, []);
+
+  // Authentication function using the _authHandler and updating the signalStore
+  async function authenticate(iss = null, launch = null, patientId = null, encounterId = null) {
+    setIsAppLoading(true);
+    const { accessToken, idToken, context, services } = await _authHandler(iss, launch, window.location.origin, patientId, encounterId);
+    signalStore._loadStore(idToken, context, services, accessToken);
+    setIsAuthenticated(true);
   }
 
+  // Render the main application component
   return (
     <>
-      {!isAuthenticated?(
-        <div class="flex min-h-full flex-col">
-          {isAppLoading?(
-            <LoadingDialog show={true} loadingText={loadingText} />
-          ):(
-            <Home _authenticate={_authenticate}  />
-          )}
+      {!isAuthenticated ? (
+        // If not authenticated, show loading screen or the Home view
+        <div className="flex min-h-full flex-col">
+          {isAppLoading ? <AppLoading show={true} loadingText={loadingText} /> : <Home _authenticate={authenticate} />}
         </div>
-      ):(
+      ) : (
+        // If authenticated, render the router with the defined routes
         <React.StrictMode>
-          <RouterProvider router={router} />
+          <RouterProvider router={createBrowserRouter(routes)} />
         </React.StrictMode>
       )}
-      
     </>
   )
 }
-export {App};
 
+// Export the App component
+export { App };

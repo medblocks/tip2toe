@@ -30,12 +30,12 @@ export const _loadStore= (_idToken: any | undefined, _context: any | undefined, 
     accessToken.value = _accessToken
   }
   if (_services && _services["org.openehr.rest"]){
-    // serviceUrl_openehr_rest.value = _services["org.openehr.rest"]
+    serviceUrl_openehr_rest.value = _services["org.openehr.rest"]
     serviceUrl_openehr_rest.value = "http://localhost:8080/ehrbase/rest/openehr/v1"
   }
   if (_services && _services["org.openehr.ehrscape"]){
+    serviceUrl_openehr_ehrscape.value = _services["org.openehr.ehrscape"]
     serviceUrl_openehr_ehrscape.value = "http://localhost:8080/ehrbase/rest/ecis/v1"
-    // serviceUrl_openehr_ehrscape.value = _services["org.openehr.ehrscape"]
   }
 }
 

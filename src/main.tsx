@@ -3,6 +3,7 @@ import { App } from './app.tsx'
 import './assets/css/main.css'
 import 'medblocks-ui'
 import 'medblocks-ui/dist/styles'
+// @ts-ignore
 // import * as signalStore from '@/core/store'
 // import { _authHandler } from './auth.ts'
 // import { idToken, context, services } from './auth.ts'

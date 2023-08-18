@@ -1,3 +1,4 @@
+import { useEffect } from "preact/hooks";
 import { useLocation } from "react-router-dom";
 
 interface Item {
@@ -16,7 +17,7 @@ export default function Overview({ selectedValues }: OverviewProps) {
   if (pathname !== `/questionnaire/summary`) return null;
 
   return (
-    <div>
+    <div id="summary">
       <h2 className="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">Summary</h2>
       <div className="mt-4 text-left px-2">
         {selectedValues.map(item => (

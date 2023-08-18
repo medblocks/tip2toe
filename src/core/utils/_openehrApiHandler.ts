@@ -17,9 +17,8 @@ async function _handleEHRRequests(methodtype='GET' as string, ehrId: string){
     url: url,
     headers: { 
       'Accept': 'application/json', 
-      'Content-Type': 'application/json', 
-      'Prefer': 'return=representation', 
-      'Authorization': import.meta.env.VITE_OPENEHR_AUTHORIZATIONTOKEN
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${signalStore.accessToken.value}`
     },
   }
   const response = await axios.request(config).then((response) => {
@@ -40,8 +39,8 @@ async function _handleAQLQuery(query: string){
     url: url,
     headers: { 
       'Accept': 'application/json', 
-      'Content-Type': 'application/json', 
-      'Authorization': import.meta.env.VITE_OPENEHR_AUTHORIZATIONTOKEN
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${signalStore.accessToken.value}`
     },
     data : JSON.stringify({q: query})
   };
@@ -64,8 +63,8 @@ async function _handleCompositionRequests(methodtype='GET' as string, id: string
     maxBodyLength: Infinity,
     url: '',
     headers: {
-    'Content-Type': 'application/json', 
-    'Authorization': import.meta.env.VITE_OPENEHR_AUTHORIZATIONTOKEN
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${signalStore.accessToken.value}`
     },
     data: {}
   }
@@ -82,6 +81,8 @@ async function _handleCompositionRequests(methodtype='GET' as string, id: string
     config.data = composition
     config.url = `${signalStore.serviceUrl_openehr_ehrscape}/composition/${id}?format=FLAT&templateId=${templateId}`
   }
+
+  console.log(config)
   const response = await axios.request(config).then((response) => {
     return response.data
   }).catch((error) => {

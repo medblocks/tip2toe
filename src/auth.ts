@@ -23,20 +23,32 @@ import {smartAuth} from '@medblocks/appauth/src/medblocks_auth'
 //   },
 // })
 
-export const _authHandler = async (iss=null,launch=null,redirectUri:string,_patientId=null,_encounterId=null) => {
-  console.log('AuthParams',iss,launch,redirectUri,_patientId,_encounterId)
-  const _launch = launch? launch : _patientId&&_encounterId? btoa(JSON.stringify({patient: _patientId, encounter:_encounterId})) : ''
-  const {accessToken, idToken, context, services } = await smartAuth({
+export const _authHandler = async (
+  iss = null,
+  launch = null,
+  redirectUri: string,
+  _patientId = null,
+  _encounterId = null
+) => {
+  console.log('AuthParams', iss, launch, redirectUri, _patientId, _encounterId);
+  
+  // Determine the value for _launch
+  const _launch = launch 
+    ? launch 
+    : (_patientId && _encounterId) 
+      ? btoa(JSON.stringify({ patient: _patientId, encounter: _encounterId })) 
+      : '';
+
+  return await smartAuth({
     iss: iss || "https://dev.medblocks.com/fhir",
     clientId: "tip2toe",
     redirectUri: redirectUri,
     scope: "emulate_user openid offline launch/patient",
     launch: _launch,
     onRedirect(originalUrl) {
-      console.log(originalUrl)
-    },
-  })
-  return {accessToken, idToken, context, services }
+      console.log(originalUrl);
+    }
+  });
 }
 
 

@@ -1,6 +1,6 @@
 {
   "templateId" : "tip2toe.v0",
-  "semVer" : "57.1.0",
+  "semVer" : "57.2.0",
   "version" : "2.3",
   "defaultLanguage" : "en",
   "languages" : [ "en" ],
@@ -25,6 +25,9 @@
       "nodeId" : "",
       "min" : 1,
       "max" : 1,
+      "annotations" : {
+        "view:VisibleInView" : "context"
+      },
       "aqlPath" : "/context",
       "children" : [ {
         "id" : "mother",
@@ -214,6 +217,202 @@
                 "min" : 0
               }
             }
+          } ]
+        } ]
+      }, {
+        "id" : "this_is_me",
+        "name" : "this_is_me",
+        "localizedName" : "this_is_me",
+        "rmType" : "CLUSTER",
+        "nodeId" : "openEHR-EHR-CLUSTER.this_is_me.v0",
+        "min" : 0,
+        "max" : 1,
+        "localizedNames" : {
+          "en" : "this_is_me"
+        },
+        "localizedDescriptions" : {
+          "en" : "this_is_me"
+        },
+        "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]",
+        "children" : [ {
+          "id" : "my_care_givers_are",
+          "name" : "My care givers are",
+          "localizedName" : "My care givers are",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0001",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "My care givers are"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0001]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "my_favorite_things_to_do",
+          "name" : "My favorite things to do",
+          "localizedName" : "My favorite things to do",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0002",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "My favorite things to do"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0002]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "i_don_t_like_to",
+          "name" : "I don't like to",
+          "localizedName" : "I don't like to",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0003",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "I don't like to"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0003]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "when_i_am_happy_i",
+          "name" : "When I am happy, I",
+          "localizedName" : "When I am happy, I",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0004",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "When I am happy, I"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0004]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "when_i_am_worried_i",
+          "name" : "When I am worried, I",
+          "localizedName" : "When I am worried, I",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0005",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "When I am worried, I"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0005]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "i_need_help_with",
+          "name" : "I need help with",
+          "localizedName" : "I need help with",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0006",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "I need help with"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0006]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "i_can_do_these_things_for_myself",
+          "name" : "I can do these things for myself",
+          "localizedName" : "I can do these things for myself",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0007",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "I can do these things for myself"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0007]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "i_eat",
+          "name" : "I eat",
+          "localizedName" : "I eat",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0008",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "I eat"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0008]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "i_sleep",
+          "name" : "I sleep",
+          "localizedName" : "I sleep",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0009",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "I sleep"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0009]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
+          } ]
+        }, {
+          "id" : "i_have_the_following_medical_problems",
+          "name" : "I have the following medical problems",
+          "localizedName" : "I have the following medical problems",
+          "rmType" : "DV_TEXT",
+          "nodeId" : "at0010",
+          "min" : 0,
+          "max" : 1,
+          "localizedNames" : {
+            "en" : "I have the following medical problems"
+          },
+          "localizedDescriptions" : {
+            "en" : ""
+          },
+          "aqlPath" : "/context/other_context[at0001]/items[openEHR-EHR-CLUSTER.this_is_me.v0]/items[at0010]/value",
+          "inputs" : [ {
+            "type" : "TEXT"
           } ]
         } ]
       }, {
@@ -2289,250 +2488,6 @@
         "min" : 1,
         "max" : 1,
         "aqlPath" : "/content[openEHR-EHR-OBSERVATION.laboratory_test_result.v1,'Laboratory test result']/subject",
-        "inputs" : [ {
-          "suffix" : "id",
-          "type" : "TEXT"
-        }, {
-          "suffix" : "id_scheme",
-          "type" : "TEXT"
-        }, {
-          "suffix" : "id_namespace",
-          "type" : "TEXT"
-        }, {
-          "suffix" : "name",
-          "type" : "TEXT"
-        } ],
-        "inContext" : true
-      } ]
-    }, {
-      "id" : "this_is_me",
-      "name" : "This is me",
-      "localizedName" : "This is me",
-      "rmType" : "OBSERVATION",
-      "nodeId" : "openEHR-EHR-OBSERVATION.this_is_me.v0",
-      "min" : 0,
-      "max" : 1,
-      "localizedNames" : {
-        "en" : "This is me"
-      },
-      "localizedDescriptions" : {
-        "en" : "this_is_me"
-      },
-      "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']",
-      "children" : [ {
-        "id" : "my_care_givers_are",
-        "name" : "My care givers are",
-        "localizedName" : "My care givers are",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0004",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "My care givers are"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "my_favorite_things_to_do",
-        "name" : "My favorite things to do",
-        "localizedName" : "My favorite things to do",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0006",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "My favorite things to do"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "i_don_t_like_to",
-        "name" : "I don't like to",
-        "localizedName" : "I don't like to",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0007",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "I don't like to"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0007]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "when_i_am_happy_i",
-        "name" : "When I am happy, I",
-        "localizedName" : "When I am happy, I",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0008",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "When I am happy, I"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0008]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "when_i_am_worried_i",
-        "name" : "When I am worried, I",
-        "localizedName" : "When I am worried, I",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0009",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "When I am worried, I"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0009]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "i_need_help_with",
-        "name" : "I need help with",
-        "localizedName" : "I need help with",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0010",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "I need help with"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0010]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "i_can_do_these_things_for_myself",
-        "name" : "I can do these things for myself",
-        "localizedName" : "I can do these things for myself",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0012",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "I can do these things for myself"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0012]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "i_eat",
-        "name" : "I eat",
-        "localizedName" : "I eat",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0014",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "I eat"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0014]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "i_sleep",
-        "name" : "I sleep",
-        "localizedName" : "I sleep",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0013",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "I sleep"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0013]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "i_have_the_following_medical_problems",
-        "name" : "I have the following medical problems",
-        "localizedName" : "I have the following medical problems",
-        "rmType" : "DV_TEXT",
-        "nodeId" : "at0015",
-        "min" : 0,
-        "max" : 1,
-        "localizedNames" : {
-          "en" : "I have the following medical problems"
-        },
-        "localizedDescriptions" : {
-          "en" : ""
-        },
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/data[at0003]/items[at0015]/value",
-        "inputs" : [ {
-          "type" : "TEXT"
-        } ]
-      }, {
-        "id" : "time",
-        "name" : "Time",
-        "rmType" : "DV_DATE_TIME",
-        "min" : 1,
-        "max" : 1,
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/data[at0001]/events[at0002]/time",
-        "inputs" : [ {
-          "type" : "DATETIME"
-        } ],
-        "inContext" : true
-      }, {
-        "id" : "language",
-        "name" : "Language",
-        "rmType" : "CODE_PHRASE",
-        "min" : 1,
-        "max" : 1,
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/language",
-        "inContext" : true
-      }, {
-        "id" : "encoding",
-        "name" : "Encoding",
-        "rmType" : "CODE_PHRASE",
-        "min" : 1,
-        "max" : 1,
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/encoding",
-        "inContext" : true
-      }, {
-        "id" : "subject",
-        "name" : "Subject",
-        "rmType" : "PARTY_PROXY",
-        "min" : 1,
-        "max" : 1,
-        "aqlPath" : "/content[openEHR-EHR-OBSERVATION.this_is_me.v0,'This is me']/subject",
         "inputs" : [ {
           "suffix" : "id",
           "type" : "TEXT"

@@ -41,7 +41,7 @@ const HomePage : React.FC<HomePageHandlerProps> = ({ _authenticate }) => {
             <p className="text-gray-600 text-sm">
               For physicians, geneticists. Start questionnare.
             </p>
-            <button onClick={()=>_authenticate()} class="border rounded p-3 px-6 mt-5 border-primary text-primary uppercase text-sm font-bold hover:bg-primary hover:text-white" >Login</button>
+            <button onClick={()=>_authenticate()} class="border rounded p-3 px-6 mt-5 border-primary text-primary uppercase text-sm font-bold hover:bg-primary hover:text-white" >Sign in with Medblocks Dev</button>
           </div>
         </div>
       </div>

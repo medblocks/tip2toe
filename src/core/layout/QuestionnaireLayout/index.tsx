@@ -24,7 +24,7 @@ import SummarySidebar from "./_components/SummarySidebar";
 import LoadingDialog from "@/core/components/LoadingDialog";
 import Notification from "@/core/components/Notification";
 import ConfirmAlert from "@/core/components/ConfirmAlert";
-import { createComposition, setEhrId } from "@/core/utils/openehr";
+import { createComposition, getAllCompositionIDs, getCompositionByID, setEhrId } from "@/core/utils/openehr";
 import FamilyHistory from "@/core/pages/Questionnaire/FamilyHistory";
 import IndividualView from "@/core/pages/Questionnaire/IndividualView";
 
@@ -106,14 +106,27 @@ export default function QuestionnaireLayout() {
     try{
       $Loading("Loading EHR ID...")
       if(signalStore.encounterId.value && signalStore.patientId.value){
-        setehrId(await setEhrId(signalStore.patientId.value))
-        $Loading()
+        let _ehrId = await setEhrId(signalStore.patientId.value)
+        setehrId(_ehrId)
+        if(signalStore.isPractitioner.value){
+        $Loading("Getting Patient Data...")
+        const patientData = await getAllCompositionIDs(_ehrId)
+        $Loading("Loading Patient Data...")
+        if(patientData?.rows?.length > 0){
+          let compositionData =  await getCompositionByID(patientData.rows[patientData.rows.length-1][2])
+          if(compositionData){
+            handleImport(compositionData.composition)
+          }
+        }
+      }
+      $Loading()
+          
+        
       }
       else{
         $Notification("No EHR ID found","error","Please select a patient and an encounter to continue")
         $Loading("Failed to load EHR ID")
       }
-      
     } catch (error : any) {
       $Notification("Failed to load EHR ID","error",error.toString())
       $Loading("Failed to load EHR ID")
@@ -168,7 +181,7 @@ export default function QuestionnaireLayout() {
       }
     });
     setmedblocksForm(_data);
-    let formElement = await document.getElementById(formId);
+    let formElement = await document.getElementById(_formid);
     formElement.import(data);
     Object.entries(data).forEach(async ([key, value]) => {
       if (key.includes("presence|value")){
@@ -226,8 +239,9 @@ export default function QuestionnaireLayout() {
 
           {/* MEDBLOCKS FORM */}
           <main class="flex-1 border-r border-solid pt-10">
+            <div class="mx-6">
+            </div>
             <mb-form id={_formid} onmb-submit={submitForm} >
-
               {/* FORM CONTEXT */}
               <mb-context path="tip2toe.v0/context/start_time"></mb-context>
               <mb-context path="tip2toe.v0/context/setting"></mb-context>
@@ -241,9 +255,9 @@ export default function QuestionnaireLayout() {
               {/* FORM CONTENT */}
               <div class="mx-6 md:min-h-[88vh]">
                 <Overview />
-                {/* <ThisIsMe addToSummary={addToSummary} /> */}
                 <FamilyHistory addToSummary={addToSummary} />
                 <IndividualView addToSummary={addToSummary}/>
+              <ThisIsMe addToSummary={addToSummary} />
                 {Object.entries(medblocksForm).map(([key, value]) => {
                   if(excludeSections.includes(key)){
                     return (<></>)
