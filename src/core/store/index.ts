@@ -10,6 +10,8 @@ export const accessToken = signal<any | undefined>({})
 export const serviceUrl_openehr_rest = signal<any | undefined>({})
 export const serviceUrl_openehr_ehrscape = signal<any | undefined>({})
 export const serviceUrl_fhir = signal<any | undefined>({})
+export const serviceUrl_s3presignedurl = signal<any | undefined>({})
+
 // DATA VARIABLES
 
 
@@ -42,6 +44,10 @@ export const _loadStore= (_idToken: any | undefined, _context: any | undefined, 
     serviceUrl_fhir.value = _services["org.fhir.rest"]
     // serviceUrl_openehr_ehrscape.value = "http://localhost:8080/ehrbase/rest/ecis/v1"
   }
+  if (_services && _services["org.medblocks.s3presignedurl"]){
+    serviceUrl_s3presignedurl.value = _services["org.medblocks.s3presignedurl"]
+    // serviceUrl_openehr_ehrscape.value = "http://localhost:8080/ehrbase/rest/ecis/v1"
+  }
   window.sessionStorage.setItem("idToken", JSON.stringify(_idToken))
   window.sessionStorage.setItem("context", JSON.stringify(_context))
   window.sessionStorage.setItem("services", JSON.stringify(_services))
@@ -68,8 +74,24 @@ export const _loadStoreFromSessionStorage = () => {
   }
   if (services.value && services.value["org.fhir.rest"]){
     serviceUrl_fhir.value = services.value["org.fhir.rest"]
-    // serviceUrl_openehr_ehrscape.value = "http://localhost:8080/ehrbase/rest/ecis/v1"
   }
+  if (services && services.value["org.medblocks.s3presignedurl"]){
+    serviceUrl_s3presignedurl.value = services.value["org.medblocks.s3presignedurl"]
+  }
+}
+
+export const _clearStore = () => {
+  idToken.value = undefined
+  context.value = undefined
+  services.value = undefined
+  accessToken.value = undefined
+  serviceUrl_openehr_rest.value = undefined
+  serviceUrl_openehr_ehrscape.value = undefined
+  serviceUrl_fhir.value = undefined
+  window.sessionStorage.removeItem("idToken")
+  window.sessionStorage.removeItem("context")
+  window.sessionStorage.removeItem("services")
+  window.sessionStorage.removeItem("accessToken")
 }
 
 

@@ -7,7 +7,7 @@ async function getFhirPatientDetails(patientId : string){
   }
   catch(e){
     console.log(e)
-    throw new Error('Error creating composition')
+    throw new Error('Error getting fhir patient details')
   }
 }
 

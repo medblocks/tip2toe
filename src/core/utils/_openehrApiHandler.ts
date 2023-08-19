@@ -25,6 +25,10 @@ async function _handleEHRRequests(methodtype='GET' as string, ehrId: string){
     return response.data
   }).catch((error) => {
     console.log(error)
+    if (error.response.status == 401){
+      console.log('Forbidden')
+      signalStore._clearStore()
+    }
     throw new Error('Error in request')
   })
   return response
@@ -48,6 +52,10 @@ async function _handleAQLQuery(query: string){
     return response.data
   }).catch((error) => {
     console.log(error)
+    if (error.response.status == 401){
+      console.log('Forbidden')
+      signalStore._clearStore()
+    }
     return null
   })
   return response
@@ -86,6 +94,10 @@ async function _handleCompositionRequests(methodtype='GET' as string, id: string
     return response.data
   }).catch((error) => {
     console.log(error)
+    if (error.response.status == 401){
+      console.log('Forbidden')
+      signalStore._clearStore()
+    }
     throw new Error('Error in request')
   })
   return response

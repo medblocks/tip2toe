@@ -20,6 +20,10 @@ async function _handleFhirPatient(methodtype='GET' as string, patientId: string)
     return response.data
   }).catch((error) => {
     console.log(error)
+    if (error.response.status == 401){
+      console.log('Forbidden')
+      signalStore._clearStore()
+    }
     throw new Error('Error in request')
   })
   return response

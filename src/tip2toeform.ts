@@ -29,6 +29,13 @@ const _practitionerForm : MBFormData = {
     path:"",
     questions: []
   },
+  reports:{
+    title: "Reports",
+    description: "",
+    slug:"reports",
+    path:"",
+    questions: []
+  },
   pregnancy: {
     title: "Pregnancy",
     description: "",

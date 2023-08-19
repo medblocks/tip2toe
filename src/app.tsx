@@ -70,6 +70,11 @@ const App = () => {
       }
     }
 
+    signalStore.context.subscribe((value)=>{
+      if(!value) 
+      initializeApp();
+    })
+
     initializeApp();
   }, []);
 

@@ -26,6 +26,7 @@ import Notification from "@/core/components/Notifications";
 import ConfirmAlert from "@/core/components/ConfirmAlert";
 import { createComposition, getAllCompositionIDs, getCompositionByID, setEhrId, updateComposition } from "@/core/utils/openehr";
 import FamilyHistory from "@/core/pages/Questionnaire/FamilyHistory";
+import Reports from "@/core/pages/Questionnaire/Reports";
 import IndividualView from "@/core/pages/Questionnaire/IndividualView";
 import { default_data } from "@/sample_data";
 
@@ -47,7 +48,7 @@ export default function QuestionnaireLayout() {
   const [_notification, set_notification] = useState<{type?:string | null, message:string, description?: string | null }>({type:'info',message:"",description:null});
   const [_confirm, set_confirm] = useState<{show:boolean, title:string, message:string, id:string | null, onConfirm?:()=>void, onCancel?:()=>void}>({show:false,title:"",message:"",id:null, onConfirm:()=>{},onCancel:()=>{}});
 
-  const excludeSections:Array<string> = ['overview','summary','this_is_me','family_history','individual']
+  const excludeSections:Array<string> = ['overview','summary','this_is_me','family_history','individual','reports']
   const _formid = "medblocksForm";
   const { pathname } = useLocation();
 
@@ -286,6 +287,7 @@ export default function QuestionnaireLayout() {
                 <FamilyHistory addToSummary={addToSummary} />
                 <IndividualView addToSummary={addToSummary}/>
                 <ThisIsMe readonly={signalStore.isPractitioner.value} addToSummary={addToSummary} />
+                <Reports addToSummary={addToSummary} />
                 {Object.entries(medblocksForm).map(([key, value]) => {
                   if(excludeSections.includes(key)){
                     return (<></>)

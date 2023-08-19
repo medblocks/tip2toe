@@ -19,7 +19,7 @@ const FamilyHistory: React.FC<FamilyHistoryHandlerProps> = ({ addToSummary }) =>
 
   return (
     <div class={pathname === `/questionnaire/family-history` ?'':'hidden'}>
-      <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">This Is Me</h2>
+      <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">Family History</h2>
       <mb-context path="tip2toe.v0/family_history/language"></mb-context>
       <mb-context path="tip2toe.v0/family_history/encoding"></mb-context>
       <mb-context path="tip2toe.v0/family_history/subject"></mb-context>
