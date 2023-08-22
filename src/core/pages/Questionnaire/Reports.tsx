@@ -50,7 +50,7 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
             filePath = {"tip2toe/media"}
             authToken = {signalStore.accessToken}
             onFilesUploaded={files => silentCompositionSave("Imaging Examination Result")}
-            onFilesSelected={addToSummary({code: "Imaging Examination Result", title: "", value: ONTOLOGY.options[0].value})}
+            onFilesSelected={files =>addToSummary({code: "Imaging Examination Result", title: "", value: ONTOLOGY.options[0].value})}
 
           />
         </div>
