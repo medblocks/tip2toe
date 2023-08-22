@@ -207,7 +207,7 @@ class FileUpload extends Component<FileUploadProps, FileUploadState> {
                             {file.name}
                             {file.url && (
                                 <a href={file.url} target={"_blank"} rel="noopener noreferrer">
-                                    <img  src={file.url} alt={file.name} />
+                                    {file.type.includes('image') && (<img src={file.url} alt={file.name} />)}
                                 </a>
                             )}
                             {!this.state.isUploaded && (
