@@ -46,24 +46,9 @@
 }
 
 .file-item img {
-  max-width: 120px;
-  /* max-height: 50px; */
+  max-width: 150px;
+  /* max-height: 150px; */
   margin-right: 10px;
-}
-
-.file-item input {
-  border: solid gray 1px;
-  border-radius: 4px;
-  padding: 5px;
-  min-width: 3  0%;
-}
-
-.file-item button {
-  border: solid gray 1px;
-  border-radius: 24px;
-  padding: 5px;
-  width: 30px;
-  height: 30px;
 }
 
 .actions {

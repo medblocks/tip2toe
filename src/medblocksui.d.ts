@@ -9,6 +9,7 @@ declare global {
     interface IntrinsicElements {
       // ["component-name"]: {props, Events}
       ['mb-input']: {path: string, data?: string, terminology?: string, textarea?: Boolean, label?: string, id?: string, required?: boolean, type?: string, placeholder?: string, min?: number, max?: number, minlength?: number, maxlength?: number, disabled?: boolean, rows?: string, resize?: string, onMbInput?: (event: CustomEvent<string>) => void},
+      ['mb-text-select']: {path: string,hidden:boolean, data?: string, terminology?: string, textarea?: Boolean, label?: string, id?: string, required?: boolean, type?: string, placeholder?: string, min?: number, max?: number, minlength?: number, maxlength?: number, disabled?: boolean, rows?: string, resize?: string, onMbInput?: (event: CustomEvent<string>) => void},
       ['mb-form']: {children?: any, id: string, ctx?: any, novalidate?: boolean, templateId?: string, nosuggest?: boolean, variant?: string, onMbSubmit?: (event: CustomEvent<object>) => void},
       ['mb-context']: {path: string, bind?: object, label?: string},
       ['mb-buttons']: {path: string, label?: string, type?: string, className:any, data?: object, terminology?: string, disabled?: boolean, children?: any, onMbClick?: (event: CustomEvent<object>) => void},

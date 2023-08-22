@@ -46,7 +46,7 @@ export default function QuestionnaireLayout() {
   const [notifKey, setNotifKey] = useState(Date.now());
   
   const [_loading, set_loading] = useState<{show:boolean, text:string | null}>({show:false,text:null});
-  const [_notification, set_notification] = useState<{type?:string | null, message:string, description?: string | null }>({type:'info',message:"",description:null});
+  const [_notification, set_notification] = useState<{type?:'error' | 'success' | 'warning' | 'info', message:string, description?: string | null }>({type:'info',message:"",description:null});
   const [_confirm, set_confirm] = useState<{show:boolean, title:string, message:string, id:string | null, onConfirm?:()=>void, onCancel?:()=>void}>({show:false,title:"",message:"",id:null, onConfirm:()=>{},onCancel:()=>{}});
 
   const excludeSections:Array<string> = ['overview','summary','this_is_me','family_history','individual','reports']
@@ -170,10 +170,26 @@ export default function QuestionnaireLayout() {
     }
   }
 
+  async function silentFormUpdate(){
+    try{
+      // @ts-ignore comment
+      let data = await document.getElementById(_formid)?.export()
+      delete data['tip2toe.v0/_uid']
+      // @ts-ignore comment
+      await updateComposition(_compositionId, data).then(async (res:any) => {
+      }).catch((error:any) => {
+        console.log(error)
+      })
+    } catch (error : any) {
+      console.log(error)
+    }
+  }
+
   async function updateForm(data:any){
     try{
       $Loading("Updating Form...")
       delete data['tip2toe.v0/_uid']
+      // @ts-ignore comment
       updateComposition(_compositionId, data).then(async (res:any) => {
         if (res) {
           $Loading()
@@ -200,14 +216,18 @@ export default function QuestionnaireLayout() {
         let type = tempformIndex.split("/")[1].split("|")[1];
 
         if (!_data[formKey]) {
+          // @ts-ignore comment
           _data[formKey] = { questions: {} };
         }
+        // @ts-ignore comment
         if (_data[formKey]["questions"][formIndex] === undefined) {
+        // @ts-ignore comment
           _data[formKey]["questions"][formIndex] = {
             type: "ontology",
             path: key.split("/symptom_or_sign_name")[0],
           };
         }
+        // @ts-ignore comment
         _data[formKey]["questions"][formIndex][type] = value;
       }
     });
@@ -221,6 +241,7 @@ export default function QuestionnaireLayout() {
         let formKey = temp.split(":")[0];
         let tempformIndex = temp.split(":")[1];
         let formIndex = tempformIndex.split("/")[0];
+        // @ts-ignore comment
         await addToSummary({ code: medblocksForm[formKey]["questions"][formIndex].code, title: medblocksForm[formKey]["questions"][formIndex].value, value: value })
       }
     });
@@ -234,7 +255,7 @@ export default function QuestionnaireLayout() {
     }
     set_loading({show:!Boolean((_loading.show).toString()), text:null})
   }
-  function $Notification(message:string,type:string | null, description:string | null) {
+  function $Notification(message:string,type:'error' | 'success' | 'warning' | 'info', description:string | null) {
     setNotifKey(Date.now());
     set_notification({type:type,message:message,description:description})
   }
@@ -305,7 +326,7 @@ export default function QuestionnaireLayout() {
                     )
                   }
                 })}
-                <Reports addToSummary={addToSummary} />
+                <Reports addToSummary={addToSummary} silentFormUpdate={silentFormUpdate} />
                 <Summary selectedValues={_summary} />
               </div>
               {/* FORM CONTENT */}

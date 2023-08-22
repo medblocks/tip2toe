@@ -1,4 +1,4 @@
-import FileUpload from "@/core/components/upload";
+import FileUpload from "@/core/components/FileUpload";
 import { ONTOLOGY } from "@/tip2toeform";
 import { useLocation } from "react-router-dom";
 import * as signalStore from '@/core/store'
@@ -6,9 +6,10 @@ import * as signalStore from '@/core/store'
 
 interface ReportsHandlerProps {
   addToSummary: Function;
+  silentFormUpdate: Function;
 }
 
-const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
+const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate }) => {
 
   const { pathname } = useLocation();
 
@@ -21,30 +22,13 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
     }
   }
 
-  const supabaseStoragePlugin2 = {
-    upload: async ({ axios, file }) => {
-      console.log(file)
-        // const form = new FormData();
-        // form.append('data', file);
-        // const response = await axios.post(`/${create_UUID()}`, form, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data',
-        //     },
-        // });
-        // const key = response.data.Key.split('/')[1];
-        return file;
-    },
-    download: async ({ axios, key }) => {
-      console.log(key)
-        // const response = await axios({
-        //     url: `/${key}`,
-        //     method: 'GET',
-        //     responseType: 'blob',
-        // });
-        let file = new File(key, "test.png", { type: "image/png" });
-        return file;
-    },
-  };
+  async function silentCompositionSave(title:string){
+    await addToSummary({code: title, title: "", value: ONTOLOGY.options[0].value})
+    await silentFormUpdate();
+
+  }
+
+
 
   return (
     <div class={pathname === `/questionnaire/reports` ?'':'hidden'}>
@@ -58,20 +42,35 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
 
           <mb-context path="tip2toe.v0/imaging_examination_result/any_event:0/time"></mb-context>
           <FileUpload 
-            path="tip2toe.v0/imaging_examination_result/" 
-            s3presignedurl={signalStore.serviceUrl_s3presignedurl}
+            // multiple={true}
+            acceptedFileTypes="image/*"
+            path="tip2toe.v0/imaging_examination_result/any_event:0/test_name" 
+            s3serviceurl={signalStore.serviceUrl_s3presignedurl}
             bucketName = {"ignite-medblocks"}
             filePath = {"tip2toe/media"}
             authToken = {signalStore.accessToken}
-            onSubmit={(files, fileNames) => {console.log(files); console.log(fileNames); return Promise.resolve();}}
+            onFilesUploaded={files => silentCompositionSave("Imaging Examination Result")}
+            onFilesSelected={addToSummary({code: "Imaging Examination Result", title: "", value: ONTOLOGY.options[0].value})}
+
           />
         </div>
         <div class="py-5">
           <h3 class="text-xl">Previous Genetic Investigations</h3>
-          <mb-context path="tip2toe.v0/previous_genetic_investigations/any_event:0/time"></mb-context>
           <mb-context path="tip2toe.v0/previous_genetic_investigations/language"></mb-context>
           <mb-context path="tip2toe.v0/previous_genetic_investigations/encoding"></mb-context>
           <mb-context path="tip2toe.v0/previous_genetic_investigations/subject"></mb-context>
+          <mb-context path="tip2toe.v0/previous_genetic_investigations/any_event:0/time"></mb-context>
+          <FileUpload 
+            // multiple={true}
+            acceptedFileTypes="image/*"
+            path="tip2toe.v0/previous_genetic_investigations/any_event:0/test_name" 
+            s3serviceurl={signalStore.serviceUrl_s3presignedurl}
+            bucketName = {"ignite-medblocks"}
+            filePath = {"tip2toe/media"}
+            authToken = {signalStore.accessToken}
+            onFilesUploaded={files => silentCompositionSave("Previous Genetic Investigations")}
+            onFilesSelected={files => addToSummary({code: "Previous Genetic Investigations", title: "", value: ONTOLOGY.options[0].value})}
+          />
           {/* <FileUpload 
             path="tip2toe.v0/previous_genetic_investigations/any_event" 
             onSubmit={(files, fileNames) => {console.log(files); console.log(fileNames); return Promise.resolve();}}
@@ -101,11 +100,18 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
           <mb-context path="tip2toe.v0/laboratory_test_result/encoding"></mb-context>
           <mb-context path="tip2toe.v0/laboratory_test_result/subject"></mb-context>
 
-          {/* <FileUpload 
-            path="tip2toe.v0/laboratory_test_result/any_event"
-            onSubmit={(files, fileNames) => {console.log(files); console.log(fileNames); return Promise.resolve();}}
-          /> */}
-          
+          <FileUpload 
+            // multiple={true}
+            acceptedFileTypes="image/*"
+            path="tip2toe.v0/laboratory_test_result/any_event:0/test_name" 
+            s3serviceurl={signalStore.serviceUrl_s3presignedurl}
+            bucketName = {"ignite-medblocks"}
+            filePath = {"tip2toe/media"}
+            authToken = {signalStore.accessToken}
+            onFilesUploaded={files => silentCompositionSave("Laboratory Test Result")}
+            onFilesSelected={files => addToSummary({code: "Laboratory Test Result", title: "", value: ONTOLOGY.options[0].value})}
+          />
+
         </div>
         <div class="py-5">
           <h3 class="text-xl">Clinical Findings</h3>

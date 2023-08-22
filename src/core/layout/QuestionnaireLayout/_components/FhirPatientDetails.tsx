@@ -31,8 +31,6 @@ const FhirPatientDetails: React.FC<FhirPatientDetailsHandlerProps> = () => {
     });
 
     // Cleanup the subscription on component unmount
-    // @ts-ignore comment
-    return () => subscription.unsubscribe();
   }, [signalStore.patientId.value]);
 
   // Only render the component when need_patient_banner is true, otherwise render nothing
