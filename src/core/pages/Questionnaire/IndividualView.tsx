@@ -1,13 +1,22 @@
+/*
+  File: individualView.tsx
+  File Description: The individualView component is used to display the Individual page of the questionnaire.
+*/
+
+// Import necessary modules and components
 import { ONTOLOGY } from "@/tip2toeform";
 import { useLocation } from "react-router-dom";
 
+// Define the properties for the individualView component
 interface IndividualViewHandlerProps {
   addToSummary: Function;
 }
 
 const IndividualView: React.FC<IndividualViewHandlerProps> = ({ addToSummary }) => {
+  // Get the current route pathname
   const { pathname } = useLocation();
 
+  // Handle input events
   function _handleInput(e:any,title:string){
     if(e.currentTarget?.data){
       addToSummary({code: title, title: e.currentTarget?.data?.value, value: ONTOLOGY.options[0].value})
@@ -19,7 +28,7 @@ const IndividualView: React.FC<IndividualViewHandlerProps> = ({ addToSummary }) 
 
   return (
     <div class={pathname === `/questionnaire/individual` ?'':'hidden'}>
-      <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">Individual View</h2>
+      <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">Individual</h2>
 
       <div class="mt-4 divide-y divide-gray-300">
         <div class="py-5">
@@ -71,7 +80,7 @@ const IndividualView: React.FC<IndividualViewHandlerProps> = ({ addToSummary }) 
           <mb-context path="tip2toe.v0/height_length/encoding"></mb-context>
           <mb-context path="tip2toe.v0/height_length/subject"></mb-context>
           <mb-context path="tip2toe.v0/height_length/length_at_the_last_visit:0/time"></mb-context>
-          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Height/length At Last Visit")} default="cm" path="tip2toe.v0/height_length/length_at_the_last_visit:0/height_length" label="">
+          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Height/length At Last Visit")} default="cm" path="tip2toe.v0/height_length/length_at_the_last_visit:0/height_length">
             <mb-unit unit="cm" label="cm" min="" max="1000"></mb-unit>
             <mb-unit unit="[in_i]" label="[in_i]" min="" max="250"></mb-unit>
           </mb-quantity>
@@ -79,7 +88,7 @@ const IndividualView: React.FC<IndividualViewHandlerProps> = ({ addToSummary }) 
         <div class="py-5">
           <mb-context path="tip2toe.v0/height_length/birth/time"></mb-context>
           <h3 class="text-xl">Height/Length At Birth</h3>
-          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Height/length At Birth")} default="cm" path="tip2toe.v0/height_length/birth/height_length" label="Height/Length">
+          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Height/length At Birth")} default="cm" path="tip2toe.v0/height_length/birth/height_length">
             <mb-unit unit="cm" label="cm" min="" max="1000"></mb-unit>
             <mb-unit unit="[in_i]" label="[in_i]" min="" max="250"></mb-unit>
           </mb-quantity>
@@ -91,7 +100,7 @@ const IndividualView: React.FC<IndividualViewHandlerProps> = ({ addToSummary }) 
           <mb-context path="tip2toe.v0/head_circumference/subject"></mb-context>
 
           <mb-context path="tip2toe.v0/head_circumference/head_circumference_at_the_last_visit:0/time"></mb-context>
-          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Head Circumference At Last Visit")} default="cm" path="tip2toe.v0/head_circumference/head_circumference_at_the_last_visit:0/head_circumference" label="Head circumference">
+          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Head Circumference At Last Visit")} default="cm" path="tip2toe.v0/head_circumference/head_circumference_at_the_last_visit:0/head_circumference" >
             <mb-unit unit="cm" label="cm" min="" max="100"></mb-unit>
             <mb-unit unit="[in_i]" label="[in_i]" min="" max="40"></mb-unit>
           </mb-quantity>
@@ -99,7 +108,7 @@ const IndividualView: React.FC<IndividualViewHandlerProps> = ({ addToSummary }) 
         <div class="py-5">
           <h3 class="text-xl">Head circumference At Birth</h3>
           <mb-context path="tip2toe.v0/head_circumference/birth/time"></mb-context>
-          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Head Circumference At Birth")} default="cm" path="tip2toe.v0/head_circumference/birth/head_circumference" label="Head circumference">
+          <mb-quantity onmb-input={(e: any) => _handleInput(e,"Head Circumference At Birth")} default="cm" path="tip2toe.v0/head_circumference/birth/head_circumference">
             <mb-unit unit="cm" label="cm" min="" max="100"></mb-unit>
             <mb-unit unit="[in_i]" label="[in_i]" min="" max="40"></mb-unit>
           </mb-quantity>

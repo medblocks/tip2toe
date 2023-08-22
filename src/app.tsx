@@ -1,21 +1,33 @@
-// Importing necessary dependencies and components
+/*
+  File: app.tsx
+  File Description: This file is responsible for setting up the application and rendering the root component. It also handles authentication and loading of the application.
+*/
+
+// Importing necessary Preact components
 import React, { useState, useEffect } from 'preact/compat';
-import QuestionnaireLayout from '@/core/layout/QuestionnaireLayout';
-import DefaultLayout from '@/core/layout/DefaultLayout';
-import Home from '@/core/pages/HomeView.tsx';
-import * as signalStore from '@/core/store';
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+
+// Importing the Layout component for the Questionnaire
+import QuestionnaireLayout from '@/core/layout/QuestionnaireLayout';
+
+// Importing the Home view
+import Home from '@/core/pages/HomeView.tsx';
+
+// Importing the signal store for global state management
+import * as signalStore from '@/core/store';
+
+// Importing the authentication handler
 import { _authHandler } from './auth';
+
+// Importing the AppLoading component
 import AppLoading from './core/components/AppLoading';
+
 
 // Routes configuration for the application
 const routes = [
   {
-    path: "/",
-    element: <DefaultLayout />,
-    children: [
-      { path: "", element: <Navigate to="/questionnaire/overview" replace /> }
-    ]
+    path: "",
+    element: <Navigate to="/questionnaire/overview" replace /> ,
   },
   {
     path: "/questionnaire",
@@ -27,6 +39,7 @@ const routes = [
   { path: "*", element: <div>Not found</div> }
 ];
 
+// Main application component. This component handles the authentication and loading of the application.
 const App = () => {
   // State management for application loading, authentication, and loading text
   const [isAppLoading, setIsAppLoading] = useState(true);
@@ -79,11 +92,19 @@ const App = () => {
   }, []);
 
   // Authentication function using the _authHandler and updating the signalStore
-  async function authenticate(iss = null, launch = null, patientId = null, encounterId = null) {
+  async function authenticate(iss = null as string | null, launch = null as string | null, patientId = null as string | null, encounterId = null as string | null) {
     setIsAppLoading(true);
     const { accessToken, idToken, context, services } = await _authHandler(iss, launch, window.location.origin, patientId, encounterId);
     signalStore._loadStore(idToken, context, services, accessToken);
     setIsAuthenticated(true);
+  }
+
+  async function _authHandlerMain(type=1){
+    if(type === 1){
+      await authenticate('https://dev.medblocks.com/fhir');
+    }else {
+      await authenticate('https://karolinska.medblocks.com/fhir');
+    }
   }
 
   // Render the main application component
@@ -92,7 +113,7 @@ const App = () => {
       {!isAuthenticated ? (
         // If not authenticated, show loading screen or the Home view
         <div className="flex min-h-full flex-col">
-          {isAppLoading ? <AppLoading show={true} loadingText={loadingText} /> : <Home _authenticate={authenticate} />}
+          {isAppLoading ? <AppLoading show={true} loadingText={loadingText} /> : <Home _authenticate={_authHandlerMain} />}
         </div>
       ) : (
         // If authenticated, render the router with the defined routes

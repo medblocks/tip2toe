@@ -9,6 +9,7 @@ interface ReportsHandlerProps {
 }
 
 const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
+
   const { pathname } = useLocation();
 
   function _handleInput(e:any,title:string){
@@ -48,41 +49,16 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
   return (
     <div class={pathname === `/questionnaire/reports` ?'':'hidden'}>
       <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">Reports</h2>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       <div class="mt-4 divide-y divide-gray-300">
         <div class="py-5">
           <h3 class="text-xl">Imaging Examination Result</h3>
-          <mb-context path="tip2toe.v0/imaging_examination_result/any_event:0/time"></mb-context>
           <mb-context path="tip2toe.v0/imaging_examination_result/language"></mb-context>
           <mb-context path="tip2toe.v0/imaging_examination_result/encoding"></mb-context>
           <mb-context path="tip2toe.v0/imaging_examination_result/subject"></mb-context>
+
+          <mb-context path="tip2toe.v0/imaging_examination_result/any_event:0/time"></mb-context>
           <FileUpload 
-            path="tip2toe.v0/imaging_examination_result/any_event" 
+            path="tip2toe.v0/imaging_examination_result/" 
             s3presignedurl={signalStore.serviceUrl_s3presignedurl}
             bucketName = {"ignite-medblocks"}
             filePath = {"tip2toe/media"}
@@ -96,17 +72,14 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
           <mb-context path="tip2toe.v0/previous_genetic_investigations/language"></mb-context>
           <mb-context path="tip2toe.v0/previous_genetic_investigations/encoding"></mb-context>
           <mb-context path="tip2toe.v0/previous_genetic_investigations/subject"></mb-context>
-          <FileUpload 
+          {/* <FileUpload 
             path="tip2toe.v0/previous_genetic_investigations/any_event" 
             onSubmit={(files, fileNames) => {console.log(files); console.log(fileNames); return Promise.resolve();}}
-          />
+          /> */}
           
-          {/* <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotyping" label="Karyotyping" terminology="local">
+           <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotyping" label="Karyotyping" terminology="local">
             <mb-option value="at0002" label="Yes"></mb-option>
             <mb-option value="at0003" label="No"></mb-option>
-          </mb-select>
-          
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotype" label="Karyotype" terminology="local">
           </mb-select>
           
           <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/fish" label="FISH" terminology="local">
@@ -114,26 +87,12 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
             <mb-option value="at0007" label="No"></mb-option>
           </mb-select>
           
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotype2" label="Karyotype" terminology="local">
-          </mb-select>
-         
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/array_results" label="Array Results" terminology="local">
-          </mb-select>
-         
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/targeted_sequencing_variants" label="Targeted sequencing variants" terminology="local">
-          </mb-select>
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/wes_panels_trios_variants" label="WES panels/trios variants" terminology="local">
-          </mb-select>
-         
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/wgs_panels_trios_variants" label="WGS panels/trios variants" terminology="local">
-          </mb-select>
-
           <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/media_file:0/content_name" label="Content name" terminology="local_terms">
             <mb-option value="1" label="Array"></mb-option>
             <mb-option value="2" label="Target Sequencing"></mb-option>
             <mb-option value="3" label="WES panels/trios"></mb-option>
             <mb-option value="4" label="WGS panels/trios"></mb-option>
-          </mb-select> */}
+          </mb-select>
         </div>
         <div class="py-5">
           <h3 class="text-xl">Laboratory Test Result</h3>
@@ -142,10 +101,10 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary }) => {
           <mb-context path="tip2toe.v0/laboratory_test_result/encoding"></mb-context>
           <mb-context path="tip2toe.v0/laboratory_test_result/subject"></mb-context>
 
-          <FileUpload 
+          {/* <FileUpload 
             path="tip2toe.v0/laboratory_test_result/any_event"
             onSubmit={(files, fileNames) => {console.log(files); console.log(fileNames); return Promise.resolve();}}
-          />
+          /> */}
           
         </div>
         <div class="py-5">

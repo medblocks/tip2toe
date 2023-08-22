@@ -1,5 +1,10 @@
 import {MBFormData} from "@/types"
 
+/*
+  File: tip2toeform.ts
+  File Description: This file is used to declare the tip2toe form data for practitioner and patient.
+*/
+
 const _practitionerForm : MBFormData = {
   overview:{
     title: "Overview",
@@ -23,7 +28,7 @@ const _practitionerForm : MBFormData = {
     questions: []
   },
   family_history:{
-    title: "Family History",
+    title: "Family history",
     description: "",
     slug:"family-history",
     path:"",
@@ -584,7 +589,7 @@ const _practitionerForm : MBFormData = {
     ]
   },
   summary:{
-    title: "summary",
+    title: "Summary",
     description: "",
     slug:"summary",
     path:"",

@@ -1,20 +1,29 @@
+/*
+  File: ThisIsMe.tsx
+  File Description: The ThisIsMe component is used to display the This Is Me page of the questionnaire.
+*/
+
+// Import necessary modules and components
 import { ONTOLOGY } from "@/tip2toeform";
 import { useLocation } from "react-router-dom";
 
+// Define the properties for the ThisIsMe component
 interface ThisIsMeHandlerProps {
   addToSummary: Function;
   readonly: boolean;
 }
 
 const ThisIsMe: React.FC<ThisIsMeHandlerProps> = ({ addToSummary, readonly= false }) => {
+  // Get the current route pathname
   const { pathname } = useLocation();
 
+  // Handle input events
   function _handleInput(e:any,title:string){
     if(e.currentTarget?.data){
-      addToSummary({code: title, title: "text", value: ONTOLOGY.options[0].value})
+      addToSummary({code: title, title: "", value: ONTOLOGY.options[0].value})
     }
     else{
-      addToSummary({code: title, title: "text", value: ONTOLOGY.default.value})
+      addToSummary({code: title, title: "", value: ONTOLOGY.default.value})
     }
   }
 

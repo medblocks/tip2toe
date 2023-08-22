@@ -43,6 +43,7 @@ export default function QuestionnaireLayout() {
   const [ehrId, setehrId] = useState<string>("");
 
   const [medblocksForm, setmedblocksForm] = useState<MBFormData>(_practitionerForm);
+  const [notifKey, setNotifKey] = useState(Date.now());
   
   const [_loading, set_loading] = useState<{show:boolean, text:string | null}>({show:false,text:null});
   const [_notification, set_notification] = useState<{type?:string | null, message:string, description?: string | null }>({type:'info',message:"",description:null});
@@ -53,7 +54,7 @@ export default function QuestionnaireLayout() {
   const { pathname } = useLocation();
 
 
-  useState(async ()=>{
+  useEffect(()=>{
     signalStore.isPractitioner.subscribe((value)=>{
       if(value) setmedblocksForm(_practitionerForm)
       else setmedblocksForm(_patientForm)
@@ -65,7 +66,7 @@ export default function QuestionnaireLayout() {
       setpatientId(value)
     })
     fetchData()
-  })
+  },[])
 
   useEffect(()=>{
     window.scrollTo(0, 0);
@@ -122,6 +123,7 @@ export default function QuestionnaireLayout() {
                 compositionData.composition[key] = value;
               }
             })
+            console.log(compositionData)
             handleImport(compositionData.composition)
           }
         }
@@ -211,7 +213,8 @@ export default function QuestionnaireLayout() {
     });
     setmedblocksForm(_data);
     let formElement = await document.getElementById(_formid);
-    formElement.import(data);
+    // @ts-ignore comment
+    if (formElement) formElement.import(data);
     Object.entries(data).forEach(async ([key, value]) => {
       if (key.includes("presence|value")){
         let temp = key.split("tip2toe.v0/symptom_sign_screening_questionnaire/any_event:0/")[1];
@@ -232,6 +235,7 @@ export default function QuestionnaireLayout() {
     set_loading({show:!Boolean((_loading.show).toString()), text:null})
   }
   function $Notification(message:string,type:string | null, description:string | null) {
+    setNotifKey(Date.now());
     set_notification({type:type,message:message,description:description})
   }
   function $Confirm(title:string,message:string,onConfirm?:()=>void,onCancel?:()=>void) {
@@ -247,7 +251,7 @@ export default function QuestionnaireLayout() {
       <div class="flex min-h-full flex-col">
 
         {/* UI ELEMENTS */}
-          <Notification notificationMessage={_notification.message} notificationType={_notification.type} notificationDescription={_notification.description}  />
+          <Notification key={notifKey} notificationMessage={_notification.message} notificationType={_notification.type} notificationDescription={_notification.description}  />
           <LoadingDialog show={_loading.show} loadingText={_loading.text} />
           <ConfirmAlert message={_confirm.message} title={_confirm.title} id={_confirm.id} _onConfirm={()=>{_confirm.onConfirm && _confirm.onConfirm()}} _onCancel={() => {_confirm.onCancel && _confirm.onCancel()}} />
         {/* UI ELEMENTS */}
@@ -287,7 +291,6 @@ export default function QuestionnaireLayout() {
                 <FamilyHistory addToSummary={addToSummary} />
                 <IndividualView addToSummary={addToSummary}/>
                 <ThisIsMe readonly={signalStore.isPractitioner.value} addToSummary={addToSummary} />
-                <Reports addToSummary={addToSummary} />
                 {Object.entries(medblocksForm).map(([key, value]) => {
                   if(excludeSections.includes(key)){
                     return (<></>)
@@ -302,6 +305,7 @@ export default function QuestionnaireLayout() {
                     )
                   }
                 })}
+                <Reports addToSummary={addToSummary} />
                 <Summary selectedValues={_summary} />
               </div>
               {/* FORM CONTENT */}

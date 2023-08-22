@@ -1,6 +1,14 @@
+/*
+  File: store.ts
+  File Description: This file is used to store data in signals for global use inside the app.
+*/
 import { signal, computed } from "@preact/signals";
 
-// DATA VARIABLES
+type ServiceMapping = {
+  [key: string]: typeof serviceUrl_openehr_rest; // This line is our index signature
+}
+
+// Data signals
 export const idToken = signal<any | undefined>({})
 export const context = signal<any | undefined>({})
 export const services = signal<any | undefined>({})
@@ -12,75 +20,70 @@ export const serviceUrl_openehr_ehrscape = signal<any | undefined>({})
 export const serviceUrl_fhir = signal<any | undefined>({})
 export const serviceUrl_s3presignedurl = signal<any | undefined>({})
 
-// DATA VARIABLES
+// Helper to update service URLs
+const updateServiceUrls = (_services: any) => {
+  const serviceMappings: ServiceMapping = {
+    "org.openehr.rest": serviceUrl_openehr_rest,
+    "org.openehr.ehrscape": serviceUrl_openehr_ehrscape,
+    "org.fhir.rest": serviceUrl_fhir,
+    "org.medblocks.s3presignedurl": serviceUrl_s3presignedurl
+  };
 
+  for (let key in serviceMappings) {
+    if (_services && _services[key]) {
+      serviceMappings[key].value = _services[key];
+    }
+  }
+}
 
-// DATA FUNCTIONS
-export const _loadStore= (_idToken: any | undefined, _context: any | undefined, _services: any | undefined, _accessToken: any | undefined) => {
+export const _loadStore = (_idToken: any, _context: any, _services: any, _accessToken: any) => {
   idToken.value = _idToken
   context.value = _context
   services.value = _services
+  accessToken.value = _accessToken
+
+  // Display debug information
   console.log("context", _context)
+  console.log("need_patient_banner", _context?.need_patient_banner)
   console.log("services", _services)
   console.log("idToken", _idToken)
-  if (_context && _context.encounter){
-    encounterId.value = _context.encounter
+
+  // Update context-based values
+  if (_context) {
+    encounterId.value = _context.encounter || encounterId.value;
+    patientId.value = _context.patient || patientId.value;
+    _context.need_patient_banner = _context.need_patient_banner ?? true;
   }
-  if (_context && _context.patient){
-    patientId.value = _context.patient
-  }
-  if (_accessToken){
-    accessToken.value = _accessToken
-  }
-  if (_services && _services["org.openehr.rest"]){
-    serviceUrl_openehr_rest.value = _services["org.openehr.rest"]
-    // serviceUrl_openehr_rest.value = "http://localhost:8080/ehrbase/rest/openehr/v1"
-  }
-  if (_services && _services["org.openehr.ehrscape"]){
-    serviceUrl_openehr_ehrscape.value = _services["org.openehr.ehrscape"]
-    // serviceUrl_openehr_ehrscape.value = "http://localhost:8080/ehrbase/rest/ecis/v1"
-  }
-  if (_services && _services["org.fhir.rest"]){
-    serviceUrl_fhir.value = _services["org.fhir.rest"]
-    // serviceUrl_openehr_ehrscape.value = "http://localhost:8080/ehrbase/rest/ecis/v1"
-  }
-  if (_services && _services["org.medblocks.s3presignedurl"]){
-    serviceUrl_s3presignedurl.value = _services["org.medblocks.s3presignedurl"]
-    // serviceUrl_openehr_ehrscape.value = "http://localhost:8080/ehrbase/rest/ecis/v1"
-  }
-  window.sessionStorage.setItem("idToken", JSON.stringify(_idToken))
-  window.sessionStorage.setItem("context", JSON.stringify(_context))
-  window.sessionStorage.setItem("services", JSON.stringify(_services))
-  window.sessionStorage.setItem("accessToken", JSON.stringify(_accessToken))
+
+  // Update service URLs
+  updateServiceUrls(_services);
+
+  // Save to session storage
+  window.sessionStorage.setItem("idToken", JSON.stringify(idToken.value))
+  window.sessionStorage.setItem("context", JSON.stringify(context.value))
+  window.sessionStorage.setItem("services", JSON.stringify(services.value))
+  window.sessionStorage.setItem("accessToken", JSON.stringify(accessToken.value))
 }
 
 export const _loadStoreFromSessionStorage = () => {
+  // Get values from session storage
   idToken.value = JSON.parse(window.sessionStorage.getItem("idToken") || "{}")
   context.value = JSON.parse(window.sessionStorage.getItem("context") || "{}")
   services.value = JSON.parse(window.sessionStorage.getItem("services") || "{}")
   accessToken.value = JSON.parse(window.sessionStorage.getItem("accessToken") || "{}")
 
-  if (context.value && context.value.encounter){
-    encounterId.value = context.value.encounter
+  // Update context-based values
+  if (context.value) {
+    encounterId.value = context.value.encounter || encounterId.value;
+    patientId.value = context.value.patient || patientId.value;
   }
-  if (context.value && context.value.patient){
-    patientId.value = context.value.patient
-  }
-  if (services.value && services.value["org.openehr.rest"]){
-    serviceUrl_openehr_rest.value = services.value["org.openehr.rest"]
-  }
-  if (services.value && services.value["org.openehr.ehrscape"]){
-    serviceUrl_openehr_ehrscape.value = services.value["org.openehr.ehrscape"]
-  }
-  if (services.value && services.value["org.fhir.rest"]){
-    serviceUrl_fhir.value = services.value["org.fhir.rest"]
-  }
-  if (services && services.value["org.medblocks.s3presignedurl"]){
-    serviceUrl_s3presignedurl.value = services.value["org.medblocks.s3presignedurl"]
-  }
+
+  // Update service URLs
+  updateServiceUrls(services.value);
 }
 
 export const _clearStore = () => {
+  // Clear all signals
   idToken.value = undefined
   context.value = undefined
   services.value = undefined
@@ -88,20 +91,15 @@ export const _clearStore = () => {
   serviceUrl_openehr_rest.value = undefined
   serviceUrl_openehr_ehrscape.value = undefined
   serviceUrl_fhir.value = undefined
+
+  // Clear session storage
   window.sessionStorage.removeItem("idToken")
   window.sessionStorage.removeItem("context")
   window.sessionStorage.removeItem("services")
   window.sessionStorage.removeItem("accessToken")
 }
 
-
+// Computed to determine if user is a practitioner
 export const isPractitioner = computed(() => {
-  if (idToken.value && idToken.value.fhirUser)
-    return idToken.value.fhirUser.toLowerCase().includes("practitioner")? true : false
-  return false
+  return idToken.value?.fhirUser?.toLowerCase().includes("practitioner");
 });
-
-
-
-// DATA FUNCTIONS
-

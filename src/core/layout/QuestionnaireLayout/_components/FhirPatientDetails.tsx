@@ -1,42 +1,59 @@
+/*
+  File: FhirPatientDetails.tsx
+  File Description: The FhirPatientDetails component is used to display the FHIR Patient Details.
+*/
+
+// Import necessary modules and components
 import { useEffect, useState } from "preact/hooks";
 import * as signalStore from '@/core/store';
 import { getFhirPatientDetails } from "@/core/utils/fhir";
 
-interface FhirPatientDetailsHandlerProps {
-}
+// The interface is currently empty; if you plan to pass props in the future, they should be added here
+interface FhirPatientDetailsHandlerProps {}
 
-const FhirPatientDetails: React.FC<FhirPatientDetailsHandlerProps> = ({  }) => {
-  const [id, setid] = useState<string>('')
-  const [name, setName] = useState<string>('')
-  const [gender, setGender] = useState<string>('')
-  const [birthDate, setBirthDate] = useState<string>('')
+const FhirPatientDetails: React.FC<FhirPatientDetailsHandlerProps> = () => {
+  const [id, setId] = useState<string>(''); // Updated set function name for consistency
+  const [name, setName] = useState<string>('');
+  const [gender, setGender] = useState<string>('');
+  const [birthDate, setBirthDate] = useState<string>('');
+
   useEffect(() => {
-    signalStore.patientId.subscribe(async (value)=>{
-      const patientDetails = await getFhirPatientDetails(value)
-      setid(patientDetails?.id)
-      setName(patientDetails?.name[0]?.text)
-      setGender(patientDetails?.gender)
-      setBirthDate(patientDetails?.birthDate)
-    })
-  },[signalStore.patientId.value]);
+    const subscription = signalStore.patientId.subscribe(async (value) => {
+      const patientDetails = await getFhirPatientDetails(value);
+      
+      // Check for the existence of patientDetails before setting state to ensure safety
+      if (patientDetails) {
+        setId(patientDetails.id || '');
+        setName(patientDetails.name?.[0]?.text || '');
+        setGender(patientDetails.gender || '');
+        setBirthDate(patientDetails.birthDate || '');
+      }
+    });
+
+    // Cleanup the subscription on component unmount
+    // @ts-ignore comment
+    return () => subscription.unsubscribe();
+  }, [signalStore.patientId.value]);
+
+  // Only render the component when need_patient_banner is true, otherwise render nothing
+  if (!signalStore.context.value?.need_patient_banner) return null;
+
   return (
-    <>
-      <div class="relative flex min-w-0 flex-1 items-center bg-primary/10 p-2 rounded text-left">
-        <div class="ml-4">
-          <p class="text-sm text-gray-500">@{id}</p>
-          <p class="text-base font-medium text-gray-900">{name}</p>
-          <div class="flex">
-            <p class="mt-1 text-sm font-medium mr-1">Gender :</p>
-            <p class="mt-1 text-sm font-medium uppercase">{gender}</p>
-          </div>
-          <div class="flex">
-            <p class="mt-1 text-sm font-medium mr-1">Birth Date :</p>
-            <p class="mt-1 text-sm font-medium uppercase">{birthDate}</p>
-          </div>
+    <div className="relative flex min-w-0 flex-1 items-center bg-primary/10 p-2 rounded text-left">
+      <div className="ml-4">
+        <p className="text-sm text-gray-500">@{id}</p>
+        <p className="text-base font-medium text-gray-900">{name}</p>
+        <div className="flex">
+          <p className="mt-1 text-sm font-medium mr-1">Gender :</p>
+          <p className="mt-1 text-sm font-medium uppercase">{gender}</p>
+        </div>
+        <div className="flex">
+          <p className="mt-1 text-sm font-medium mr-1">Birth Date :</p>
+          <p className="mt-1 text-sm font-medium uppercase">{birthDate}</p>
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
 export default FhirPatientDetails;

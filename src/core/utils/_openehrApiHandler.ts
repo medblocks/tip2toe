@@ -1,3 +1,7 @@
+/*
+  File: _openehrApiHandler.ts
+  File Description: This file is used to handle openEHR requests to server.
+*/
 import axios from 'axios';
 import * as signalStore from '@/core/store'
 

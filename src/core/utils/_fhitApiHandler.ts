@@ -1,3 +1,8 @@
+/*
+  File: _fhitApiHandler.ts
+  File Description: This file is used to handle fhir requests to server.
+*/
+
 import axios from 'axios';
 import * as signalStore from '@/core/store'
 

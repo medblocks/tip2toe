@@ -1,3 +1,7 @@
+/*
+  File: openehr.ts
+  File Description: This file is used to handle openEHR requests from formsection.
+*/
 import {_handleEHRRequests , _handleCompositionRequests, _handleAQLQuery} from './_openehrApiHandler'
 
 async function setEhrId(ehrId : string) {

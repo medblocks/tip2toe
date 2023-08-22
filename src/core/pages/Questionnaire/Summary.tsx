@@ -1,19 +1,28 @@
-import { useEffect } from "preact/hooks";
+/*
+  File: Summary.tsx
+  File Description: The Summary component is used to display the Summary page of the questionnaire.
+*/
+
+// Import necessary modules and components
+import { JSX } from "preact/jsx-runtime";
 import { useLocation } from "react-router-dom";
 
+// Define Item interface for clarity on the expected structure of each selected value
 interface Item {
   value: string;
   code: string;
   title: string;
 }
 
+// Define OverviewProps interface for the component's props
 interface OverviewProps {
   selectedValues: Item[];
 }
 
-export default function Overview({ selectedValues }: OverviewProps) {
+function Overview({ selectedValues }: OverviewProps) {
   const { pathname } = useLocation();
 
+  // Only display the component for the specific route
   if (pathname !== `/questionnaire/summary`) return null;
 
   return (
@@ -21,7 +30,8 @@ export default function Overview({ selectedValues }: OverviewProps) {
       <h2 className="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">Summary</h2>
       <div className="mt-4 text-left px-2">
         {selectedValues.map(item => (
-          <div key={item.code} className={item.value=="Yes"?'text-gray-800':'text-gray-800/40'}>
+          // Display each item with different styling based on their value
+          <div key={item.code} className={item.value === "Yes" ? 'text-gray-800' : 'text-gray-800/40'}>
             <p>
               {renderIcon(item.value)}
               <strong>{item.code}</strong> {item.title}
@@ -33,10 +43,16 @@ export default function Overview({ selectedValues }: OverviewProps) {
   );
 }
 
-function renderIcon(value: string) {
+/**
+ * Render different SVG icons based on the value provided.
+ * @param {string} value - The value based on which the appropriate icon should be rendered.
+ * @returns {JSX.Element} - SVG Icon element
+ */
+function renderIcon(value: string): JSX.Element {
   let path: string;
   let color: string;
 
+  // Choose icon based on the value
   switch (value) {
     case "Yes":
       path = "M4.5 12.75l6 6 9-13.5";
@@ -56,12 +72,14 @@ function renderIcon(value: string) {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
       aria-hidden="true"
       className={`w-5 h-5 inline-block mr-1 ${color}`}
     >
-      <path stroke-linecap="round" stroke-linejoin="round" d={path}></path>
+      <path strokeLinecap="round" strokeLinejoin="round" d={path}></path>
     </svg>
   );
 }
+
+export default Overview;

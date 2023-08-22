@@ -1,13 +1,22 @@
+/*
+  File: FamilyHistory.tsx
+  File Description: The FamilyHistory component is used to display the Family History page of the questionnaire.
+*/
+
+// Import necessary modules and components
 import { ONTOLOGY } from "@/tip2toeform";
 import { useLocation } from "react-router-dom";
 
+// Define the properties for the FamilyHistory component
 interface FamilyHistoryHandlerProps {
   addToSummary: Function;
 }
 
 const FamilyHistory: React.FC<FamilyHistoryHandlerProps> = ({ addToSummary }) => {
+  // Get the current route pathname
   const { pathname } = useLocation();
 
+  // Handle input events
   function _handleInput(e:any,title:string){
     if(e.currentTarget?.data){
       addToSummary({code: title, title: e.currentTarget?.data?.value, value: ONTOLOGY.options[0].value})

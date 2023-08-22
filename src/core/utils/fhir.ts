@@ -1,3 +1,8 @@
+/*
+  File: fhir.ts
+  File Description: This file is used to handle fhir requests from formsection.
+*/
+
 import { _handleFhirPatient } from "./_fhitApiHandler"
 
 async function getFhirPatientDetails(patientId : string){

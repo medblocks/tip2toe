@@ -1,3 +1,7 @@
+/*
+  File: types.ts
+  File Description: This file is used to declare medblocks form sections and questions types.
+*/
 export type YesNoUnknown = 'yes' | 'no' | 'unknown';
 export type QuestionType =
   | 'text'
