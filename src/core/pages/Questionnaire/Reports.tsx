@@ -1,8 +1,8 @@
+// @ts-nocheck
 import FileUpload from "@/core/components/FileUpload";
 import { ONTOLOGY } from "@/tip2toeform";
 import { useLocation } from "react-router-dom";
 import * as signalStore from '@/core/store'
-
 
 interface ReportsHandlerProps {
   addToSummary: Function;
@@ -51,7 +51,6 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
             authToken = {signalStore.accessToken}
             onFilesUploaded={files => silentCompositionSave("Imaging Examination Result")}
             onFilesSelected={files =>addToSummary({code: "Imaging Examination Result", title: "", value: ONTOLOGY.options[0].value})}
-
           />
         </div>
         <div class="py-5">

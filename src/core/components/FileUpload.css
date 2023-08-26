@@ -57,8 +57,8 @@
   justify-content: space-between;
 }
 
-button {
-  padding: 8px 15px;
+.actions button {
+  padding: 5px 10px;
   border: none;
   background-color: #007bff;
   color: #fff;
@@ -69,8 +69,20 @@ button {
 
 button:hover {
   background-color: #0056b3;
+  color: #fff;
 }
 
 button:active {
   background-color: #003d80;
+}
+
+.test_input p {
+  font-size: medium;
+  padding-bottom: 2px;
+}
+
+.test_input input {
+  border: solid #497cb2;
+  border-radius: 5px;
+  padding: 2px 15px;
 }

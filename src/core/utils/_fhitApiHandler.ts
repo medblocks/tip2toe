@@ -10,7 +10,7 @@ import * as signalStore from '@/core/store'
 async function _handleFhirPatient(methodtype='GET' as string, patientId: string){
   await signalStore.serviceUrl_fhir
   const allowedMethods = ['GET']
-  const url = `${signalStore.serviceUrl_fhir}/patient/${patientId}`
+  const url = `${signalStore.serviceUrl_fhir}/Patient/${patientId}`
   methodtype = methodtype.toUpperCase().replace(/ /g,'')
   if (!allowedMethods.includes(methodtype)) throw new Error('Invalid type of request')
   const config = {

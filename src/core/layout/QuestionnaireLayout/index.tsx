@@ -37,7 +37,9 @@ export default function QuestionnaireLayout() {
   const [_summary, set_summary] = useState<Array<any>>([]);
   const [_nextUrl,set_nextUrl] = useState<string | null>(null);
   const [_prevUrl,set_prevUrl] = useState<string | null>(null);
+  // @ts-ignore
   const [encounterId, setEncounterId] = useState<string | null>(null);
+  // @ts-ignore
   const [patientId, setpatientId] = useState<string | null>(null);
   const [_compositionId, set_compositionId] = useState<string | null>(null);
   const [ehrId, setehrId] = useState<string>("");
@@ -116,7 +118,11 @@ export default function QuestionnaireLayout() {
         $Loading("Loading Patient Data...")
         if(patientData?.rows?.length > 0){
           set_compositionId(patientData.rows[patientData.rows.length-1][2])
-          let compositionData =  await getCompositionByID(patientData.rows[patientData.rows.length-1][2])
+          let compositionData =  await getCompositionByID(patientData.rows[patientData.rows.length-1][2]).catch((reason)=>{
+            if(reason){
+              console.log("No Previous Submission Present")
+            }
+          })
           if(compositionData){
             Object.entries(default_data).forEach(([key, value]) => {
               if (!compositionData.composition[key]) {
@@ -284,6 +290,7 @@ export default function QuestionnaireLayout() {
             <div class="hidden lg:fixed lg:inset-y-0 lg:z-10 lg:flex lg:w-72 lg:flex-col">
               <div id="navigationSidebar" class="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white/60 px-3 pb-4">
                 <nav class="flex mt-2 flex-1 flex-col">
+                  {/* @ts-ignore */}
                   <Sidebar formSections={medblocksForm}  />
                 </nav>
               </div>

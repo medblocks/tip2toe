@@ -211,8 +211,8 @@ class FileUpload extends Component<FileUploadProps, FileUploadState> {
                                 </a>
                             )}
                             {!this.state.isUploaded && (
-                                <div>
-                                    <p>testname</p>
+                                <div class="test_input">
+                                    <p>Test Name</p>
                                     <input onInput={(e:Event)=>this._handleinput(e,index)} type="text" label="test name" />
                                 </div>
                             )}

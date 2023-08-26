@@ -18,6 +18,7 @@ const FhirPatientDetails: React.FC<FhirPatientDetailsHandlerProps> = () => {
   const [birthDate, setBirthDate] = useState<string>('');
 
   useEffect(() => {
+    // @ts-ignore
     const subscription = signalStore.patientId.subscribe(async (value) => {
       const patientDetails = await getFhirPatientDetails(value);
       
