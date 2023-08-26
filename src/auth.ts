@@ -23,7 +23,7 @@ export const _authHandler = async (
       : '';
 
   return await smartAuth({
-    iss: iss || "https://dev.medblocks.com/fhir",
+    iss: iss || "https://karolinska.medblocks.com/fhir",
     clientId: "tip2toe",
     redirectUri: redirectUri,
     scope: "emulate_user openid offline launch/patient",
