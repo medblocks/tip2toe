@@ -43,7 +43,7 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
           <mb-context path="tip2toe.v0/imaging_examination_result/any_event:0/time"></mb-context>
           <FileUpload 
             // multiple={true}
-            acceptedFileTypes="image/*"
+            acceptedFileTypes="image/*,application/pdf,application/vnd.ms-excel"
             path="tip2toe.v0/imaging_examination_result/any_event:0/test_name" 
             s3serviceurl={signalStore.serviceUrl_s3presignedurl}
             bucketName = {"ignite-medblocks"}
@@ -60,7 +60,6 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
           <mb-context path="tip2toe.v0/previous_genetic_investigations/subject"></mb-context>
           <mb-context path="tip2toe.v0/previous_genetic_investigations/any_event:0/time"></mb-context>
           <FileUpload 
-            // multiple={true}
             acceptedFileTypes="image/*"
             path="tip2toe.v0/previous_genetic_investigations/any_event:0/test_name" 
             s3serviceurl={signalStore.serviceUrl_s3presignedurl}
@@ -70,21 +69,17 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
             onFilesUploaded={files => silentCompositionSave("Previous Genetic Investigations")}
             onFilesSelected={files => addToSummary({code: "Previous Genetic Investigations", title: "", value: ONTOLOGY.options[0].value})}
           />
-          {/* <FileUpload 
-            path="tip2toe.v0/previous_genetic_investigations/any_event" 
-            onSubmit={(files, fileNames) => {console.log(files); console.log(fileNames); return Promise.resolve();}}
-          /> */}
-          
-           <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotyping" label="Karyotyping" terminology="local">
+          <br />
+          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotyping" label="Karyotyping" terminology="local">
             <mb-option value="at0002" label="Yes"></mb-option>
             <mb-option value="at0003" label="No"></mb-option>
           </mb-select>
-          
+          <br />
           <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/fish" label="FISH" terminology="local">
             <mb-option value="at0006" label="Yes"></mb-option>
             <mb-option value="at0007" label="No"></mb-option>
           </mb-select>
-          
+          <br />
           <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/media_file:0/content_name" label="Content name" terminology="local_terms">
             <mb-option value="1" label="Array"></mb-option>
             <mb-option value="2" label="Target Sequencing"></mb-option>
@@ -100,7 +95,7 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
           <mb-context path="tip2toe.v0/laboratory_test_result/subject"></mb-context>
 
           <FileUpload 
-            // multiple={true}
+            multiple={true}
             acceptedFileTypes="image/*"
             path="tip2toe.v0/laboratory_test_result/any_event:0/test_name" 
             s3serviceurl={signalStore.serviceUrl_s3presignedurl}

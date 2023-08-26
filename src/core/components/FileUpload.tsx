@@ -6,7 +6,7 @@ import { useId } from 'preact/hooks';
 type FileUploadProps = {
     onFilesSelected?: (files: FileData[]) => void;
     onFilesUploaded?: (files: FileData[]) => void;
-    // multiple?: boolean;
+    multiple?: boolean;
     acceptedFileTypes?: string; 
     s3serviceurl: any;
     filePath: string;
@@ -57,9 +57,9 @@ class FileUpload extends Component<FileUploadProps, FileUploadState> {
     }
 
     handleUploadClick = async () => {
-        console.log('Upload clicked');
         let files = this.state.files;
         if(files.length == 0) return;
+        console.log('Upload clicked');
         await Promise.all(files.map(async (file: FileData, index) => {
             const presignedURL = await this.getPresignedURL(file,'PUT');
             await this.uploadFileToS3(this.state.uploadFiles[index],presignedURL);
@@ -192,7 +192,7 @@ class FileUpload extends Component<FileUploadProps, FileUploadState> {
                     >
                         <input
                             type="file"
-                            // multiple={this.props.multiple}
+                            multiple={this.props.multiple}
                             accept={this.props.acceptedFileTypes || "*.*"}
                             onChange={this.onFilesChange}
                         />
@@ -207,7 +207,7 @@ class FileUpload extends Component<FileUploadProps, FileUploadState> {
                             {file.name}
                             {file.url && (
                                 <a href={file.url} target={"_blank"} rel="noopener noreferrer">
-                                    {file.type.includes('image') && (<img src={file.url} alt={file.name} />)}
+                                    {file.type.includes('image')?(<img src={file.url} alt={file.name} />):(<p>Click Here</p>)}
                                 </a>
                             )}
                             {!this.state.isUploaded && (

@@ -51,6 +51,16 @@
   margin-right: 10px;
 }
 
+.file-item p {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.file-item p:hover {
+  color: #4986c6;
+  text-decoration: underline;
+}
+
 .actions {
   margin-top: 20px;
   display: flex;
