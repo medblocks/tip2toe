@@ -314,7 +314,7 @@ export default function QuestionnaireLayout() {
               {/* FORM CONTEXT */}
 
               {/* FORM CONTENT */}
-              <div class="mx-6 md:min-h-[88vh]">
+              <div class="mx-6 min-h-[87vh] md:min-h-[88vh]">
                 <Overview />
                 <FamilyHistory addToSummary={addToSummary} />
                 <IndividualView addToSummary={addToSummary}/>

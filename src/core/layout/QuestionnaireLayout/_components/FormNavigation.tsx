@@ -15,7 +15,7 @@ const FormNav: React.FC<FormNavHandlerProps> = ({ prevUrl, nextUrl }) => {
   const { pathname } = useLocation();
 
   return (
-    <div className="sticky z-10 bottom-0 bg-white border-t border-slate-200 print:hidden">
+    <div className="sticky z-10 bottom-0 bg-white border-t border-slate-200">
       <div className="flex px-4 h-16 justify-between items-center max-w-6xl mx-auto">
         {/* Render Previous button if prevUrl exists */}
         {prevUrl ? (
