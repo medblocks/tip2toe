@@ -26,7 +26,7 @@ async function setEhrId(ehrId : string) {
 }
 
 async function getAllCompositionIDs(ehrId : string){
-  let query = `select c/context/start_time/value as start_time, c/name/value as name, c/uid/value as uid From EHR e contains COMPOSITION c WHERE e/ehr_id/value='${ehrId}'`
+  let query = `select c/context/start_time/value as start_time, c/name/value as name, c/uid/value as uid From EHR e contains COMPOSITION c WHERE e/ehr_id/value='${ehrId}' AND c/archetype_details/template_id/value='tip2toe.v0'`
   const response = await _handleAQLQuery(query)
   return response
 }

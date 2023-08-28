@@ -165,7 +165,7 @@ const HomePage: React.FC<HomePageHandlerProps> = ({ _authenticate }) => {
                 </div>
               </div>
               <div class="py-5 items-center ">
-                <img class="bg-primary px-5 py-5 rounded-xl w-64 lg:w-[560px] m-auto" src="/assets/images/zebra.png" alt="zebra_image" />
+                <img class="bg-primary px-5 py-5 rounded-xl md:w-[400px] lg:w-[560px] m-auto" src="/assets/images/zebra.png" alt="zebra_image" />
               </div>
             </div>
           </div>

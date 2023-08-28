@@ -29,7 +29,10 @@ const ThisIsMe: React.FC<ThisIsMeHandlerProps> = ({ addToSummary, readonly= fals
 
   return (
     <div class={pathname === `/questionnaire/this-is-me` ?'':'hidden'}>
-      <h2 class="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">This Is Me</h2>
+      <div class="flex items-center mt-0">
+        <img class="w-16 h-16" src="/assets/patient.png" alt="" />
+        <h2 class="ml-2 text-4xl uppercase font-bold antialiased tracking-wide">This Is Me</h2>
+      </div>
       <div class="mt-4 divide-y divide-gray-300">
         <div class="py-5">
           <h3 class="text-xl">My care givers are</h3>
