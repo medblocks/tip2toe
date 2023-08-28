@@ -70,17 +70,17 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
             onFilesSelected={files => addToSummary({code: "Previous Genetic Investigations", title: "", value: ONTOLOGY.options[0].value})}
           />
           <br />
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotyping" label="Karyotyping" terminology="local">
+          <mb-select onmb-input={(e: any) => _handleInput(e,"Karyotyping")} path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/karyotyping" label="Karyotyping" terminology="local">
             <mb-option value="at0002" label="Yes"></mb-option>
             <mb-option value="at0003" label="No"></mb-option>
           </mb-select>
           <br />
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/fish" label="FISH" terminology="local">
+          <mb-select onmb-input={(e: any) => _handleInput(e,"FISH")} path="tip2toe.v0/previous_genetic_investigations/any_event:0/previous_genetic_investigations/fish" label="FISH" terminology="local">
             <mb-option value="at0006" label="Yes"></mb-option>
             <mb-option value="at0007" label="No"></mb-option>
           </mb-select>
           <br />
-          <mb-select path="tip2toe.v0/previous_genetic_investigations/any_event:0/media_file:0/content_name" label="Content name" terminology="local_terms">
+          <mb-select onmb-input={(e: any) => _handleInput(e,"Content name")} path="tip2toe.v0/previous_genetic_investigations/any_event:0/media_file:0/content_name" label="Content name" terminology="local_terms">
             <mb-option value="1" label="Array"></mb-option>
             <mb-option value="2" label="Target Sequencing"></mb-option>
             <mb-option value="3" label="WES panels/trios"></mb-option>
@@ -113,9 +113,9 @@ const Reports: React.FC<ReportsHandlerProps> = ({ addToSummary, silentFormUpdate
           <mb-context path="tip2toe.v0/clinical_findings/encoding"></mb-context>
           <mb-context path="tip2toe.v0/clinical_findings/subject"></mb-context>
 
-          <mb-input path="tip2toe.v0/clinical_findings/synopsis" label="Synopsis"></mb-input>
+          <mb-input onmb-input={(e: any) => _handleInput(e,"Synopsis")}  path="tip2toe.v0/clinical_findings/synopsis" label="Synopsis"></mb-input>
 
-          <mb-select path="tip2toe.v0/clinical_findings/media_file:0/content_name" label="Content name" terminology="local_terms">
+          <mb-select onmb-input={(e: any) => _handleInput(e,"Content name")} path="tip2toe.v0/clinical_findings/media_file:0/content_name" label="Content name" terminology="local_terms">
             <mb-option value="1" label="Face from the front"></mb-option>
             <mb-option value="2" label="Face in profile with ear shown left side"></mb-option>
             <mb-option value="3" label="Face in profile with ear shown right side"></mb-option>
