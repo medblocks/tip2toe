@@ -123,7 +123,7 @@ export default function QuestionnaireLayout() {
     } else {
       set_prevUrl(null);
     }
-  }, [pathname]);
+  }, [pathname,medblocksForm]);
 
   function addToSummary(data: any) {
     let index = _summary.findIndex((item) => item.code == data.code);
