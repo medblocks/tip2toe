@@ -101,7 +101,7 @@ const App = () => {
 
   async function _authHandlerMain(type=1){
     if(type === 1){
-      await authenticate('https://dev.medblocks.com/fhir');
+      await authenticate('https://app3.medblocks.com/fhir');
     }else {
       await authenticate('https://karolinska.medblocks.com/fhir');
     }
