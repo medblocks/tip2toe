@@ -15,6 +15,11 @@ export const _authHandler = async (
   _encounterId = null as string | null
 ) => {
   console.log('AuthParams', iss, launch, redirectUri, _patientId, _encounterId);
+
+  const _iss = iss?iss : sessionStorage.getItem("iss")?sessionStorage.getItem("iss"):"https://karolinska.medblocks.com/fhir"
+  console.log("iss_auth",_iss)
+
+  sessionStorage.setItem('iss',_iss)
   
   const _launch = launch 
     ? launch 
@@ -23,7 +28,7 @@ export const _authHandler = async (
       : '';
 
   return await smartAuth({
-    iss: iss || "https://karolinska.medblocks.com/fhir",
+    iss: _iss,
     clientId: "tip2toe",
     redirectUri: redirectUri,
     scope: "emulate_user openid offline launch/patient",
