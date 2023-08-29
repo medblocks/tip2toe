@@ -190,7 +190,7 @@ const _practitionerForm : MBFormData = {
     ]
   },
   mouth_teeth: {
-    title: 'Mouth/teeth',
+    title: 'Mouth/Teeth',
     description: "",
     slug: 'mouthteeth',
     path: "tip2toe.v0/symptom_sign_screening_questionnaire/any_event:0/mouth_teeth:{0}",
@@ -312,7 +312,7 @@ const _practitionerForm : MBFormData = {
     ]
   },
   head_and_neck: {
-    title: 'head and neck',
+    title: 'Head and Neck',
     description: "",
     slug: 'head-and-neck',
     path: "tip2toe.v0/symptom_sign_screening_questionnaire/any_event:0/head_and_neck:{0}",
@@ -325,7 +325,7 @@ const _practitionerForm : MBFormData = {
     ]
   },
   trunk: {
-    title: 'trunk',
+    title: 'Trunk',
     description: "",
     slug: 'trunk',
     path: "tip2toe.v0/symptom_sign_screening_questionnaire/any_event:0/trunk:{0}",
