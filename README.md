@@ -1,8 +1,14 @@
 # tip2toe
 
-### NOTE: PLEASE USE NODE VERSION == 19.7.0
+## Technologies Used
 
-## How To Get Started
+Frontend - Node Js - Preact
+NOTE: PLEASE USE NODE VERSION == 19.7.0
+
+Backend - OpenEHR
+
+
+## How To Get Started 
 
 1. Install Docker from the link given below
 ```
@@ -43,6 +49,33 @@ If Windows
 ```
 http://localhost:5173
 ```
+
+
+## Deployment Steps
+
+1. Deploy OpenEHR using docker
+```
+https://docs.docker.com/engine/install/
+
+Clone the repository or the just the docker-compose.yaml file
+
+docker-compose up
+```
+
+2. Build the Frontend App
+```
+npm build
+```
+
+3. Deploy the files from the dist folder to a frontend server accessible to public
+
+
+
+## Code Docs
+Comments has been added for each File to explain its function as well as use. 
+
+
+
 
 ## Summary 
 The following app is developed utilizing Preact for the frontend and openEHR as the backend foundation to store the tip2toe form data in a structured data format. The app also has a SMART ON FHIR authentication integration for easy portability to any FHIR system.
