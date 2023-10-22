@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'primary': '#2563EB',
         'udni-teal-100': '#EDFBFD',
         'udni-teal-200': '#91E7F2',
         'udni-teal-400': '#48D7EA',

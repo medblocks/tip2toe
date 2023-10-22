@@ -1,160 +1,125 @@
-import { SearchFunction } from 'medblocks-ui/dist/src/medblocks/codedtext/searchFunctions';
-import { MBFormSection, MBQuestion } from "@/types";
-import { useLocation } from "react-router-dom";
+/*
+  File: AllSections.tsx
+  File Description: The AllSections component is used to display the Multichoice sections of the questionnaire.
+*/
+
+// Import necessary modules and components
 import { useState } from "preact/hooks";
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
+import { MBFormSection, MBQuestion } from "@/types";
+import { ONTOLOGY } from "@/tip2toeform";
 
 interface AllSectionHandlerProps {
   _sectionData: MBFormSection;
+  addToSummary: Function;
 }
 
-const AllSections = ({_sectionData}:AllSectionHandlerProps) => {
+const AllSections: React.FC<AllSectionHandlerProps> = ({ _sectionData, addToSummary }) => {
   const { pathname } = useLocation();
-  const _buttonDefaultValue = {code: "at0027",value: "Not Investigated",terminology: "local"}
-  const [questions,setQuestions] = useState(_sectionData.questions)
+  const [questions, setQuestions] = useState(_sectionData.questions);
 
-  const formatPath = (path:string,questionIndex:number) => {
-    return path.replace(/{([0]+)}/g, questionIndex.toString());
-  };
+  const formatPath = (path: string, questionIndex: number) => 
+    path.replace(/{([0]+)}/g, questionIndex.toString());
 
-  const addQuestion = (targetElement:any) => {
-    if(targetElement.data){
-      const path = formatPath(_sectionData.path,questions.length)
-      const tempQuestions = [...questions,{...targetElement.data,path,type:"ontology"}]
-      setQuestions(tempQuestions)
-      targetElement.data = undefined
+  // Add a new question to the state
+  const addQuestion = (targetElement: any) => {
+    if (targetElement.data) {
+      const path = formatPath(_sectionData.path, questions.length);
+      const newQuestion = {
+        ...targetElement.data,
+        path,
+        type: "ontology",
+        selected_value: { code: "at0023", value: "Yes", terminology: "local" }
+      };
+      setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
+      targetElement.data = undefined;
     }
   }
 
-  const searchFunction:SearchFunction = async ({searchString, maxHits})=>{
+  // API call to fetch search results
+  async function searchFunction({ searchString, maxHits }: { searchString: string; maxHits: number; }) {
     const response = await axios.get('https://hpo.jax.org/api/hpo/search/', {
       params: {
         q: searchString,
-        max:maxHits,
-        offset:0,
-        category:"terms"
+        max: maxHits,
+        offset: 0,
+        category: "terms"
       },
     });
-    return response.data.terms.map(
-      (
-        term: {
-          id: String,
-          name: String
-        }
-      ) => (
-        {
-          code: term.id,
-          value: term.name,
-          terminology: 'local_terms',
-        }
-      )
+    return response.data.terms.map((term: { id: any; name: any; }) => ({
+      code: term.id,
+      value: term.name,
+      terminology: 'local_terms',
+    }));
+  }
+
+  // Update the state of individual questions and invoke callback to addToSummary
+  const saveQuestionsState = (question: MBQuestion, selectedValue: any) => {
+    const updatedQuestions = questions.map(q => q.code === question.code 
+      ? { ...q, selected_value: selectedValue }
+      : q
     );
+    addToSummary({ code: question.code, title: question.value, value: selectedValue["value"] });
+    setQuestions(updatedQuestions);
   }
 
-  const saveQuestionsState = (question:MBQuestion,selected_value:object) => {
-    const tempQuestions = [...questions]
-    tempQuestions.forEach(_question =>{
-      if(_question.code == question.code){
-        _question.selected_value = selected_value
-      }
-    })
-    setQuestions(tempQuestions)
+  // Handle changes via master control buttons
+  const handleMasterControl = (setValue: number) => {
+    const selectedValue = setValue === 1 
+      ? { code: "at0024", value: "No", terminology: "local" }
+      : ONTOLOGY.default;
+    const updatedQuestions = questions.map(q => ({ ...q, selected_value: selectedValue }));
+    questions.forEach(q => addToSummary({ code: q.code, title: q.value, value: selectedValue["value"] }));
+    setQuestions(updatedQuestions);
   }
 
-  const allQuestionController = (setValue:number) => {
-    let defaultValue = _buttonDefaultValue
-    if(setValue==1){
-      defaultValue = {
-        code: "at0024",
-        value: "No",
-        terminology: "local"
-      }
+  const buttonClickHandler = (event: any, question: MBQuestion) => {
+    if (!event?.currentTarget?.data) {
+      event.currentTarget.data = ONTOLOGY.default;
     }
-    const tempQuestions = [...questions]
-    tempQuestions.forEach(_question =>{
-      _question.selected_value = defaultValue
-    })
-    setQuestions(tempQuestions) 
+    saveQuestionsState(question, event.currentTarget.data);
   }
-
-  const _mbButtonHandler = (event:any,question:MBQuestion) =>{
-    if(event?.currentTarget?.data == undefined){
-      event.currentTarget.data = _buttonDefaultValue
-    }
-    saveQuestionsState(question,event.currentTarget.data)
-  }
-
   return (
-    <>
-      <div class={pathname === `/questionnaire/${_sectionData.slug}` ?'':'hidden'}>
+    <div className={pathname === `/questionnaire/${_sectionData.slug}` ? '' : 'hidden'}>
+      <h2 className="mt-0 text-4xl uppercase font-bold antialiased tracking-wide">{_sectionData.title}</h2>
+      {_sectionData.description && <div dangerouslySetInnerHTML={{ __html: _sectionData.description }} />}
 
-        {/* Title & Description */}
-        <h2 class="text-2xl">{_sectionData.title}</h2>
-        {_sectionData.description ? (
-          <div dangerouslySetInnerHTML={{ __html: _sectionData.description }} />
-        ) : null}
-        {/* Title & Description */}
-        
-        {/* MB CONTEXT */}
-        <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/any_event:0/time"></mb-context>
-        <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/subject"></mb-context>
-        <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/language"></mb-context>
-        <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/encoding"></mb-context>
-        {/* MB CONTEXT */}
+      <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/any_event:0/time"></mb-context>
+      <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/subject"></mb-context>
+      <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/language"></mb-context>
+      <mb-context path="tip2toe.v0/symptom_sign_screening_questionnaire/encoding"></mb-context>
 
-        {/* MASTER CONTROLLER */}
-        <div class="inline-flex my-2 text-sm border rounded border-slate-300 text-slate-500">
-          <button onClick={e => allQuestionController(1)} class="flex items-center p-2 hover:bg-white hover:text-gray-700">Normal</button>
-          <button onClick={e => allQuestionController(0)} class="flex items-center p-2 border-l hover:bg-white hover:text-gray-700">Not investigated</button>
-        </div>
-        {/* MASTER CONTROLLER */}
-
-        {/* QUESTIONS HANDLER */}
-        <div class="mt-4 divide-y divide-gray-300">
-          {questions.map((item) => (
-            <div class="py-4" key={item.code}>
-              {item.type === 'ontology' ? (
-                <div>
-                  <mb-context bind={{ code: item.code, terminology: item.terminology, value: item.value }} path={`${item.path}/symptom_or_sign_name`} label="Symptom or sign name"></mb-context>
-                  <h3 class="text-xl m-0">{item.value} </h3>
-                  <p class="text-sm text-gray-500 mb-4">{item.code}</p>
-                  <mb-buttons onmb-input={e => _mbButtonHandler(e, item)} data={item.selected_value} class="mt-4" path={`${item.path}/presence`} terminology="local">
-                    <mb-option value="at0023" label="Yes"></mb-option>
-                    <mb-option value="at0024" label="No"></mb-option>
-                    <mb-option value="at0027" label="Not Investigated"></mb-option>
-                  </mb-buttons>
-                </div>
-              ) : item.type === 'text' ? (
-                <div>
-                  <mb-input path={item.path} label={item.value} terminology={item.terminology} ></mb-input>
-                </div>
-              ) : (
-                <p>{item.type}</p>
-              )}
-            </div>
-          ))}
-            {/* <div class="py-4" key={item.code}>
-              <mb-context bind={{code: item.code, terminology: item.terminology, value: item.value}} path={item.path} label="Symptom or sign name" terminology={item.terminology}></mb-context>
-              <h3 class="text-xl m-0">{item.value} </h3>
-              <p class="text-sm text-gray-500 mb-4">{item.code}</p>
-              <mb-buttons onmb-input={e=>_mbButtonHandler(e,item)} data={item.selected_value} class="mt-4" path={`${item.path}/presence`} terminology="local">
-                <mb-option value="at0023" label="Yes"></mb-option>
-                <mb-option value="at0024" label="No"></mb-option>
-                <mb-option value="at0027" label="Not Investigated"></mb-option>
-              </mb-buttons>
-            </div>
-          ))} */}
-        </div>
-        {/* QUESTIONS HANDLER */}
-
-        {/* ADD CUSTOM QUESTIONS */}
-        <mb-search label="Other. Describe in Clinical summary and/or add HPO terms here" onmb-input={(e)=>addQuestion(e.target)} class="mt-4 mb-24" disablefallback plugin={searchFunction} />
-        {/* ADD CUSTOM QUESTIONS */}
-
-
+      <div className="inline-flex my-2 text-sm border rounded border-slate-300 text-slate-500">
+        <button onClick={() => handleMasterControl(1)} className="flex items-center p-2 hover:bg-white hover:text-gray-700">Normal</button>
+        <button onClick={() => handleMasterControl(0)} className="flex items-center p-2 border-l hover:bg-white hover:text-gray-700">Not investigated</button>
       </div>
-    </>
+
+      <div className="mt-4 divide-y divide-gray-300">
+        {questions.map(item => (
+          <div className="py-5" key={item.code}>
+            <h3 className="text-xl">{item.value} </h3>
+            <p className="text-sm text-gray-500 mb-4">{item.code}</p>
+            {item.type === 'ontology' ? (
+              <div>
+                <mb-context bind={{ code: item.code, terminology: item.terminology, value: item.value }} path={`${item.path}/symptom_or_sign_name`} label="Symptom or sign name"></mb-context>
+                <mb-buttons onmb-input={(e:Event) => buttonClickHandler(e, item)} data={item.selected_value} className="mt-4 z-0" path={`${item.path}/presence`} terminology="local">
+                  {ONTOLOGY.options.map((option: any) => (
+                    <mb-option value={option.code} label={option.value}></mb-option>
+                  ))}
+                </mb-buttons>
+              </div>
+            ) : item.type === 'text' ? (
+              <mb-input path={item.path} label={item.value} terminology={item.terminology}></mb-input>
+            ) : (
+              <p>{item.type}</p>
+            )}
+          </div>
+        ))}
+      </div>
+      <mb-search label="Other. Describe in Clinical summary and/or add HPO terms here" onmb-input={(e: { target: any; }) => addQuestion(e.target)} className="mt-6 mb-10" disablefallback plugin={searchFunction} />
+    </div>
   );
 }
 
-export default AllSections
+export default AllSections;
