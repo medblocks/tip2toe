@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+@echo off
+
+curl --location 'http://127.0.0.1:8080/ehrbase/rest/ecis/v1/template' \
+--header 'Content-Type: application/xml' \
+--header 'prefer: return=representation' \
+--data-raw '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <template xmlns="http://schemas.openehr.org/v1">
     <language>
         <terminology_id>
@@ -406,7 +411,7 @@
 </term_definitions>
 <term_definitions code="at0013">
     <items id="text">Anonymised current location</items>
-    <items id="description">The patient's current location anonymised.</items>
+    <items id="description">The patient'\''s current location anonymised.</items>
 </term_definitions>
                             </children>
                             <children xsi:type="C_ARCHETYPE_ROOT">
@@ -663,7 +668,7 @@
 </term_definitions>
 <term_definitions code="at0013">
     <items id="text">Anonymised current location</items>
-    <items id="description">The patient's current location anonymised.</items>
+    <items id="description">The patient'\''s current location anonymised.</items>
 </term_definitions>
                             </children>
                             <children xsi:type="C_ARCHETYPE_ROOT">
@@ -1076,7 +1081,7 @@
     <items id="description"></items>
 </term_definitions>
 <term_definitions code="at0003">
-    <items id="text">I don't like to</items>
+    <items id="text">I don'\''t like to</items>
     <items id="description"></items>
 </term_definitions>
 <term_definitions code="at0004">
@@ -1672,7 +1677,7 @@
 </occurrences>
 <node_id></node_id>
 <item xsi:type="C_STRING">
-    <list>The patient's parents are consanguineous?</list>
+    <list>The patient'\''s parents are consanguineous?</list>
 </item>
                             </children>
                         </attributes>
@@ -1935,7 +1940,7 @@
             <items id="description">Summary information about the prevalence of a risk factor, problem or diagnosis in all family members.</items>
         </term_definitions>
         <term_definitions code="at0030">
-            <items id="text">The patient's parents are consanguineous?</items>
+            <items id="text">The patient'\''s parents are consanguineous?</items>
             <items id="description">Narrative description about occurrence in family members.</items>
         </term_definitions>
         <term_definitions code="at0031">
@@ -1954,7 +1959,7 @@
         <term_definitions code="at0034">
             <items id="text">Number affected</items>
             <items id="description">The number of family members known to be affected.</items>
-            <items id="comment">This is the number of family members who are affected AND who also fit selected relationship, family line and sex criteria. Effectively this number is the numerator for calculation of an 'Affected ratio'.</items>
+            <items id="comment">This is the number of family members who are affected AND who also fit selected relationship, family line and sex criteria. Effectively this number is the numerator for calculation of an '\''Affected ratio'\''.</items>
         </term_definitions>
         <term_definitions code="at0037">
             <items id="text">First degree relative</items>
@@ -1970,11 +1975,11 @@
         </term_definitions>
         <term_definitions code="at0040">
             <items id="text">Maternal line</items>
-            <items id="description">Related through the subject's mother.</items>
+            <items id="description">Related through the subject'\''s mother.</items>
         </term_definitions>
         <term_definitions code="at0041">
             <items id="text">Paternal line</items>
-            <items id="description">Related through the subject's father.</items>
+            <items id="description">Related through the subject'\''s father.</items>
         </term_definitions>
         <term_definitions code="at0042">
             <items id="text">Genetic family</items>
@@ -2004,7 +2009,7 @@
         <term_definitions code="at0054">
             <items id="text">Number eligible</items>
             <items id="description">The number of eligible family members.</items>
-            <items id="comment">This is the number of family members who potentially could be affected AND who also fit selected relationship, family line and sex criteria. Effectively this number is the denominator for calculation of an 'Affected ratio'.</items>
+            <items id="comment">This is the number of family members who potentially could be affected AND who also fit selected relationship, family line and sex criteria. Effectively this number is the denominator for calculation of an '\''Affected ratio'\''.</items>
         </term_definitions>
         <term_definitions code="at0055">
             <items id="text">Genetic predisposition?</items>
@@ -2427,7 +2432,7 @@
                 <term_definitions code="at0004">
                     <items id="text">Family member name</items>
                     <items id="description">Name of family member.</items>
-                    <items id="comment">For example: 'Aunt Susan' or 'Susan Smith'. However, for privacy reasons this may not be appropriate for recording, sharing or public display and in this situation the 'Alias' should be used.</items>
+                    <items id="comment">For example: '\''Aunt Susan'\'' or '\''Susan Smith'\''. However, for privacy reasons this may not be appropriate for recording, sharing or public display and in this situation the '\''Alias'\'' should be used.</items>
                 </term_definitions>
                 <term_definitions code="at0005">
                     <items id="text">Date of birth</items>
@@ -2436,12 +2441,12 @@
                 <term_definitions code="at0008">
                     <items id="text">Clinical history</items>
                     <items id="description">Detail about problems or diagnoses for the family member.</items>
-                    <items id="comment">If more detail is required, suggest using EVALUATION.problem_diagnosis or the ACTION.procedure archetype and specifying the 'Subject of Care' as the family member, rather than the subject of the health record.</items>
+                    <items id="comment">If more detail is required, suggest using EVALUATION.problem_diagnosis or the ACTION.procedure archetype and specifying the '\''Subject of Care'\'' as the family member, rather than the subject of the health record.</items>
                 </term_definitions>
                 <term_definitions code="at0009">
                     <items id="text">Problem/diagnosis name</items>
                     <items id="description">Identification of the significant problem or diagnosis in the identified family member.</items>
-                    <items id="comment">Coding of the family member's problem or diagnosis with a terminology is preferred, where possible. May link from this data element to a detailed record of a Problem/Diagnosis using the EVALUATION.problem_diagnosis archetype with the Subject of Care set to the family member, not to the patient.</items>
+                    <items id="comment">Coding of the family member'\''s problem or diagnosis with a terminology is preferred, where possible. May link from this data element to a detailed record of a Problem/Diagnosis using the EVALUATION.problem_diagnosis archetype with the Subject of Care set to the family member, not to the patient.</items>
                 </term_definitions>
                 <term_definitions code="at0010">
                     <items id="text">Age at onset</items>
@@ -2455,7 +2460,7 @@
                 </term_definitions>
                 <term_definitions code="at0012">
                     <items id="text">Clinical description</items>
-                    <items id="description">Narrative description or comments about clinical aspects of the family member's problem/diagnosis.</items>
+                    <items id="description">Narrative description or comments about clinical aspects of the family member'\''s problem/diagnosis.</items>
                 </term_definitions>
                 <term_definitions code="at0014">
                     <items id="text">Cause of death?</items>
@@ -2469,7 +2474,7 @@
                 <term_definitions code="at0020">
                     <items id="text">Alias</items>
                     <items id="description">An alternative name or label to uniquely identify a family member, without using a personal name which might publicly identify the individual.</items>
-                    <items id="comment">To be used to assist in distinguishing one individual from multiple family members with identical relationships. For example, the label to distinguish one specific sister from three known sisters might be 'eldest sister' 'sister with the red hair' or 'sister #1'.</items>
+                    <items id="comment">To be used to assist in distinguishing one individual from multiple family members with identical relationships. For example, the label to distinguish one specific sister from three known sisters might be '\''eldest sister'\'' '\''sister with the red hair'\'' or '\''sister #1'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0022">
                     <items id="text">Biomarker description</items>
@@ -2478,7 +2483,7 @@
                 <term_definitions code="at0023">
                     <items id="text">Deceased?</items>
                     <items id="description">Is the family member deceased?</items>
-                    <items id="comment">Record as 'True' if family member is deceased.</items>
+                    <items id="comment">Record as '\''True'\'' if family member is deceased.</items>
                 </term_definitions>
                 <term_definitions code="at0024">
                     <items id="text">Biomarkers</items>
@@ -2543,7 +2548,7 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 </term_definitions>
                 <term_definitions code="at0060">
                     <items id="text">Biological sex</items>
-                    <items id="description">The family member's biological sex.</items>
+                    <items id="description">The family member'\''s biological sex.</items>
                     <items id="comment">Coding of the sex with a terminology is preferred, where possible.</items>
                 </term_definitions>
                 <term_definitions code="at0061">
@@ -2561,7 +2566,7 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0064">
                     <items id="text">Relationship degree</items>
                     <items id="description">The degree of relationship between the subject of care and the family member.</items>
-                    <items id="comment">If the 'Relationship' data element uses pre-coordinated terms that include the degree of relationship, then this data element is redundant.</items>
+                    <items id="comment">If the '\''Relationship'\'' data element uses pre-coordinated terms that include the degree of relationship, then this data element is redundant.</items>
                 </term_definitions>
                 <term_definitions code="at0065">
                     <items id="text">First degree relative</items>
@@ -2578,15 +2583,15 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0068">
                     <items id="text">Family line</items>
                     <items id="description">Identification of the maternal or paternal family line in the relationship.</items>
-                    <items id="comment">If the 'Relationship' data element uses pre-coordinated terms that include the family line, then this data element is redundant.</items>
+                    <items id="comment">If the '\''Relationship'\'' data element uses pre-coordinated terms that include the family line, then this data element is redundant.</items>
                 </term_definitions>
                 <term_definitions code="at0069">
                     <items id="text">Maternal line</items>
-                    <items id="description">Related through the subject's mother.</items>
+                    <items id="description">Related through the subject'\''s mother.</items>
                 </term_definitions>
                 <term_definitions code="at0070">
                     <items id="text">Paternal line</items>
-                    <items id="description">Related through the subject's father.</items>
+                    <items id="description">Related through the subject'\''s father.</items>
                 </term_definitions>
                 <term_bindings terminology="SNOMED-CT">
                     <items code="at0000">
@@ -3216,7 +3221,7 @@ Note: More data elements will be needed in future to record detailed genetic mar
 <term_definitions code="at0004">
     <items id="text">Gestational age</items>
     <items id="description">The length of the pregnancy at the time of delivery of the infant.</items>
-    <items id="comment">The value for this data element will usually, but not always, be identical to the 'Pregnancy duration' data element within the EVALUATION.pregnancy_summary in the maternal record. It may also be derived using the 'Agreed date' data element within the EVALUATION.estimated_date_delivery archetype in the maternal record. Usually estimated by Naegele's rule or by ultrasound scan.</items>
+    <items id="comment">The value for this data element will usually, but not always, be identical to the '\''Pregnancy duration'\'' data element within the EVALUATION.pregnancy_summary in the maternal record. It may also be derived using the '\''Agreed date'\'' data element within the EVALUATION.estimated_date_delivery archetype in the maternal record. Usually estimated by Naegele'\''s rule or by ultrasound scan.</items>
 </term_definitions>
 <term_definitions code="at0005">
     <items id="text">Method of delivery</items>
@@ -3470,22 +3475,22 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0004">
                     <items id="text">Date/time of birth (DOB)</items>
                     <items id="description">The date/time of birth of the individual.</items>
-                    <items id="comment">May also be used to record the assumed or agreed date/time of birth for operational purposes, if the actual date/time is not formally recorded. Possible alternatives for the date/time of birth of the individual can be recorded using the CLUSTER.DOB_alternative archetype 'Date of birth details' SLOT. Partial dates are allowed.</items>
+                    <items id="comment">May also be used to record the assumed or agreed date/time of birth for operational purposes, if the actual date/time is not formally recorded. Possible alternatives for the date/time of birth of the individual can be recorded using the CLUSTER.DOB_alternative archetype '\''Date of birth details'\'' SLOT. Partial dates are allowed.</items>
                 </term_definitions>
                 <term_definitions code="at0005">
                     <items id="text">Structured place of birth</items>
                     <items id="description">Structured details about the place of birth.</items>
-                    <items id="comment">Please note: there is potential duplication of the 'Country of birth' data element if the CLUSTER.address is used. </items>
+                    <items id="comment">Please note: there is potential duplication of the '\''Country of birth'\'' data element if the CLUSTER.address is used. </items>
                 </term_definitions>
                 <term_definitions code="at0006">
                     <items id="text">Pregnancy/birth summary</items>
                     <items id="description">Narrative description about the entire pregnancy, labour and delivery of the individual, including both maternal and infant complications.</items>
-                    <items id="comment">This data element may be derived from the 'Pregnancy synopsis' data element within the EVALUATION.pregnancy_summary archetype in the maternal health record.</items>
+                    <items id="comment">This data element may be derived from the '\''Pregnancy synopsis'\'' data element within the EVALUATION.pregnancy_summary archetype in the maternal health record.</items>
                 </term_definitions>
                 <term_definitions code="at0007">
                     <items id="text">Birth plurality</items>
                     <items id="description">Term representing the total number of live births and stillbirths resulting from the pregnancy.</items>
-                    <items id="comment">Coding of the 'birth plurality' term is recommended. For example: singleton; twins; triplets; or quadruplets.The definition of 'stillbirth' may vary in different locations. </items>
+                    <items id="comment">Coding of the '\''birth plurality'\'' term is recommended. For example: singleton; twins; triplets; or quadruplets.The definition of '\''stillbirth'\'' may vary in different locations. </items>
                 </term_definitions>
                 <term_definitions code="at0008">
                     <items id="text">Birth details</items>
@@ -3506,7 +3511,7 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0012">
                     <items id="text">Place of birth</items>
                     <items id="description">Simple representation about the place of birth.</items>
-                    <items id="comment">This data element provides the opportunity for simple detail about the place of birth, such as the city, region, town, or suburb within the identified 'Country of birth'. For example: Kingston (Jamaica); Manhattan (USA); or Box Hill (Australia).</items>
+                    <items id="comment">This data element provides the opportunity for simple detail about the place of birth, such as the city, region, town, or suburb within the identified '\''Country of birth'\''. For example: Kingston (Jamaica); Manhattan (USA); or Box Hill (Australia).</items>
                 </term_definitions>
                 <term_definitions code="at0013">
                     <items id="text">Additional details</items>
@@ -5287,7 +5292,7 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0009">
                     <items id="text">Confounding factors</items>
                     <items id="description">Narrative descripiton of any issues or factors that may impact on the measurement.</items>
-                    <items id="comment">For example: 'uncooperative child','caput &amp; moulding post birth' and 'haematoma'.</items>
+                    <items id="comment">For example: '\''uncooperative child'\'','\''caput &amp; moulding post birth'\'' and '\''haematoma'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0010">
                     <items id="text">Head circumference at the last visit</items>
@@ -5983,12 +5988,12 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0005">
                     <items id="text">Modality</items>
                     <items id="description">Type of equipment that originally acquired the image or series of images.</items>
-                    <items id="comment">Also known as 'Examination type'. For example: Ultrasound; Computed tomography; or X-ray. Coding with a terminology is desirable, where possible. If the modality is specified by a code in the 'Test name', then this field may be redundant.</items>
+                    <items id="comment">Also known as '\''Examination type'\''. For example: Ultrasound; Computed tomography; or X-ray. Coding with a terminology is desirable, where possible. If the modality is specified by a code in the '\''Test name'\'', then this field may be redundant.</items>
                 </term_definitions>
                 <term_definitions code="at0006">
                     <items id="text">Structured target site</items>
                     <items id="description">Structured detail about the anatomical site related to the entire result.</items>
-                    <items id="comment">If the 'Target site' is specified by a code in the 'Test name', then this field may be redundant. Identification of an anatomical site related to a specific finding will be recorded within each instance of CLUSTER.imaging_finding.</items>
+                    <items id="comment">If the '\''Target site'\'' is specified by a code in the '\''Test name'\'', then this field may be redundant. Identification of an anatomical site related to a specific finding will be recorded within each instance of CLUSTER.imaging_finding.</items>
                 </term_definitions>
                 <term_definitions code="at0007">
                     <items id="text">Overall result status</items>
@@ -6026,12 +6031,12 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0020">
                     <items id="text">Imaging diagnosis</items>
                     <items id="description">Single word, phrase or brief description representing the likely condition or diagnosis.</items>
-                    <items id="comment">This data element has multiple occurrences to allow for more than one diagnoses. Coding with a terminology is preferred, where possible. This data element should be regarded as mutually exclusive to 'Differential diagnoses' - only one of 'Differential diagnoses' OR 'Imaging diagnosis' should be present in the each Imaging examination result.</items>
+                    <items id="comment">This data element has multiple occurrences to allow for more than one diagnoses. Coding with a terminology is preferred, where possible. This data element should be regarded as mutually exclusive to '\''Differential diagnoses'\'' - only one of '\''Differential diagnoses'\'' OR '\''Imaging diagnosis'\'' should be present in the each Imaging examination result.</items>
                 </term_definitions>
                 <term_definitions code="at0021">
                     <items id="text">Overall impression</items>
                     <items id="description">Narrative concise, clinically relevant interpretation of all imaging findings, and include a comparison with previous studies where appropriate.</items>
-                    <items id="comment">Also referred to as 'Opinion' or 'Conclusion'.</items>
+                    <items id="comment">Also referred to as '\''Opinion'\'' or '\''Conclusion'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0023">
                     <items id="text">Comment</items>
@@ -6040,7 +6045,7 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 </term_definitions>
                 <term_definitions code="at0024">
                     <items id="text">DateTime result issued</items>
-                    <items id="description">The date and/or time that the result was issued for the recorded 'Examination result status'.</items>
+                    <items id="description">The date and/or time that the result was issued for the recorded '\''Examination result status'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0025">
                     <items id="text">Tree</items>
@@ -6107,12 +6112,12 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0049">
                     <items id="text">Technique</items>
                     <items id="description">Narrative description about the technical aspects of capturing the image/s.</items>
-                    <items id="comment">Use this data element to provide an outline of technique. For example: '5 mm axial images from the lung bases through the pubic symphysis were acquired following the administration of intravenous and oral contrast. Coronal and Sagittal reformatted images were constructed from the source data.' It is particularly useful to record technical limitations or any deviation from normal, such as capturing a non-routine alternative or additional imaging.</items>
+                    <items id="comment">Use this data element to provide an outline of technique. For example: '\''5 mm axial images from the lung bases through the pubic symphysis were acquired following the administration of intravenous and oral contrast. Coronal and Sagittal reformatted images were constructed from the source data.'\'' It is particularly useful to record technical limitations or any deviation from normal, such as capturing a non-routine alternative or additional imaging.</items>
                 </term_definitions>
                 <term_definitions code="at0055">
                     <items id="text">Target site</items>
                     <items id="description">Simple description about the body site or region targetted for imaging.</items>
-                    <items id="comment">If the 'Target site' is specified by a code in the 'Test name', then this field may be redundant.</items>
+                    <items id="comment">If the '\''Target site'\'' is specified by a code in the '\''Test name'\'', then this field may be redundant.</items>
                 </term_definitions>
                 <term_definitions code="at0056">
                     <items id="text">Comparison</items>
@@ -6127,7 +6132,7 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0058">
                     <items id="text">Imaging differential diagnosis</items>
                     <items id="description">Single word, phrase or brief description representing a possible condition or diagnosis.</items>
-                    <items id="comment">This data element has multiple occurrences to allow for more than one differential diagnoses. Coding with a terminology is preferred, where possible. This data element should be regarded as mutually exclusive to 'Imaging diagnosis' - only one of 'Differential diagnoses' OR 'Imaging diagnosis' should be present in each Imaging examination result.</items>
+                    <items id="comment">This data element has multiple occurrences to allow for more than one differential diagnoses. Coding with a terminology is preferred, where possible. This data element should be regarded as mutually exclusive to '\''Imaging diagnosis'\'' - only one of '\''Differential diagnoses'\'' OR '\''Imaging diagnosis'\'' should be present in each Imaging examination result.</items>
                 </term_definitions>
                 <term_definitions code="at0059">
                     <items id="text">Recommendation</items>
@@ -6141,13 +6146,13 @@ Note: More data elements will be needed in future to record detailed genetic mar
                 <term_definitions code="at0062">
                     <items id="text">Procedure</items>
                     <items id="description">Narrative description about the clinical aspects of capturing the image/s.</items>
-                    <items id="comment">Use this data element to describe a summary of the clinical procedure, patient positioning, interventions such as Valsalva manoeuvre, and administration of contrast agent, radiopharmaceuticals and/or treatments as part of the imaging study. For example: '80 ml of Isovue-370 was administered intravenously using a bolus-tracking technique centered on the main pulmonary artery'. It can also be used to record an overview of any issues, &#13;
+                    <items id="comment">Use this data element to describe a summary of the clinical procedure, patient positioning, interventions such as Valsalva manoeuvre, and administration of contrast agent, radiopharmaceuticals and/or treatments as part of the imaging study. For example: '\''80 ml of Isovue-370 was administered intravenously using a bolus-tracking technique centered on the main pulmonary artery'\''. It can also be used to record an overview of any issues, &#13;
 complications or adverse reactions encountered. RM attributes allow links to the actual clinical procedure, contrast administration and vital signs records captured within the health record using ACTION.procedure, ACTION.medication, EVALUATION.adverse_reaction_risk and similar archetypes.</items>
                 </term_definitions>
                 <term_definitions code="at0063">
                     <items id="text">Study quality</items>
                     <items id="description">Assessment about the quality of the examination.</items>
-                    <items id="comment">Coding of the imaging quality with a value set is recommended. For example: 'excellent, good, fair, poor, and non-diagnostic'; or 'adequate, suboptimal and inadequate'.&#13;
+                    <items id="comment">Coding of the imaging quality with a value set is recommended. For example: '\''excellent, good, fair, poor, and non-diagnostic'\''; or '\''adequate, suboptimal and inadequate'\''.&#13;
 </items>
                 </term_definitions>
                 <term_definitions code="at0064">
@@ -7396,7 +7401,7 @@ complications or adverse reactions encountered. RM attributes allow links to the
                 </archetype_id>
                 <term_definitions code="at0000">
                     <items id="text">Previous Genetic Investigations</items>
-                    <items id="description">The result, including findings and the laboratory's interpretation, of an investigation performed on specimens collected from an individual or related to that individual.</items>
+                    <items id="description">The result, including findings and the laboratory'\''s interpretation, of an investigation performed on specimens collected from an individual or related to that individual.</items>
                 </term_definitions>
                 <term_definitions code="at0001">
                     <items id="text">Event Series</items>
@@ -7417,21 +7422,21 @@ complications or adverse reactions encountered. RM attributes allow links to the
                 <term_definitions code="at0005">
                     <items id="text">Test name</items>
                     <items id="description">Name of the laboratory investigation performed on the specimen(s).</items>
-                    <items id="comment">A test result may be for a single analyte, or a group of items, including panel tests. It is strongly recommended that 'Test name' be coded with a terminology, for example LOINC or SNOMED CT. For example: 'Glucose', 'Urea and Electrolytes', 'Swab', 'Cortisol (am)', 'Potassium in perspiration' or 'Melanoma histopathology'. The name may sometimes include specimen type and patient state, for example 'Fasting blood glucose' or include other information, as 'Potassium (PNA blood gas)'.</items>
+                    <items id="comment">A test result may be for a single analyte, or a group of items, including panel tests. It is strongly recommended that '\''Test name'\'' be coded with a terminology, for example LOINC or SNOMED CT. For example: '\''Glucose'\'', '\''Urea and Electrolytes'\'', '\''Swab'\'', '\''Cortisol (am)'\'', '\''Potassium in perspiration'\'' or '\''Melanoma histopathology'\''. The name may sometimes include specimen type and patient state, for example '\''Fasting blood glucose'\'' or include other information, as '\''Potassium (PNA blood gas)'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0017">
                     <items id="text">Receiving laboratory</items>
                     <items id="description">Details of the laboratory which received the request and has overall responsibility to manage reporting of the test, even if other labs perform specific aspects.</items>
                     <items id="comment">This slot is intended to carry details of the laboratory which received the request and has overall responsibility to manage reporting of the test, even if other labs perform specific aspects.&#13;
 &#13;
-The receiving laboratory may either perform the test or refer it to another laboratory. Where a different laboratory is responsible for performing the testing on specific analytes, it would be expected that these details would be carried in the 'Analyte result detail' SLOT within the CLUSTER.laboratory_test_analyte archetype.&#13;
+The receiving laboratory may either perform the test or refer it to another laboratory. Where a different laboratory is responsible for performing the testing on specific analytes, it would be expected that these details would be carried in the '\''Analyte result detail'\'' SLOT within the CLUSTER.laboratory_test_analyte archetype.&#13;
 &#13;
 </items>
                 </term_definitions>
                 <term_definitions code="at0035">
                     <items id="text">Distribution list</items>
                     <items id="description">Details of additional clinicians or organisations who require a copy of the test result.</items>
-                    <items id="comment">The 'Distribution list' is for information-only, and that the primary recipient of the report is the person intended to act on the information.</items>
+                    <items id="comment">The '\''Distribution list'\'' is for information-only, and that the primary recipient of the report is the person intended to act on the information.</items>
                 </term_definitions>
                 <term_definitions code="at0037">
                     <items id="text">Partial</items>
@@ -7448,7 +7453,7 @@ The receiving laboratory may either perform the test or refer it to another labo
                 <term_definitions code="at0057">
                     <items id="text">Conclusion</items>
                     <items id="description">Narrative description of the key findings.</items>
-                    <items id="comment">For example: 'Pattern suggests significant renal impairment'. The content of the conclusion will vary, depending on the investigation performed. This conclusion should be aligned with the coded 'Test diagnosis'.</items>
+                    <items id="comment">For example: '\''Pattern suggests significant renal impairment'\''. The content of the conclusion will vary, depending on the investigation performed. This conclusion should be aligned with the coded '\''Test diagnosis'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0062">
                     <items id="text">Requester order identifier</items>
@@ -7463,7 +7468,7 @@ The receiving laboratory may either perform the test or refer it to another labo
                 <term_definitions code="at0065">
                     <items id="text">Specimen detail</items>
                     <items id="description">Details about the physical substance that has been analysed.</items>
-                    <items id="comment">If the specimen type is sufficiently specified with a code in the Test name, then this additional data is not required. Linking results to specific specimens may be recorded using 'Specimen identifier' elements in both the CLUSTER.specimen and the various results CLUSTER archetypes.</items>
+                    <items id="comment">If the specimen type is sufficiently specified with a code in the Test name, then this additional data is not required. Linking results to specific specimens may be recorded using '\''Specimen identifier'\'' elements in both the CLUSTER.specimen and the various results CLUSTER archetypes.</items>
                 </term_definitions>
                 <term_definitions code="at0068">
                     <items id="text">Laboratory internal identifier</items>
@@ -7473,13 +7478,13 @@ The receiving laboratory may either perform the test or refer it to another labo
                 <term_definitions code="at0073">
                     <items id="text">Overall test status</items>
                     <items id="description">The status of the laboratory test result as a whole.</items>
-                    <items id="comment">The values have been specifically chosen to match those in the HL7 FHIR Diagnostic report, historically derived from HL7v2 practice. Other local codes/terms can be used via the Text 'choice'.&#13;
+                    <items id="comment">The values have been specifically chosen to match those in the HL7 FHIR Diagnostic report, historically derived from HL7v2 practice. Other local codes/terms can be used via the Text '\''choice'\''.&#13;
 &#13;
 This element is multiple occurrence to cater for the use cases where statuses for different aspects of the result have been split into several elements.</items>
                 </term_definitions>
                 <term_definitions code="at0074">
                     <items id="text">Cancelled</items>
-                    <items id="description">The result is unavailable because the test was not started or not completed (also sometimes called 'aborted').</items>
+                    <items id="description">The result is unavailable because the test was not started or not completed (also sometimes called '\''aborted'\'').</items>
                 </term_definitions>
                 <term_definitions code="at0075">
                     <items id="text">Overall test status timestamp</items>
@@ -7499,7 +7504,7 @@ This element is multiple occurrence to cater for the use cases where statuses fo
                     <items id="description">Details about the test request.</items>
                     <items id="comment">In most situations there is one test request and a single corresponding test result, however this repeating cluster allows for the situation where there may be multiple test requests reported using a single test result.&#13;
 &#13;
-As an example: 'a clinician asks for blood glucose in one request and Urea/electrolytes in a second request, but the lab analyser does both and the lab wishes to report these together'.</items>
+As an example: '\''a clinician asks for blood glucose in one request and Urea/electrolytes in a second request, but the lab analyser does both and the lab wishes to report these together'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0097">
                     <items id="text">Test result</items>
@@ -7509,7 +7514,7 @@ As an example: 'a clinician asks for blood glucose in one request and Urea/elect
                 <term_definitions code="at0098">
                     <items id="text">Test diagnosis</items>
                     <items id="description">Single word, phrase or brief description that represents the clinical meaning and significance of the laboratory test result.</items>
-                    <items id="comment">For example: 'Severe hepatic impairment', 'Salmonella contamination'. Coding of the diagnosis with a terminology is strongly recommended, where possible. This diagnosis should be aligned with the narrative in the 'Conclusion'.</items>
+                    <items id="comment">For example: '\''Severe hepatic impairment'\'', '\''Salmonella contamination'\''. Coding of the diagnosis with a terminology is strongly recommended, where possible. This diagnosis should be aligned with the narrative in the '\''Conclusion'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0100">
                     <items id="text">Clinical information provided</items>
@@ -7532,7 +7537,7 @@ As an example: 'a clinician asks for blood glucose in one request and Urea/elect
                 <term_definitions code="at0110">
                     <items id="text">Testing details</items>
                     <items id="description">Structured details about the method of analysis, device or interpretation used.</items>
-                    <items id="comment">For example: 'details of ELISA/nephelometry'.</items>
+                    <items id="comment">For example: '\''details of ELISA/nephelometry'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0111">
                     <items id="text">Point-of-care test</items>
@@ -7546,11 +7551,11 @@ As an example: 'a clinician asks for blood glucose in one request and Urea/elect
                 <term_definitions code="at0113">
                     <items id="text">Confounding factors</items>
                     <items id="description">Issues or circumstances that impact on the accurate interpretation of the measurement or test result.</items>
-                    <items id="comment">'Confounding factors' should be reserved for uncontrolled/unplanned issues of patient state/physiology that might affect interpretation, for example 'recent exercise' or 'recent tobacco smoking'.&#13;
+                    <items id="comment">'\''Confounding factors'\'' should be reserved for uncontrolled/unplanned issues of patient state/physiology that might affect interpretation, for example '\''recent exercise'\'' or '\''recent tobacco smoking'\''.&#13;
 &#13;
-Known or required preconditions, such as 'fasting' should be carried in the 'Sampling conditions' element within the CLUSTER.specimen archetype . In some cases preconditions are captured as part of the test name, for example 'Fasting blood glucose'.&#13;
+Known or required preconditions, such as '\''fasting'\'' should be carried in the '\''Sampling conditions'\'' element within the CLUSTER.specimen archetype . In some cases preconditions are captured as part of the test name, for example '\''Fasting blood glucose'\''.&#13;
 &#13;
-Known issues with specimen collection or handling, such as 'prolonged use of tourniquet' or 'sample haemolysed', should be carried in the 'Specimen quality' elements within CLUSTER.specimen archetype.&#13;
+Known issues with specimen collection or handling, such as '\''prolonged use of tourniquet'\'' or '\''sample haemolysed'\'', should be carried in the '\''Specimen quality'\'' elements within CLUSTER.specimen archetype.&#13;
 &#13;
 Coding with a terminology is desirable, where possible.</items>
                 </term_definitions>
@@ -7561,7 +7566,7 @@ Coding with a terminology is desirable, where possible.</items>
                 </term_definitions>
                 <term_definitions code="at0115">
                     <items id="text">Corrected</items>
-                    <items id="description">The result has been modified subsequent to being Final, and is complete and verified by the responsible pathologist. This is a sub-category of 'Amended'.</items>
+                    <items id="description">The result has been modified subsequent to being Final, and is complete and verified by the responsible pathologist. This is a sub-category of '\''Amended'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0116">
                     <items id="text">Entered in error</items>
@@ -7579,11 +7584,11 @@ Coding with a terminology is desirable, where possible.</items>
                 </term_definitions>
                 <term_definitions code="at0119">
                     <items id="text">Appended</items>
-                    <items id="description">Subsequent to being final, the report has been modified by adding new content. The existing content is unchanged. This is a sub-category of 'Amended'.</items>
+                    <items id="description">Subsequent to being final, the report has been modified by adding new content. The existing content is unchanged. This is a sub-category of '\''Amended'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0120">
                     <items id="text">Preliminary</items>
-                    <items id="description">Verified early results are available, but not all results are final. This is a sub-category of 'Partial'.</items>
+                    <items id="description">Verified early results are available, but not all results are final. This is a sub-category of '\''Partial'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0121">
                     <items id="text">Test method</items>
@@ -8325,7 +8330,7 @@ Coding with a terminology is desirable, where possible.</items>
                 </archetype_id>
                 <term_definitions code="at0000">
                     <items id="text">Laboratory test result</items>
-                    <items id="description">The result, including findings and the laboratory's interpretation, of an investigation performed on specimens collected from an individual or related to that individual.</items>
+                    <items id="description">The result, including findings and the laboratory'\''s interpretation, of an investigation performed on specimens collected from an individual or related to that individual.</items>
                 </term_definitions>
                 <term_definitions code="at0001">
                     <items id="text">Event Series</items>
@@ -8346,21 +8351,21 @@ Coding with a terminology is desirable, where possible.</items>
                 <term_definitions code="at0005">
                     <items id="text">Test name</items>
                     <items id="description">Name of the laboratory investigation performed on the specimen(s).</items>
-                    <items id="comment">A test result may be for a single analyte, or a group of items, including panel tests. It is strongly recommended that 'Test name' be coded with a terminology, for example LOINC or SNOMED CT. For example: 'Glucose', 'Urea and Electrolytes', 'Swab', 'Cortisol (am)', 'Potassium in perspiration' or 'Melanoma histopathology'. The name may sometimes include specimen type and patient state, for example 'Fasting blood glucose' or include other information, as 'Potassium (PNA blood gas)'.</items>
+                    <items id="comment">A test result may be for a single analyte, or a group of items, including panel tests. It is strongly recommended that '\''Test name'\'' be coded with a terminology, for example LOINC or SNOMED CT. For example: '\''Glucose'\'', '\''Urea and Electrolytes'\'', '\''Swab'\'', '\''Cortisol (am)'\'', '\''Potassium in perspiration'\'' or '\''Melanoma histopathology'\''. The name may sometimes include specimen type and patient state, for example '\''Fasting blood glucose'\'' or include other information, as '\''Potassium (PNA blood gas)'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0017">
                     <items id="text">Receiving laboratory</items>
                     <items id="description">Details of the laboratory which received the request and has overall responsibility to manage reporting of the test, even if other labs perform specific aspects.</items>
                     <items id="comment">This slot is intended to carry details of the laboratory which received the request and has overall responsibility to manage reporting of the test, even if other labs perform specific aspects.&#13;
 &#13;
-The receiving laboratory may either perform the test or refer it to another laboratory. Where a different laboratory is responsible for performing the testing on specific analytes, it would be expected that these details would be carried in the 'Analyte result detail' SLOT within the CLUSTER.laboratory_test_analyte archetype.&#13;
+The receiving laboratory may either perform the test or refer it to another laboratory. Where a different laboratory is responsible for performing the testing on specific analytes, it would be expected that these details would be carried in the '\''Analyte result detail'\'' SLOT within the CLUSTER.laboratory_test_analyte archetype.&#13;
 &#13;
 </items>
                 </term_definitions>
                 <term_definitions code="at0035">
                     <items id="text">Distribution list</items>
                     <items id="description">Details of additional clinicians or organisations who require a copy of the test result.</items>
-                    <items id="comment">The 'Distribution list' is for information-only, and that the primary recipient of the report is the person intended to act on the information.</items>
+                    <items id="comment">The '\''Distribution list'\'' is for information-only, and that the primary recipient of the report is the person intended to act on the information.</items>
                 </term_definitions>
                 <term_definitions code="at0037">
                     <items id="text">Partial</items>
@@ -8377,7 +8382,7 @@ The receiving laboratory may either perform the test or refer it to another labo
                 <term_definitions code="at0057">
                     <items id="text">Conclusion</items>
                     <items id="description">Narrative description of the key findings.</items>
-                    <items id="comment">For example: 'Pattern suggests significant renal impairment'. The content of the conclusion will vary, depending on the investigation performed. This conclusion should be aligned with the coded 'Test diagnosis'.</items>
+                    <items id="comment">For example: '\''Pattern suggests significant renal impairment'\''. The content of the conclusion will vary, depending on the investigation performed. This conclusion should be aligned with the coded '\''Test diagnosis'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0062">
                     <items id="text">Requester order identifier</items>
@@ -8392,7 +8397,7 @@ The receiving laboratory may either perform the test or refer it to another labo
                 <term_definitions code="at0065">
                     <items id="text">Specimen detail</items>
                     <items id="description">Details about the physical substance that has been analysed.</items>
-                    <items id="comment">If the specimen type is sufficiently specified with a code in the Test name, then this additional data is not required. Linking results to specific specimens may be recorded using 'Specimen identifier' elements in both the CLUSTER.specimen and the various results CLUSTER archetypes.</items>
+                    <items id="comment">If the specimen type is sufficiently specified with a code in the Test name, then this additional data is not required. Linking results to specific specimens may be recorded using '\''Specimen identifier'\'' elements in both the CLUSTER.specimen and the various results CLUSTER archetypes.</items>
                 </term_definitions>
                 <term_definitions code="at0068">
                     <items id="text">Laboratory internal identifier</items>
@@ -8402,13 +8407,13 @@ The receiving laboratory may either perform the test or refer it to another labo
                 <term_definitions code="at0073">
                     <items id="text">Overall test status</items>
                     <items id="description">The status of the laboratory test result as a whole.</items>
-                    <items id="comment">The values have been specifically chosen to match those in the HL7 FHIR Diagnostic report, historically derived from HL7v2 practice. Other local codes/terms can be used via the Text 'choice'.&#13;
+                    <items id="comment">The values have been specifically chosen to match those in the HL7 FHIR Diagnostic report, historically derived from HL7v2 practice. Other local codes/terms can be used via the Text '\''choice'\''.&#13;
 &#13;
 This element is multiple occurrence to cater for the use cases where statuses for different aspects of the result have been split into several elements.</items>
                 </term_definitions>
                 <term_definitions code="at0074">
                     <items id="text">Cancelled</items>
-                    <items id="description">The result is unavailable because the test was not started or not completed (also sometimes called 'aborted').</items>
+                    <items id="description">The result is unavailable because the test was not started or not completed (also sometimes called '\''aborted'\'').</items>
                 </term_definitions>
                 <term_definitions code="at0075">
                     <items id="text">Overall test status timestamp</items>
@@ -8428,7 +8433,7 @@ This element is multiple occurrence to cater for the use cases where statuses fo
                     <items id="description">Details about the test request.</items>
                     <items id="comment">In most situations there is one test request and a single corresponding test result, however this repeating cluster allows for the situation where there may be multiple test requests reported using a single test result.&#13;
 &#13;
-As an example: 'a clinician asks for blood glucose in one request and Urea/electrolytes in a second request, but the lab analyser does both and the lab wishes to report these together'.</items>
+As an example: '\''a clinician asks for blood glucose in one request and Urea/electrolytes in a second request, but the lab analyser does both and the lab wishes to report these together'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0097">
                     <items id="text">Test result</items>
@@ -8438,7 +8443,7 @@ As an example: 'a clinician asks for blood glucose in one request and Urea/elect
                 <term_definitions code="at0098">
                     <items id="text">Test diagnosis</items>
                     <items id="description">Single word, phrase or brief description that represents the clinical meaning and significance of the laboratory test result.</items>
-                    <items id="comment">For example: 'Severe hepatic impairment', 'Salmonella contamination'. Coding of the diagnosis with a terminology is strongly recommended, where possible. This diagnosis should be aligned with the narrative in the 'Conclusion'.</items>
+                    <items id="comment">For example: '\''Severe hepatic impairment'\'', '\''Salmonella contamination'\''. Coding of the diagnosis with a terminology is strongly recommended, where possible. This diagnosis should be aligned with the narrative in the '\''Conclusion'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0100">
                     <items id="text">Clinical information provided</items>
@@ -8461,7 +8466,7 @@ As an example: 'a clinician asks for blood glucose in one request and Urea/elect
                 <term_definitions code="at0110">
                     <items id="text">Testing details</items>
                     <items id="description">Structured details about the method of analysis, device or interpretation used.</items>
-                    <items id="comment">For example: 'details of ELISA/nephelometry'.</items>
+                    <items id="comment">For example: '\''details of ELISA/nephelometry'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0111">
                     <items id="text">Point-of-care test</items>
@@ -8475,11 +8480,11 @@ As an example: 'a clinician asks for blood glucose in one request and Urea/elect
                 <term_definitions code="at0113">
                     <items id="text">Confounding factors</items>
                     <items id="description">Issues or circumstances that impact on the accurate interpretation of the measurement or test result.</items>
-                    <items id="comment">'Confounding factors' should be reserved for uncontrolled/unplanned issues of patient state/physiology that might affect interpretation, for example 'recent exercise' or 'recent tobacco smoking'.&#13;
+                    <items id="comment">'\''Confounding factors'\'' should be reserved for uncontrolled/unplanned issues of patient state/physiology that might affect interpretation, for example '\''recent exercise'\'' or '\''recent tobacco smoking'\''.&#13;
 &#13;
-Known or required preconditions, such as 'fasting' should be carried in the 'Sampling conditions' element within the CLUSTER.specimen archetype . In some cases preconditions are captured as part of the test name, for example 'Fasting blood glucose'.&#13;
+Known or required preconditions, such as '\''fasting'\'' should be carried in the '\''Sampling conditions'\'' element within the CLUSTER.specimen archetype . In some cases preconditions are captured as part of the test name, for example '\''Fasting blood glucose'\''.&#13;
 &#13;
-Known issues with specimen collection or handling, such as 'prolonged use of tourniquet' or 'sample haemolysed', should be carried in the 'Specimen quality' elements within CLUSTER.specimen archetype.&#13;
+Known issues with specimen collection or handling, such as '\''prolonged use of tourniquet'\'' or '\''sample haemolysed'\'', should be carried in the '\''Specimen quality'\'' elements within CLUSTER.specimen archetype.&#13;
 &#13;
 Coding with a terminology is desirable, where possible.</items>
                 </term_definitions>
@@ -8490,7 +8495,7 @@ Coding with a terminology is desirable, where possible.</items>
                 </term_definitions>
                 <term_definitions code="at0115">
                     <items id="text">Corrected</items>
-                    <items id="description">The result has been modified subsequent to being Final, and is complete and verified by the responsible pathologist. This is a sub-category of 'Amended'.</items>
+                    <items id="description">The result has been modified subsequent to being Final, and is complete and verified by the responsible pathologist. This is a sub-category of '\''Amended'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0116">
                     <items id="text">Entered in error</items>
@@ -8508,11 +8513,11 @@ Coding with a terminology is desirable, where possible.</items>
                 </term_definitions>
                 <term_definitions code="at0119">
                     <items id="text">Appended</items>
-                    <items id="description">Subsequent to being final, the report has been modified by adding new content. The existing content is unchanged. This is a sub-category of 'Amended'.</items>
+                    <items id="description">Subsequent to being final, the report has been modified by adding new content. The existing content is unchanged. This is a sub-category of '\''Amended'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0120">
                     <items id="text">Preliminary</items>
-                    <items id="description">Verified early results are available, but not all results are final. This is a sub-category of 'Partial'.</items>
+                    <items id="description">Verified early results are available, but not all results are final. This is a sub-category of '\''Partial'\''.</items>
                 </term_definitions>
                 <term_definitions code="at0121">
                     <items id="text">Test method</items>
@@ -17350,3 +17355,4 @@ Coding with a terminology is desirable, where possible.</items>
         </constraints>
     </view>
 </template>
+'

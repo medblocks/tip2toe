@@ -143,7 +143,45 @@ export default function QuestionnaireLayout() {
 
   async function fetchData() {
     try {
-      $Loading("Loading EHR ID...");
+      // $Loading("Loading EHR ID...");
+      // if(import.meta.env.VITE_IS_DEV){
+      //   let _ehrId = await setEhrId('5dd790d4-6bc6-47c9-a57f-2c3fdc164fda');
+      //   setehrId(_ehrId);
+      //   const patientData = await getAllCompositionIDs(_ehrId);
+      //   if (patientData?.rows?.length > 0) {
+      //     set_compositionId(patientData.rows[patientData.rows.length - 1][2]);
+      //     let compositionData = await getCompositionByID(
+      //       patientData.rows[patientData.rows.length - 1][2]
+      //     ).catch((reason) => {
+      //       if (reason) {
+      //         $Notification(
+      //           "No Previous Submission Present!",
+      //           "error",
+      //           "No form submission for the current patient found."
+      //         );
+      //         console.log("No Previous Submission Present");
+      //       }
+      //     });
+      //     if (compositionData) {
+      //       Object.entries(default_data).forEach(([key, value]) => {
+      //         if (!compositionData.composition[key]) {
+      //           compositionData.composition[key] = value;
+      //         }
+      //       });
+      //       console.log(compositionData);
+      //       if (signalStore.isPractitioner.value) {
+      //         handleImport(compositionData.composition);
+      //       }
+      //       else{
+      //         let formElement = await document.getElementById(_formid);
+      //         if (formElement) formElement.import(compositionData.composition);
+      //       }
+      //     }
+      //   }
+      //   $Loading();
+      //   return
+
+      // }
       if (signalStore.encounterId.value && signalStore.patientId.value) {
         let _ehrId = await setEhrId(signalStore.patientId.value);
         setehrId(_ehrId);

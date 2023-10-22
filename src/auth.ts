@@ -14,12 +14,15 @@ export const _authHandler = async (
   _patientId = null as string | null,
   _encounterId = null as string | null
 ) => {
-  console.log('AuthParams', iss, launch, redirectUri, _patientId, _encounterId);
 
-  const _iss = iss?iss : sessionStorage.getItem("iss")?sessionStorage.getItem("iss"):"https://karolinska.medblocks.com/fhir"
-  console.log("iss_auth",_iss)
+  // The following code has been commented out since smartAuth is taking care of this now
+  // console.log('AuthParams', iss, launch, redirectUri, _patientId, _encounterId);
 
-  sessionStorage.setItem('iss',_iss)
+  // const _iss = iss?iss : sessionStorage.getItem("iss")?sessionStorage.getItem("iss"):"https://karolinska.medblocks.com/fhir"
+  // console.log("iss_auth",_iss)
+  
+  // sessionStorage.setItem('iss',_iss)
+  const _iss = iss!
   
   const _launch = launch 
     ? launch 

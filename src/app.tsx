@@ -12,6 +12,7 @@ import QuestionnaireLayout from '@/core/layout/QuestionnaireLayout';
 
 // Importing the Home view
 import Home from '@/core/pages/HomeView.tsx';
+import HomeDev from '@/core/pages/HomeDevView.tsx';
 
 // Importing the signal store for global state management
 import * as signalStore from '@/core/store';
@@ -43,6 +44,7 @@ const routes = [
 const App = () => {
   // State management for application loading, authentication, and loading text
   const [isAppLoading, setIsAppLoading] = useState(true);
+  const [isDev, setIsDev] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loadingText, setLoadingText] = useState('Loading Tip2Toe App...');
 
@@ -52,6 +54,15 @@ const App = () => {
   // Effect hook that initializes the app
   useEffect(() => {
     async function initializeApp() {
+
+      setIsDev(import.meta.env.VITE_IS_DEV)
+
+      if (isDev){
+        setIsAppLoading(false);
+        return
+      }
+
+
       // Check if signal store's context value is empty
       if (Object.keys(signalStore.context.value).length === 0) {
         const _patientId = urlParams.get('_patientId');
@@ -107,13 +118,18 @@ const App = () => {
     }
   }
 
+  async function _authHandlerDev(ehrId: string,isPractitioner: Boolean){
+    signalStore._loadStoreDev(ehrId,isPractitioner)
+    setIsAuthenticated(true)
+  }
+
   // Render the main application component
   return (
     <>
       {!isAuthenticated ? (
         // If not authenticated, show loading screen or the Home view
         <div className="flex min-h-full flex-col">
-          {isAppLoading ? <AppLoading show={true} loadingText={loadingText} /> : <Home _authenticate={_authHandlerMain} />}
+          {isAppLoading ? <AppLoading show={true} loadingText={loadingText} /> : isDev? <HomeDev _authenticate={_authHandlerDev} /> : <Home _authenticate={_authHandlerMain} />}
         </div>
       ) : (
         // If authenticated, render the router with the defined routes

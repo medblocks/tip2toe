@@ -65,6 +65,14 @@ export const _loadStore = (_idToken: any, _context: any, _services: any, _access
   window.sessionStorage.setItem("accessToken", JSON.stringify(accessToken.value))
 }
 
+
+export const _loadStoreDev = (ehrId: string,isPractitioner: Boolean) => {
+  patientId.value = ehrId
+  isPractitioner ? idToken.value.fhirUser = "practitioner" : null
+  serviceUrl_openehr_rest.value = import.meta.env.VITE_DEV_EHRBASE_REST_URL
+  serviceUrl_openehr_ehrscape.value = import.meta.env.VITE_DEV_EHRBASE_SCAPE_URL
+}
+
 export const _loadStoreFromSessionStorage = () => {
   // Get values from session storage
   idToken.value = JSON.parse(window.sessionStorage.getItem("idToken") || "{}")
