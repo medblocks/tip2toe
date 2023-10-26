@@ -44,7 +44,7 @@ const routes = [
 const App = () => {
   // State management for application loading, authentication, and loading text
   const [isAppLoading, setIsAppLoading] = useState(true);
-  const [isDev, setIsDev] = useState(true);
+  const [isDev, setIsDev] = useState(import.meta.env.VITE_IS_DEV);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loadingText, setLoadingText] = useState('Loading Tip2Toe App...');
 
@@ -54,10 +54,11 @@ const App = () => {
   // Effect hook that initializes the app
   useEffect(() => {
     async function initializeApp() {
+      // setIsDev()
 
-      setIsDev(import.meta.env.VITE_IS_DEV)
-
-      if (isDev){
+      
+      if (isDev==true){
+        console.log("yaye",isDev)
         setIsAppLoading(false);
         return
       }
@@ -129,7 +130,7 @@ const App = () => {
       {!isAuthenticated ? (
         // If not authenticated, show loading screen or the Home view
         <div className="flex min-h-full flex-col">
-          {isAppLoading ? <AppLoading show={true} loadingText={loadingText} /> : isDev? <HomeDev _authenticate={_authHandlerDev} /> : <Home _authenticate={_authHandlerMain} />}
+          {isAppLoading ? <AppLoading show={true} loadingText={loadingText} /> : isDev==true? <HomeDev _authenticate={_authHandlerDev} /> : <Home _authenticate={_authHandlerMain} />}
         </div>
       ) : (
         // If authenticated, render the router with the defined routes
