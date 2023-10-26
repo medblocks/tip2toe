@@ -50,6 +50,11 @@ If Windows
 http://localhost:5173
 ```
 
+8. To use local ehr system change the env variable
+```
+VITE_IS_DEV = true
+```
+
 
 ## Deployment Steps
 
