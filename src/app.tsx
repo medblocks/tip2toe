@@ -56,7 +56,7 @@ const App = () => {
     async function initializeApp() {
       // setIsDev()
 
-      
+      // checking isDev is true or not
       if (isDev==true){
         console.log("yaye",isDev)
         setIsAppLoading(false);
