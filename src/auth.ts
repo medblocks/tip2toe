@@ -32,7 +32,7 @@ export const _authHandler = async (
 
   return await smartAuth({
     iss: _iss,
-    clientId: "tip2toe",
+    clientId: "067a76d2-eaa2-46fc-95b8-834f943ac2e8",
     redirectUri: redirectUri,
     scope: "emulate_user openid offline launch/patient",
     launch: _launch,
