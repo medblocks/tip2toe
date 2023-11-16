@@ -17,6 +17,8 @@ const ThisIsMe: React.FC<ThisIsMeHandlerProps> = ({ addToSummary, readonly= fals
   // Get the current route pathname
   const { pathname } = useLocation();
 
+  readonly = false;
+
   // Handle input events
   function _handleInput(e:any,title:string){
     if(e.currentTarget?.data){
